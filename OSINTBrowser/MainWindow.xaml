@@ -1,0 +1,24 @@
+﻿<Window x:Name="WndMain" x:Class="OSINTBrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OSINTBrowser"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="603.6" WindowStartupLocation="CenterScreen" Cursor="Arrow">
+    <Grid Background="#FF8D98E8" Margin="0,0,-6.4,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="btnOpenCase" Content="Open Existing Case" HorizontalAlignment="Left" Margin="20,179,0,0" VerticalAlignment="Top" Width="180" BorderBrush="#FF333DA8" FontFamily="Yu Gothic Medium" FontSize="16" BorderThickness="2,2,2,1" Cursor="Hand" Height="61" Grid.Column="1"/>
+        <Button x:Name="btnNewCase" Content="Create New Case" HorizontalAlignment="Left" Margin="80,179,0,0" VerticalAlignment="Top" Width="180" BorderBrush="#FF333DA8" FontFamily="Yu Gothic Medium" FontSize="16" BorderThickness="2,2,2,1" Cursor="Hand" Height="61"/>
+        <Label x:Name="lblTitle" Content="Open Source Investigation Browser" Margin="10,50,0,0" VerticalAlignment="Top" Background="#FFDDE9F3" FontFamily="Tahoma" FontSize="34" Opacity="0.9" BorderBrush="#FF5574F3" BorderThickness="3" Height="60" Width="580" Grid.ColumnSpan="2">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+
+    </Grid>
+</Window>
