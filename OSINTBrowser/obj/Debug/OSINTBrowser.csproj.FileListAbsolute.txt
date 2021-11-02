@@ -1,7 +1,6 @@
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\OSINTBrowser.exe.config
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\OSINTBrowser.exe
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\OSINTBrowser.pdb
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.AssemblyReference.cache
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\MainWindow.g.cs
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\App.g.cs
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser_MarkupCompile.cache
@@ -13,3 +12,6 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csp
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.CoreCompileInputs.cache
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.exe
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.pdb
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\NewCase.g.cs
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\NewCase.baml
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.AssemblyReference.cache
