@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace OSINTBrowser
 {
     /// <summary>
@@ -58,8 +59,6 @@ namespace OSINTBrowser
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-        //if (ValidateChildren(ValidationConstraints.Enabled))
-        //{
 
             //Gets the input from the form and creates a new folder.
 
@@ -107,8 +106,10 @@ namespace OSINTBrowser
                         }
                     }
                 }
-
-                //}
+                Browser browser = new Browser();
+                browser.Show();
+                this.Close();
+                
 
                 //**CLOSES WINDOW AND GOES TO MAIN BROWSER**
             }
@@ -121,50 +122,6 @@ namespace OSINTBrowser
             this.Close();
         }
 
-        //private void txtName_Validating(object sender, CancelEventArgs e)
-        //{
-        //    if (string.IsNullOrWhiteSpace(txtSubject.Text))
-        //    {
-        //        e.Cancel = true;
-        //        txtSubject.Focus();
-        //        errorProvider1.SetError(txtSubject, "Please enter a name for your case.");
-        //    }
-        //    else
-        //    {
-        //        e.Cancel = false;
-        //        errorProvider1.SetError(txtSubject, "");
-        //    }
-        //}
-
-        //private void txtUser_Validating(object sender, CancelEventArgs e)
-        //{
-        //    if (string.IsNullOrWhiteSpace(txtUser.Text))
-        //    {
-        //        e.Cancel = true;
-        //        txtUser.Focus();
-        //        errorProvider2.SetError(txtUser, "Please enter your name or alias.");
-        //    }
-        //    else
-        //    {
-        //        e.Cancel = false;
-        //        errorProvider2.SetError(txtUser, "");
-        //    }
-        //}
-
-        //private void txtOrganisation_Validating(object sender, CancelEventArgs e)
-        //{
-        //    if (string.IsNullOrWhiteSpace(txtOrganisation.Text))
-        //    {
-        //        e.Cancel = true;
-        //        txtOrganisation.Focus();
-        //        errorProvider3.SetError(txtOrganisation, "Please enter the name of your organisation.");
-        //    }
-        //    else
-        //    {
-        //        e.Cancel = false;
-        //        errorProvider3.SetError(txtOrganisation, "");
-        //    }
-        //}
     }
 }
 

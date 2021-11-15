@@ -32,7 +32,6 @@ namespace OSINTBrowser
             NewCase makeNewCase = new NewCase();
             //this.Hide();
             makeNewCase.Show();
-            //makeNewCase.Visibility = Visibility.Visible;
         }
 
         private void btnOpenCase_Click(object sender, RoutedEventArgs e)
@@ -54,14 +53,8 @@ namespace OSINTBrowser
                     sw.WriteLine("Case last accessed " + date, "/n");
                 }
 
-                //BrowserForm wb = new BrowserForm();
-                //wb.Show();
-
-
-                //WebBrowser wb = new WebBrowser();
-                //BrowserForm openedCase = new BrowserForm(selectedFolder);
-                //openBrowser(openedCase);
-
+                Browser bw = new Browser();
+                bw.Show();
             }
             else
             {

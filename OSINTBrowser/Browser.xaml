@@ -1,0 +1,74 @@
+﻿<Window x:Class="OSINTBrowser.Browser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OSINTBrowser" xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        mc:Ignorable="d"
+        Title="OSIB" Height="450" Width="800" Background="{DynamicResource wbBackground}" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="81*"/>
+            <ColumnDefinition Width="39*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Menu bar and options -->
+        <Menu Height="25" VerticalAlignment="Center" Background="{DynamicResource wbSecBackground}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">
+            <MenuItem Header="File" ItemContainerStyle="{StaticResource wbSubMenuItem}">
+                <MenuItem x:Name="newtabMenuItem" Header="New Tab" Click="newtabMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!--Window is split into three columns and three rows-->
+        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--Webbrowser buttons, URL and search text boxes-->
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnBack" Content="Back" Padding="5,0" Click="btnBack_Click" Cursor="Hand"/>
+                <Button x:Name="btnFwd" Content="Forward" Padding="5,0" Click="btnFwd_Click" Cursor="Hand"/>
+                <Button x:Name="btnRefresh" Content="Refresh" Padding="5,0" Click="btnRefresh_Click" Cursor="Hand"/>
+            </StackPanel>
+
+
+            <TextBox x:Name="txtAddressBar" Grid.Column="1" Height="26" VerticalAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14"/>
+            <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" VerticalAlignment="Center"  Padding="10,0" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="40,0,80,0" FontSize="14"/>
+
+        </Grid>
+
+        <!--TabItems-->
+        <TabControl x:Name="tabControl" Grid.Row="2" SelectionChanged="tabControl_SelectionChanged" Padding="0" Grid.ColumnSpan="3">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Header" Value="{Binding TabHeader}" />
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" />
+                                    <Button x:Name="btnCloseTab" Content="X" Click="btnCloseTab_Click" Padding="1" Margin="1,0"
+                                    Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+
+            <!--ChromiumWebBrowser inside of a Tabitem-->
+            <TabItem Header="OSIB" BorderThickness="0" Padding="2">
+                <cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com" Padding="0" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

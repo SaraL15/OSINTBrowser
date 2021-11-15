@@ -4,6 +4,25 @@
              xmlns:local="clr-namespace:OSINTBrowser"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="wbBackground" Color="#2C2E43"/>
+        <SolidColorBrush x:Key="wbSecBackground" Color="#595260"/>
+        <SolidColorBrush x:Key="wbLight" Color="#B2B1B9"/>
+        <SolidColorBrush x:Key="wbYellow" Color="#FFD523"/>
+
+        <Style x:Key="wbMenuItem" TargetType="MenuItem">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Padding" Value="5,0"/>
+            <Setter Property="Foreground" Value="{StaticResource wbYellow}"/>
+            <Setter Property="Background" Value="{StaticResource wbSecBackground}"/>
+
+        </Style>
+
+        <Style x:Key="wbSubMenuItem" TargetType="MenuItem">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Padding" Value="5,0"/>
+            <Setter Property="Foreground" Value="{StaticResource wbYellow}"/>
+            <Setter Property="Background" Value="{StaticResource wbSecBackground}"/>
+        </Style>
+        
     </Application.Resources>
 </Application>
