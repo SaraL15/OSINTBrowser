@@ -42,7 +42,9 @@
 
 
             <TextBox x:Name="txtAddressBar" Grid.Column="1" Height="26" VerticalAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14"/>
-            <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" VerticalAlignment="Center"  Padding="10,0" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="40,0,80,0" FontSize="14"/>
+            <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" VerticalAlignment="Center"  Padding="10,0" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="40,0,20,0" FontSize="14"/>
+            <Button x:Name="btnGo" Grid.Column="2" Content="Go" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click"/>
+            <Button x:Name="btnSearch" Grid.Column="2" Content="Search" HorizontalAlignment="Right" Height="26" Margin="160,0,0,0" VerticalAlignment="Center" Width="40" Click="btnSearch_Click"/>
 
         </Grid>
 

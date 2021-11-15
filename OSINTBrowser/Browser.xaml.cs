@@ -39,13 +39,14 @@ namespace OSINTBrowser
             newTab.Content = browser;
             browser.Address = "https://www.google.com";
 
-            newTab.Header = "New Blank page";
+            newTab.Header = "New Tab";
 
             currentBrowser = browser;
             currentTabItem = newTab;
             browser.Loaded += FinishedLoadingWebpage;
-
         }
+
+
 
         private void FinishedLoadingWebpage(object sender, RoutedEventArgs e)
         {
@@ -143,6 +144,16 @@ namespace OSINTBrowser
             {
                 tabControl.Items.Remove(currentTabItem);
             }
+        }
+
+        private void btnGo_Click(object sender, RoutedEventArgs e)
+        {
+            Go();
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
         }
     }
 }
