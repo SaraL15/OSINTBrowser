@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using CefSharp;
 using CefSharp.Wpf;
 
@@ -24,11 +14,14 @@ namespace OSINTBrowser
         TabItem currentTabItem = null;
         ChromiumWebBrowser currentBrowser = null;
         int tabCount = 0;
+      
+        
         public Browser()
         {
             InitializeComponent();
         }
 
+        //Opens a new tab containing a browser.
         private void newtabMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TabItem newTab = new TabItem();
@@ -47,10 +40,9 @@ namespace OSINTBrowser
         }
 
 
-
+        //Tries to put name of the site on the tab **TODO - needs to be fixed as it shows massive urls still :D**
         private void FinishedLoadingWebpage(object sender, RoutedEventArgs e)
         {
-
             var sndr = sender as ChromiumWebBrowser;
             if (currentTabItem != null)
             {
@@ -60,12 +52,10 @@ namespace OSINTBrowser
                 currentTabItem.Header = removeHttps;
             }
             currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
-
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-
             if (currentBrowser.CanGoBack)
             {
                 currentBrowser.Back(); 
@@ -85,6 +75,7 @@ namespace OSINTBrowser
             currentBrowser.Reload();
         }
 
+        //Changes the selected tab and browser to the current tab and browser.
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (tabControl.SelectedItem != null)
@@ -99,7 +90,7 @@ namespace OSINTBrowser
         }
 
        
-
+        //Enter key event for txtAddressBar for url navigation
         private void txtAddressBar_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter)
@@ -108,7 +99,7 @@ namespace OSINTBrowser
             }
         }
 
-        //Turn this into a search bar on the browser - be able to select different search engines.
+        //Turn this into a search bar on the browser - be able to select different search engines. **TODO - add different search engines to select**
         private void Search()
         {
             {
@@ -121,15 +112,15 @@ namespace OSINTBrowser
         {
             currentBrowser.Load(txtAddressBar.Text);
             currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
-            
-
         }
 
+        //Changes the text within the txtAddressBar to show current url.
         private void CurrentBrowser_AddressChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             txtAddressBar.Text = currentBrowser.Address;
         }
 
+        //Search bar keydown on enter event.
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -156,7 +147,7 @@ namespace OSINTBrowser
             Search();
         }
 
-        //Working on screenshotting - currently crashes program!
+        //Full screenshot of the current display - goes to Capture class.
         private void screenshotMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Capture captureThis = new Capture();

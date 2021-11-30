@@ -52,6 +52,7 @@ namespace OSINTBrowser
                     string date = DateTime.Now.ToString();
                     sw.WriteLine("Case last accessed " + date, "/n");
                 }
+                Case.CaseFilePath = selectedFolder;
 
                 Browser bw = new Browser();
                 bw.Show();

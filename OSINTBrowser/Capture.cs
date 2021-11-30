@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows;
 using System.Windows.Forms;
-using System.IO;
 
 namespace OSINTBrowser
 {
@@ -49,13 +42,14 @@ namespace OSINTBrowser
 
             // Save the screenshot to the specified path that the user has chosen.
             //bmpScreenshot.Save("Screenshot.png", ImageFormat.Png);
-            SaveImage(bmpScreenshot);
+            SaveCapture(bmpScreenshot);
         }
 
-        private void SaveImage(Bitmap bmp)
+        //Save location of the capture.
+        private void SaveCapture(Bitmap bmp)
         {
             SaveFileDialog saveDlog = new SaveFileDialog();
-            saveDlog.InitialDirectory = @"C:\";
+            saveDlog.InitialDirectory = Case.CaseFilePath;
             saveDlog.FileName = "screenshot.png";
             saveDlog.Title = "Save Screenshot";
             saveDlog.Filter = "PNG File | *.png";

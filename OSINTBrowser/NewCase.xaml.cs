@@ -83,8 +83,12 @@ namespace OSINTBrowser
                 System.IO.Directory.CreateDirectory(pathString);
                 lblError.Content = "";
                 //New Case object.
-                Case newCase = new Case(name, user, creationDate, organisation, pathString);
-
+                // Case newCase = new Case(name, user, creationDate, organisation, pathString);
+                Case.CaseName = name;
+                Case.CaseUser = user;
+                Case.CaseOrganisationName = organisation;
+                Case.CaseCreationDate = creationDate;   
+                Case.CaseFilePath = folder;
                 //Creates a new log file and inputs the data from the newCase object.
                 string fileName = "Log.txt";
                 string filepathString = System.IO.Path.Combine(pathString, fileName);
@@ -97,8 +101,8 @@ namespace OSINTBrowser
                     {
                         string[] logLines =
                         {
-                            newCase.caseCreationDate, "Case Name: " + newCase.caseName, "Investigator Name: " + newCase.caseUser,
-                            "Organisation Name: " + newCase.caseOrganisationName
+                            Case.CaseCreationDate, "Case Name: " + Case.CaseName, "Investigator Name: " + Case.CaseUser,
+                            "Organisation Name: " + Case.CaseOrganisationName
                         };
                         foreach (string l in logLines)
                         {
