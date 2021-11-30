@@ -155,5 +155,12 @@ namespace OSINTBrowser
         {
             Search();
         }
+
+        //Working on screenshotting - currently crashes program!
+        private void screenshotMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Capture captureThis = new Capture();
+            captureThis.screenShot();
+        }
     }
 }

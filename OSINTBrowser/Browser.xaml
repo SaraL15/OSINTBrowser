@@ -23,6 +23,11 @@
             <MenuItem Header="File" ItemContainerStyle="{StaticResource wbSubMenuItem}">
                 <MenuItem x:Name="newtabMenuItem" Header="New Tab" Click="newtabMenuItem_Click"/>
             </MenuItem>
+            <MenuItem Header="Capture" ItemContainerStyle="{StaticResource wbSubMenuItem}">
+                <MenuItem x:Name="snipMenuItem" Header="Snip Screen"/>
+                <MenuItem x:Name="screenshotMenuItem" Header="Screen Shot" Click="screenshotMenuItem_Click"/>
+                <MenuItem x:Name="recordMenuItem" Header="Record"/>
+            </MenuItem>
         </Menu>
 
         <!--Window is split into three columns and three rows-->
