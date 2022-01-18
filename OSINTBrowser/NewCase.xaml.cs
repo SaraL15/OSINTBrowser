@@ -80,7 +80,7 @@ namespace OSINTBrowser
             }
             else
             {
-                System.IO.Directory.CreateDirectory(pathString);
+                Directory.CreateDirectory(pathString);
                 lblError.Content = "";
                 //New Case object.
                 // Case newCase = new Case(name, user, creationDate, organisation, pathString);
@@ -95,7 +95,7 @@ namespace OSINTBrowser
 
                 Console.WriteLine("Path to my file is {0}\n", pathString);
 
-                if (!System.IO.File.Exists(filepathString))
+                if (!File.Exists(filepathString))
                 {
                     using (StreamWriter sw = new StreamWriter(filepathString))
                     {
