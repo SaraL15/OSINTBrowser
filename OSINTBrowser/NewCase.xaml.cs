@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 
 namespace OSINTBrowser
@@ -63,7 +52,6 @@ namespace OSINTBrowser
             //Gets the input from the form and creates a new folder.
 
             string name = txtSubject.Text;
-            string user = txtUser.Text;
             string organisation = txtOrganisation.Text;
             string creationDate = DateTime.Now.ToString("yyyy_MM_dd");
             string folder = txtFolderPath.Text;
@@ -83,9 +71,9 @@ namespace OSINTBrowser
                 Directory.CreateDirectory(pathString);
                 lblError.Content = "";
                 //New Case object.
-                // Case newCase = new Case(name, user, creationDate, organisation, pathString);
+                //Case newCase = new Case(name, user, creationDate, organisation, pathString);
                 Case.CaseName = name;
-                Case.CaseUser = user;
+                Case.CaseUser = System.Environment.UserName;
                 Case.CaseOrganisationName = organisation;
                 Case.CaseCreationDate = creationDate;   
                 Case.CaseFilePath = folder;

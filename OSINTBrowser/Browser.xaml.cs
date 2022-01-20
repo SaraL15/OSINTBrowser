@@ -150,8 +150,21 @@ namespace OSINTBrowser
         //Full screenshot of the current display - goes to Capture class.
         private void screenshotMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Capture captureThis = new Capture();
-            captureThis.screenShot();
+            Capture captureThis = new Screenshot();
+            captureThis.screenCapture();
+        }
+
+        private void snipMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Capture captureThis = new Screensnip();
+            captureThis.screenCapture();
+        }
+
+        private void recordMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Capture captureThis = new Record();
+            captureThis.screenCapture();
+            
         }
     }
 }

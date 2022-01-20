@@ -86,6 +86,9 @@
     <Compile Include="Browser.xaml.cs">
       <DependentUpon>Browser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Canvas.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Capture.cs" />
     <Compile Include="Case.cs" />
     <Compile Include="DbConnect.cs" />

@@ -32,6 +32,7 @@ namespace OSINTBrowser
             NewCase makeNewCase = new NewCase();
             //this.Hide();
             makeNewCase.Show();
+            this.Close();
         }
 
         private void btnOpenCase_Click(object sender, RoutedEventArgs e)
@@ -53,14 +54,22 @@ namespace OSINTBrowser
                     sw.WriteLine("Case last accessed " + date, "/n");
                 }
                 Case.CaseFilePath = selectedFolder;
+                getCaseDetails(selectedFolder);
 
                 Browser bw = new Browser();
                 bw.Show();
+                this.Close();
             }
             else
             {
                 return;
             }
+        }
+
+        private void getCaseDetails(string mySelectedFolder)
+        {
+            string lastFolderName = System.IO.Path.GetFileName(mySelectedFolder);
+            Case.caseUser = System.Environment.UserName;
         }
     }
 }
