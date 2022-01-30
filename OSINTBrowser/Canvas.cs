@@ -4,18 +4,18 @@ using System.Windows.Forms;
 
 namespace OSINTBrowser
 {
+    //Canvas used on top of web browser for Screen Snipping.
     public class Canvas : Form
     {
-        Point startPos;      // mouse-down position
-        Point currentPos;    // current mouse position
+        Point start;      // mouse-down position
+        Point current;    // current mouse position
         bool drawing;
         
-
         public Canvas()
         {
             this.TopMost = true;
             this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.White;
             this.Opacity = 0.75;
             this.Cursor = Cursors.Cross;
@@ -25,48 +25,47 @@ namespace OSINTBrowser
             this.Paint += Canvas_Paint;
             this.KeyDown += Canvas_KeyDown;
             this.DoubleBuffered = true;
-
         }
 
         private void Canvas_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
         }
 
-        public Rectangle GetRectangle()
-        {
-            return new Rectangle(
-                Math.Min(startPos.X, currentPos.X),
-                Math.Min(startPos.Y, currentPos.Y),
-                Math.Abs(startPos.X - currentPos.X),
-                Math.Abs(startPos.Y - currentPos.Y));
-        }
-
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
-            currentPos = startPos = e.Location;
+            current = start = e.Location;
             drawing = true;
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            currentPos = e.Location;
+            current = e.Location;
             if (drawing) this.Invalidate();
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
             if (drawing) e.Graphics.DrawRectangle(Pens.Red, GetRectangle());
+        }
+
+        public Rectangle GetRectangle()
+        {
+            return new Rectangle(
+                Math.Min(start.X, current.X),
+                Math.Min(start.Y, current.Y),
+                Math.Abs(start.X - current.X),
+                Math.Abs(start.Y - current.Y));
         }
 
         //private void InitializeComponent()

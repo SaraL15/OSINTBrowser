@@ -6,20 +6,18 @@
         xmlns:local="clr-namespace:OSINTBrowser"
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="603.6" WindowStartupLocation="CenterScreen" Cursor="Arrow">
-    <Grid Background="#FF8D98E8" Margin="0,0,-6.4,0">
+        Title="OSIB" Height="450" Width="600" WindowStartupLocation="CenterScreen" Cursor="Arrow" ResizeMode="CanMinimize" SizeToContent="Width">
+    <Grid Background="#a9a9b0" Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnOpenCase" Content="Open Existing Case" HorizontalAlignment="Left" Margin="20,179,0,0" VerticalAlignment="Top" Width="180" BorderBrush="#FF333DA8" FontFamily="Yu Gothic Medium" FontSize="16" BorderThickness="2,2,2,1" Cursor="Hand" Height="61" Grid.Column="1" Click="btnOpenCase_Click"/>
-        <Button x:Name="btnNewCase" Content="Create New Case" HorizontalAlignment="Left" Margin="80,179,0,0" VerticalAlignment="Top" Width="180" BorderBrush="#FF333DA8" FontFamily="Yu Gothic Medium" FontSize="16" BorderThickness="2,2,2,1" Cursor="Hand" Height="61" Click="btnNewCase_Click"/>
-        <Label x:Name="lblTitle" Content="Open Source Investigation Browser" Margin="10,50,0,0" VerticalAlignment="Top" Background="#FFDDE9F3" FontFamily="Tahoma" FontSize="34" Opacity="0.9" BorderBrush="#FF5574F3" BorderThickness="3" Height="60" Width="580" Grid.ColumnSpan="2">
+        <Button x:Name="btnOpenCase" Content="Open Existing Case" HorizontalAlignment="Right" Margin="0,242,85,0" VerticalAlignment="Top" Width="180" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="16" BorderThickness="2" Cursor="Hand" Height="61" Grid.Column="1" Click="btnOpenCase_Click"/>
+        <Button x:Name="btnNewCase" Content="Create New Case" HorizontalAlignment="Left" Margin="85,242,0,0" VerticalAlignment="Top" Width="180" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="16" BorderThickness="2" Cursor="Hand" Height="61" Click="btnNewCase_Click"/>
+        <Label x:Name="lblTitle" Content="Open Source Investigation Browser" Margin="25,69,25,0" VerticalAlignment="Top" FontFamily="Leelawadee UI bold" FontSize="32" BorderBrush="#1d2428" Background="#dadae3" BorderThickness="2" Height="60" Grid.ColumnSpan="2">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-
     </Grid>
 </Window>
