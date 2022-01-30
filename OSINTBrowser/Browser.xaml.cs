@@ -22,7 +22,7 @@ namespace OSINTBrowser
         }
 
         //Opens a new tab containing a browser.
-        private void newtabMenuItem_Click(object sender, RoutedEventArgs e)
+        private void btnNewTab_Click(object sender, RoutedEventArgs e)
         {
             TabItem newTab = new TabItem();
             ChromiumWebBrowser browser = new ChromiumWebBrowser();
@@ -148,10 +148,41 @@ namespace OSINTBrowser
         }
 
         //Full screenshot of the current display - goes to Capture class.
-        private void screenshotMenuItem_Click(object sender, RoutedEventArgs e)
+        //private void screenshotMenuItem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Capture captureThis = new Screenshot();
+
+        //    captureThis.screenCapture();
+        //}
+
+        //private void snipMenuItem_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    Capture captureThis = new Screensnip();
+        //    captureThis.captureType = "Screen Snip";
+        //    captureThis.screenCapture();
+        //}
+
+        //private void recordMenuItem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Capture captureThis = new Record();
+        //    captureThis.captureType = "Recording";
+        //    captureThis.screenCapture();
+
+        //}
+
+        private void btnScreenshot_Click(object sender, RoutedEventArgs e)
         {
-            Capture captureThis = new Capture();
-            captureThis.screenShot();
+            Capture captureThis = new Screenshot();
+            captureThis.screenCapture();
+        }
+
+
+
+        private void btnSnip_Click(object sender, RoutedEventArgs e)
+        {
+            Capture captureThisSnip = new Screensnip();
+            captureThisSnip.captureType = "Screen Snip";
+            captureThisSnip.screenCapture();
         }
     }
 }

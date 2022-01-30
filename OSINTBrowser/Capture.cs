@@ -1,40 +1,82 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace OSINTBrowser
 {
-    public class Capture
+    /*Capture is an abstract class. Screenshot, Screensnip and Video are inherited from it.
+     Capture contains methods to log and save captures to selected locations **Perhaps I will change so there is no option for location and goes into case file directly.**
+     Also saves filepath into database.
+    */
+    public abstract class Capture
     {
-        private string CaptureName;
-        private string CaptureType;
+        public string captureType { get; set; }
+        public CaptureWindow cpw = new CaptureWindow();
 
-        public string captureName
-        {
-            get { return CaptureName; }
-            set { CaptureName = value; }
+        public abstract void screenCapture();
+
+        public void logCapture(string captureDate, string captureName, string captureDesc, string captureSource)
+        {         
+            using (StreamWriter sw = new StreamWriter(Path.Combine(Case.CaseFilePath, "Log.txt"), true))
+            {
+                sw.WriteLine(captureDate + ": " + captureSource + " " + captureDesc + " " + captureName, "/n");
+            }
         }
 
-        public string captureType
+        public void saveCapture(Image bmp, string description, string source, bool? check)
         {
-            get { return CaptureType; }
-            set { CaptureType = value; }
-        }
+            DateTime dateTime = DateTime.Now.ToUniversalTime();
+            string captureDate = dateTime.ToString("yyMMddHHmmss");
+            string captureName = "capture" + captureDate;
+            //string saveCaptureName = "";
+           
+            SaveFileDialog saveDlog = new SaveFileDialog();
+            saveDlog.InitialDirectory = Case.CaseFilePath;
+            saveDlog.FileName = captureName;
+            
+            string captureSaveLocation = saveDlog.InitialDirectory;
+            saveDlog.Title = "Save Capture";
+            saveDlog.Filter = "PNG File | *.png";
+            ImageFormat format = ImageFormat.Png;
 
-        public Capture() { }
-        public Capture(string captureName, string capturetype)
-        { 
-            CaptureName = captureName; 
-            CaptureType = capturetype; 
-        }
 
-       
-        public void screenShot()
+            //bmp.Save(saveDlog.FileName);
+            //logCapture(captureDate, captureName, description, source);
+            //MessageBox.Show("Capture Saved in Case Folder");
+
+            if (saveDlog.ShowDialog() == DialogResult.OK)
+            {
+                captureName = saveDlog.FileName;
+                bmp.Save(saveDlog.FileName);
+
+                //saveCaptureName = new DirectoryInfo(captureName).Name;
+                logCapture(captureDate, captureName, description, source);
+
+            }
+
+            //Open database connection and save
+            DbConnect dbc = new DbConnect();
+            dbc.open_connection();
+            dbc.captureToDatabase(dateTime, description, source, captureSaveLocation, check);
+           
+            
+            
+        }
+    }
+
+    //Take a Screenshot
+    public class Screenshot : Capture
+    { 
+     
+        //Screenshots - currently only the primary display.
+        public override void screenCapture()
         {
-            string captureType = "Screenshot";
+            captureType = "Screenshot";
             //Create a new bitmap.
             var bmpScreenshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, PixelFormat.Format32bppArgb);
 
@@ -44,48 +86,77 @@ namespace OSINTBrowser
             // Take the screenshot from the upper left corner to the right bottom corner.
             gfxScreenshot.CopyFromScreen(Screen.PrimaryScreen.Bounds.X, Screen.PrimaryScreen.Bounds.Y, 0, 0, Screen.PrimaryScreen.Bounds.Size,
                                         CopyPixelOperation.SourceCopy);
-            SaveCapture(bmpScreenshot, captureType);
+
+            CaptureWindow cpw = new CaptureWindow();
+        //saveCapture(bmpScreenshot);
+            cpw.showScreenshot(bmpScreenshot, 1);
+            cpw.Topmost = true;
+            cpw.Show();
+
+
+            //saveCapture(bmpScreenshot, captureType);
+
+        }   
+
+    
+    }
+
+    //Take a snip
+    public class Screensnip : Capture
+    {
+        private Rectangle canvasBounds = Screen.GetBounds(Point.Empty);
+        public override void screenCapture()
+        {
+            //string desc = "test";
+            //string source = "test1";
+            //bool check = false;
+
+            setCanvas();
+            Console.WriteLine(canvasBounds.Width + " " + canvasBounds.Height);
+            var bmpScreenshot = new Bitmap(canvasBounds.Width, canvasBounds.Height, PixelFormat.Format32bppArgb);            
+            var gfxScreenshot = Graphics.FromImage(bmpScreenshot);
+            gfxScreenshot.CopyFromScreen(canvasBounds.Left, canvasBounds.Top, 0, 0, bmpScreenshot.Size);
             
+            gfxScreenshot.Save();
+            //saveCapture(bmpScreenshot, desc, source, check);
+
+            cpw.showScreenshot(bmpScreenshot, 2);
+            cpw.Topmost = true;
+            cpw.Show();
+
+
+
+
+
+            //Bitmap snipped = new Bitmap(bmpScreenshot);
+            //Rectangle snippedRect = new Rectangle(0, 0, 100, 100);
+            //Bitmap snippedBitmap = snipped.Clone(snippedRect, snipped.PixelFormat);
+
+
+
         }
 
-        //Save location of the capture.
-        //**TODO** file name will be casename_date_capturetypeX
-        private void SaveCapture(Bitmap bmp, string captureType)
+        //Sets the 'overlay' canvas for the screensnip
+        public void setCanvas()
         {
-            DateTime dateTime = DateTime.Now.ToUniversalTime();
-            string captureDate = DateTime.Now.ToString("yyMMddHHmmss");
-            string captureName = "";
-            string captureLocation = "";
-            //string splitpath = new DirectoryInfo(Case.CaseFilePath).Name;
-            //splitpath = splitpath.Substring(12);
-            
-            //string saveCaptureName = captureDate + "_" + splitpath + "_" + captureType;
-            SaveFileDialog saveDlog = new SaveFileDialog();
-            saveDlog.InitialDirectory = Case.CaseFilePath;
-            saveDlog.FileName = "screenshot.png";
-            captureName = saveDlog.FileName;
-            captureLocation = saveDlog.InitialDirectory;
-            saveDlog.Title = "Save Capture";
-            saveDlog.Filter = "PNG File | *.png";
-            ImageFormat format = ImageFormat.Png;
-            if (saveDlog.ShowDialog() == DialogResult.OK)
-            {
-                bmp.Save(saveDlog.FileName);
-                //logCapture(saveCaptureName);
-
+            using (Canvas canvas = new Canvas())
+            {            
+                if (canvas.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    canvasBounds = canvas.GetRectangle();
+                }
             }
 
-            DbConnect dbc = new DbConnect();
-            dbc.open_connection();
-            dbc.save_to_database(dateTime, captureName, captureLocation);
-        }
-
-        private void logCapture(string captureName)
-        {
-            using (StreamWriter sw = new StreamWriter(System.IO.Path.Combine(Case.CaseFilePath, "Log.txt"), true))
-            {
-                sw.WriteLine("Capture taken: " + captureName, "/n");
-            }
         }
     }
+
+    public class Record : Capture
+    {
+        public override void screenCapture()
+        {
+            captureType = "Recording";
+            
+        }
+    }
+
 }

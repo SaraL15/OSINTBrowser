@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace OSINTBrowser
 {
@@ -30,8 +19,8 @@ namespace OSINTBrowser
         private void btnNewCase_Click(object sender, RoutedEventArgs e)
         {
             NewCase makeNewCase = new NewCase();
-            //this.Hide();
             makeNewCase.Show();
+            this.Close();
         }
 
         private void btnOpenCase_Click(object sender, RoutedEventArgs e)
@@ -47,20 +36,29 @@ namespace OSINTBrowser
                 //selectedFolder will hold the folder path.
                 Console.WriteLine("Sucessfully Opened " + folder.SelectedPath);
                 selectedFolder = folder.SelectedPath;
-                using (StreamWriter sw = new StreamWriter(System.IO.Path.Combine(selectedFolder, "Log.txt"), true))
+                using (StreamWriter sw = new StreamWriter(Path.Combine(selectedFolder, "Log.txt"), true))
                 {
                     string date = DateTime.Now.ToString();
                     sw.WriteLine("Case last accessed " + date, "/n");
-                }
-                Case.CaseFilePath = selectedFolder;
-
+                }            
+                getCaseDetails(selectedFolder);
                 Browser bw = new Browser();
                 bw.Show();
+                this.Close();
             }
             else
             {
                 return;
             }
+        }
+
+        private void getCaseDetails(string mySelectedFolder)
+        {
+            Case.CaseFilePath = mySelectedFolder;
+            DbConnect dbc = new DbConnect();
+            string lastFolderName = Path.GetFileName(mySelectedFolder);
+            string folderName = lastFolderName.Substring(11);
+            dbc.getTheCase(folderName);
         }
     }
 }

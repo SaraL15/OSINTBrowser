@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:control ="clr-namespace:OSINTBrowser"
         xmlns:local="clr-namespace:OSINTBrowser" xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
         Title="OSIB" Height="450" Width="800" Background="{DynamicResource wbBackground}" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized">
@@ -18,16 +19,12 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+
         <!--Menu bar and options -->
         <Menu Height="25" VerticalAlignment="Center" Background="{DynamicResource wbSecBackground}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">
-            <MenuItem Header="File" ItemContainerStyle="{StaticResource wbSubMenuItem}">
-                <MenuItem x:Name="newtabMenuItem" Header="New Tab" Click="newtabMenuItem_Click"/>
-            </MenuItem>
-            <MenuItem Header="Capture" ItemContainerStyle="{StaticResource wbSubMenuItem}">
-                <MenuItem x:Name="snipMenuItem" Header="Snip Screen"/>
-                <MenuItem x:Name="screenshotMenuItem" Header="Screen Shot" Click="screenshotMenuItem_Click"/>
-                <MenuItem x:Name="recordMenuItem" Header="Record"/>
-            </MenuItem>
+            <Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>
+            <Button x:Name="btnScreenshot" Content="Screenshot" Style="{StaticResource wbMenuButtons}" Click="btnScreenshot_Click"></Button>
+            <Button x:Name="btnSnip" Content="Snip" Style="{StaticResource wbMenuButtons}" Click="btnSnip_Click"/>
         </Menu>
 
         <!--Window is split into three columns and three rows-->
@@ -40,31 +37,45 @@
 
             <!--Webbrowser buttons, URL and search text boxes-->
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnBack" Content="Back" Padding="5,0" Click="btnBack_Click" Cursor="Hand"/>
-                <Button x:Name="btnFwd" Content="Forward" Padding="5,0" Click="btnFwd_Click" Cursor="Hand"/>
-                <Button x:Name="btnRefresh" Content="Refresh" Padding="5,0" Click="btnRefresh_Click" Cursor="Hand"/>
+                <Button x:Name="btnBack" Content="Back" Padding="5,0" Click="btnBack_Click" Style="{DynamicResource wbButtons}">
+                </Button>
+                <Button x:Name="btnFwd" Content="Forward" Padding="5,0" Click="btnFwd_Click" Style="{DynamicResource wbButtons}"/>
+                <Button x:Name="btnRefresh" Content="Refresh" Padding="5,0" Click="btnRefresh_Click" Style="{DynamicResource wbButtons}"/>
             </StackPanel>
 
 
             <TextBox x:Name="txtAddressBar" Grid.Column="1" Height="26" VerticalAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14"/>
             <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" VerticalAlignment="Center"  Padding="10,0" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="40,0,20,0" FontSize="14"/>
-            <Button x:Name="btnGo" Grid.Column="2" Content="Go" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click"/>
-            <Button x:Name="btnSearch" Grid.Column="2" Content="Search" HorizontalAlignment="Right" Height="26" Margin="160,0,0,0" VerticalAlignment="Center" Width="40" Click="btnSearch_Click"/>
-
+            <Button x:Name="btnGo" Grid.Column="2" Content="Go" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click" Style="{DynamicResource wbButtons}"/>
+            <Button x:Name="btnSearch" Grid.Column="2" Content="Search" HorizontalAlignment="Right" Height="26" Margin="160,0,0,0" VerticalAlignment="Center" Width="40" Click="btnSearch_Click" Style="{DynamicResource wbButtons}"/>
+            
         </Grid>
 
         <!--TabItems-->
-        <TabControl x:Name="tabControl" Grid.Row="2" SelectionChanged="tabControl_SelectionChanged" Padding="0" Grid.ColumnSpan="3">
+        <TabControl x:Name="tabControl" Grid.Row="2" SelectionChanged="tabControl_SelectionChanged" Padding="5" Grid.ColumnSpan="3">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Grid>
+                                    <Border Name="Border" Background="#dadae3" Margin="2,2,-8,0" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="5">
+                                        <ContentPresenter x:Name="ContentSite" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,12,2" RecognizesAccessKey="True"/>
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                     <Setter Property="Header" Value="{Binding TabHeader}" />
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" />
-                                    <Button x:Name="btnCloseTab" Content="X" Click="btnCloseTab_Click" Padding="1" Margin="1,0"
-                                    Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}"/>
+                                    
+                                        <TextBlock Text="{Binding}" />
+                                        <Button x:Name="btnCloseTab" Content="X" Click="btnCloseTab_Click" Padding="0" Margin="15,0" HorizontalAlignment="Right" Style="{DynamicResource wbButtons}"
+                                        Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}"/>
+                                    
                                 </StackPanel>
                             </DataTemplate>
                         </Setter.Value>
@@ -73,8 +84,8 @@
             </TabControl.Resources>
 
             <!--ChromiumWebBrowser inside of a Tabitem-->
-            <TabItem Header="OSIB" BorderThickness="0" Padding="2">
-                <cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com" Padding="0" />
+            <TabItem Header="OSIB" BorderBrush="Black" BorderThickness="2,2,2,2" Padding="2" Width="100">
+                <cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com" Padding="5" />
             </TabItem>
         </TabControl>
     </Grid>

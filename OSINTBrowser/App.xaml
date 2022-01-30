@@ -5,14 +5,14 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <SolidColorBrush x:Key="wbBackground" Color="#2C2E43"/>
-        <SolidColorBrush x:Key="wbSecBackground" Color="#595260"/>
-        <SolidColorBrush x:Key="wbLight" Color="#B2B1B9"/>
-        <SolidColorBrush x:Key="wbYellow" Color="#FFD523"/>
+        <SolidColorBrush x:Key="wbSecBackground" Color="#a9a9b0"/>
+        <SolidColorBrush x:Key="wbLight" Color="#dadae3"/>
+        <SolidColorBrush x:Key="wbDark" Color="#2C2E43"/>
 
         <Style x:Key="wbMenuItem" TargetType="MenuItem">
             <Setter Property="Height" Value="25"/>
             <Setter Property="Padding" Value="5,0"/>
-            <Setter Property="Foreground" Value="{StaticResource wbYellow}"/>
+            <Setter Property="Foreground" Value="{StaticResource wbDark}"/>
             <Setter Property="Background" Value="{StaticResource wbSecBackground}"/>
 
         </Style>
@@ -20,8 +20,44 @@
         <Style x:Key="wbSubMenuItem" TargetType="MenuItem">
             <Setter Property="Height" Value="25"/>
             <Setter Property="Padding" Value="5,0"/>
-            <Setter Property="Foreground" Value="{StaticResource wbYellow}"/>
+            <Setter Property="Foreground" Value="{StaticResource wbDark}"/>
             <Setter Property="Background" Value="{StaticResource wbSecBackground}"/>
+        </Style>
+
+        <Style x:Key="wbMenuButtons" TargetType="Button">
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="FontFamily" Value="Leelawadee UI light"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="3" BorderBrush="Black" BorderThickness="2" Padding="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="wbButtons" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource wbLight}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource wbDark}"/>
+            <Setter Property="FontFamily" Value="Leelawadee UI light"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="#dadae3"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="3" Background="#2C2E43" BorderThickness="2" Padding="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         
     </Application.Resources>

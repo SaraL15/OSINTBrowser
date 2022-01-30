@@ -5,22 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OSINTBrowser"
         mc:Ignorable="d"
-        Title="OSIB" Height="376.4" Width="623.2" WindowStartupLocation="CenterScreen">
-    <Grid Background="#FF8D98E8" Margin="0,0,-6.2,0.4">
-        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="22" Margin="160,99,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtUser" HorizontalAlignment="Left" Height="20" Margin="160,141,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtOrganisation" HorizontalAlignment="Left" Height="20" Margin="160,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtOperation" HorizontalAlignment="Left" Height="20" Margin="160,220,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="320,257,0,0" VerticalAlignment="Top" Width="90" Height="44" Click="btnCreate_Click" Cursor="Hand"/>
-        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="470,257,0,0" VerticalAlignment="Top" Width="90" Height="44" Click="btnCancel_Click_1" Cursor="Hand"/>
-        <Button x:Name="btnFolderPath" Content="Save Location" HorizontalAlignment="Left" Margin="379,90,0,0" VerticalAlignment="Top" Width="115" Height="50" Click="btnFolderPath_Click" RenderTransformOrigin="-0.106,0.604" Cursor="Hand"/>
-        <TextBox x:Name="txtFolderPath" HorizontalAlignment="Left" Height="23" Margin="320,160,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
-        <Label x:Name="lblError" Content="" HorizontalAlignment="Left" Margin="320,199,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblTitle" Content="Create New Case" HorizontalAlignment="Left" Margin="45,36,0,0" VerticalAlignment="Top" FontFamily="Leelawadee UI" FontSize="22" BorderBrush="#FF5574F3" Background="#FFDDE9F3"/>
-        <Label x:Name="lblSubject" Content="Subject Name:" HorizontalAlignment="Left" Margin="72,97,0,0" VerticalAlignment="Top" Height="26" Width="88"/>
-        <Label x:Name="lblInvestName" Content="Investigator Name:" HorizontalAlignment="Left" Margin="49,137,0,0" VerticalAlignment="Top" Height="26" Width="110"/>
-        <Label x:Name="lblOrganisation" Content="Organisation Name:" HorizontalAlignment="Left" Margin="43,176,0,0" VerticalAlignment="Top" Height="26" Width="115"/>
-        <Label x:Name="lblOperation" Content="Operation Name:" HorizontalAlignment="Left" Margin="58,217,0,0" VerticalAlignment="Top" Height="26" Width="115"/>
+        Title="OSIB" Height="350" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SizeToContent="Manual">
+    <Grid Background="#a9a9b0" Margin="0,0,0,0" Height="350" Width="600">
+        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="22" Margin="42,128,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
+        <TextBox x:Name="txtDesc" HorizontalAlignment="Left" MaxHeight="170" Margin="42,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="247" AcceptsReturn="True"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Height="78"/>
+        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="339,239,0,0" VerticalAlignment="Top" Width="90" Height="44" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="14" Click="btnCreate_Click" Cursor="Hand"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="470,239,0,0" VerticalAlignment="Top" Width="90" Height="44" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI light" FontSize="14" Click="btnCancel_Click_1" Cursor="Hand">
+        </Button>
+        <Button x:Name="btnFolderPath" Content="Save Location" HorizontalAlignment="Left" Margin="401,64,0,0" VerticalAlignment="Top" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="12" Width="90" Height="44" Click="btnFolderPath_Click" RenderTransformOrigin="-0.106,0.604" Cursor="Hand"/>
+        <TextBox x:Name="txtFolderPath" HorizontalAlignment="Left" Height="23" Margin="321,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+        <Label x:Name="lblError" Content="" HorizontalAlignment="Left" Margin="350,154,0,0" VerticalAlignment="Top" FontFamily="Leelawadee UI bold"/>
+        <Label x:Name="lblTitle" Content="Create New Case" HorizontalAlignment="Left" Margin="30,27,0,0" VerticalAlignment="Top" FontFamily="Leelawadee UI bold" FontSize="30"/>
+        <Label x:Name="lblSubject" Content="Subject Name:" HorizontalAlignment="Left" Margin="40,106,0,0" VerticalAlignment="Top" Height="31" Width="95" FontFamily="Leelawadee UI bold"/>
+        <Label x:Name="lblInvestName" Content="Case Description:" HorizontalAlignment="Left" Margin="40,182,0,0" VerticalAlignment="Top" Height="31" Width="110" FontFamily="Leelawadee UI bold"/>
+        <Label x:Name="lblTooltipOne" Content="?" ToolTip="Enter subject name or alais. This will be your case name" Cursor="Help" Margin="190,104,385,222">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="lblTooltipTwo" Content="?" ToolTip="Brief description of why you will be preforming OSINT on the subject, e.g 'Find out of subject is known to another person of interest.'" Cursor="Help" Margin="275,182,300,145">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
 
     </Grid>
 </Window>
