@@ -13,14 +13,17 @@ namespace OSINTBrowser
     {
         Bitmap saveThisImage = null;
         int captureType = 0;
-        public CaptureWindow()
+        public CaptureWindow(string source)
         {
+            
             InitializeComponent();
+            txtSource.Text = source;
+            txtSource.IsReadOnly = true;
         }
 
   
         public void showScreenshot(Bitmap image, int type)
-        {
+        {          
             AddToPreview(image);
             captureType = type;
         }
@@ -79,6 +82,14 @@ namespace OSINTBrowser
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Grid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }

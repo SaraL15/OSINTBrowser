@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using CefSharp;
 using CefSharp.Wpf;
+using Xceed.Wpf.Toolkit;
 
 namespace OSINTBrowser
 {
@@ -14,8 +15,12 @@ namespace OSINTBrowser
         TabItem currentTabItem = null;
         ChromiumWebBrowser currentBrowser = null;
         int tabCount = 0;
-      
-        
+        public string currentUrl { get { return txtAddressBar.Text; } }
+        string queryUrl = "https://duckduckgo.com/?q=";
+
+
+
+
         public Browser()
         {
             InitializeComponent();
@@ -103,7 +108,7 @@ namespace OSINTBrowser
         private void Search()
         {
             {
-                currentBrowser.Address = "https://www.google.com/search?q=" + txtSearchBox.Text;
+                currentBrowser.Address = queryUrl + txtSearchBox.Text;
                 currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
             }
         }
@@ -112,6 +117,7 @@ namespace OSINTBrowser
         {
             currentBrowser.Load(txtAddressBar.Text);
             currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+            
         }
 
         //Changes the text within the txtAddressBar to show current url.
@@ -173,7 +179,7 @@ namespace OSINTBrowser
         private void btnScreenshot_Click(object sender, RoutedEventArgs e)
         {
             Capture captureThis = new Screenshot();
-            captureThis.screenCapture();
+            captureThis.screenCapture(currentUrl);
         }
 
 
@@ -182,7 +188,42 @@ namespace OSINTBrowser
         {
             Capture captureThisSnip = new Screensnip();
             captureThisSnip.captureType = "Screen Snip";
-            captureThisSnip.screenCapture();
+            captureThisSnip.screenCapture(currentUrl);
+        }
+
+        private void ChangeSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var selectSearch = sender as FrameworkElement;
+            if (selectSearch != null)
+            {
+               // ChangeSearch.ContextMenu.IsOpen = true;
+            }
+        }
+        
+        //Google
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            queryUrl = "https://www.google.com/search?q=";
+        }
+
+        //Bing
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            queryUrl = "https://www.bing.com/search?q=";     
+        }
+
+        //DuckDuckGo
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            //Probably set as a default rather than google.
+            queryUrl = "https://duckduckgo.com/?q=";
+        }
+
+        //Yandex
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            //Russian but has a good image search.
+            queryUrl = "https://yandex.com/search/?text=";
         }
     }
 }

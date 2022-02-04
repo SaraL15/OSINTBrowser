@@ -28,13 +28,10 @@ namespace OSINTBrowser
             cnn.Close();
         }
 
-        public void captureToDatabase(DateTime captureDate, string desc, string source, string captureLocation, bool? check)
+        public void captureToDatabase(DateTime captureDate, string desc, string source, string captureLocation, bool? check, byte[] hash)
         {
             int caseid = Case.caseID;
             int userid = Case.userID;
-            //string evidescription = "This is a test of a description for a screenshot";
-            //string source = "https://www.sourcelinktest.com/profilename";
-            var hashOfFile = 76543;
 
             SqlCommand cmd;
             //SqlDataAdapter adapter = new SqlDataAdapter();
@@ -52,7 +49,7 @@ namespace OSINTBrowser
                 cmd.Parameters.AddWithValue("@captureDate", captureDate);
                 cmd.Parameters.AddWithValue("sourceLink", source);
                 cmd.Parameters.Add("@filepath", SqlDbType.VarBinary).Value = filepath;
-                cmd.Parameters.AddWithValue("@fileHash", hashOfFile);
+                cmd.Parameters.Add("@fileHash", SqlDbType.VarBinary).Value = hash;
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }

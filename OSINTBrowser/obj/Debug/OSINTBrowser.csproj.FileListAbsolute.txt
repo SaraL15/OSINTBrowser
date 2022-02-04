@@ -107,13 +107,6 @@ C:\Users\saral\source\repos\New folder\OSINTBrowser\OSINTBrowser\obj\Debug\OSINT
 C:\Users\saral\source\repos\New folder\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.CopyComplete
 C:\Users\saral\source\repos\New folder\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.exe
 C:\Users\saral\source\repos\New folder\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.pdb
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.SuggestedBindingRedirects.cache
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\Browser.g.cs
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\MainWindow.g.cs
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\NewCase.g.cs
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\App.g.cs
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser_MarkupCompile.cache
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser_MarkupCompile.lref
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.Runtime.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.Runtime.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.Runtime.xml
@@ -198,14 +191,44 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\OSINTBrowser.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\SharpAvi.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\System.Drawing.Common.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\Xceed.Wpf.AvalonDock.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\Xceed.Wpf.Toolkit.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.xml
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\SharpAvi.xml
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\System.Drawing.Common.xml
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\cs-CZ\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\ja-JP\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.SuggestedBindingRedirects.cache
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\Browser.g.cs
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\CaptureWindow.g.cs
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\MainWindow.g.cs
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\NewCase.g.cs
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\App.g.cs
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser_MarkupCompile.cache
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser_MarkupCompile.lref
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\App.baml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\Browser.baml
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\CaptureWindow.baml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\MainWindow.baml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\NewCase.baml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.g.resources
@@ -215,7 +238,4 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csp
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.CopyComplete
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.exe
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.pdb
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\CaptureWindow.g.cs
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\CaptureWindow.baml
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\System.Drawing.Common.dll
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\System.Drawing.Common.xml
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.AssemblyReference.cache
