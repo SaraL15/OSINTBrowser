@@ -42,9 +42,7 @@ namespace OSINTBrowser
                     sw.WriteLine("Case last accessed " + date, "/n");
                 }            
                 getCaseDetails(selectedFolder);
-                Browser bw = new Browser();
-                bw.Show();
-                this.Close();
+                
             }
             else
             {
@@ -54,11 +52,27 @@ namespace OSINTBrowser
 
         private void getCaseDetails(string mySelectedFolder)
         {
-            Case.CaseFilePath = mySelectedFolder;
-            DbConnect dbc = new DbConnect();
-            string lastFolderName = Path.GetFileName(mySelectedFolder);
-            string folderName = lastFolderName.Substring(11);
-            dbc.getTheCase(folderName);
+            if (mySelectedFolder == "")
+            {
+                return ;
+            }
+            else
+            {
+                Case.CaseFilePath = mySelectedFolder;
+                DbConnect dbc = new DbConnect();
+                string lastFolderName = Path.GetFileName(mySelectedFolder);
+                string folderName = lastFolderName.Substring(11);
+                dbc.getTheCase(folderName);
+                openBrowser();
+            }
         }
+
+        private void openBrowser()
+        {
+            Browser bw = new Browser();
+            bw.Show();
+            this.Close();
+        }
+        
     }
 }

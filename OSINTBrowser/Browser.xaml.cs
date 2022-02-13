@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CefSharp;
@@ -42,6 +44,24 @@ namespace OSINTBrowser
             currentBrowser = browser;
             currentTabItem = newTab;
             browser.Loaded += FinishedLoadingWebpage;
+        }
+
+        public void htmlTab(string resultHtml)
+        {
+                     TabItem newTab = new TabItem();
+            ChromiumWebBrowser browser = new ChromiumWebBrowser();
+            tabControl.Items.Add(newTab);
+            tabCount++;
+
+            newTab.Content = browser;
+            browser.Address = "https://www.google.com";
+
+            newTab.Header = "New Tab";
+
+            currentBrowser = browser;
+            currentTabItem = newTab;
+            browser.Loaded += FinishedLoadingWebpage;
+
         }
 
 
@@ -110,6 +130,12 @@ namespace OSINTBrowser
             {
                 currentBrowser.Address = queryUrl + txtSearchBox.Text;
                 currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+                string folder = Case.CaseFilePath;
+                using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+                {
+                    string date = DateTime.Now.ToString();
+                    sw.WriteLine(date + ": Search Term: " + txtSearchBox.Text + " " + queryUrl, "/n");
+                }
             }
         }
 
@@ -117,7 +143,14 @@ namespace OSINTBrowser
         {
             currentBrowser.Load(txtAddressBar.Text);
             currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
-            
+            string folder = Case.CaseFilePath;
+            using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+            {
+                string date = DateTime.Now.ToString();
+                sw.WriteLine(date + ": Site Visited: " + txtAddressBar.Text, "/n");
+            }
+
+
         }
 
         //Changes the text within the txtAddressBar to show current url.
@@ -153,28 +186,6 @@ namespace OSINTBrowser
             Search();
         }
 
-        //Full screenshot of the current display - goes to Capture class.
-        //private void screenshotMenuItem_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Capture captureThis = new Screenshot();
-
-        //    captureThis.screenCapture();
-        //}
-
-        //private void snipMenuItem_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    Capture captureThis = new Screensnip();
-        //    captureThis.captureType = "Screen Snip";
-        //    captureThis.screenCapture();
-        //}
-
-        //private void recordMenuItem_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Capture captureThis = new Record();
-        //    captureThis.captureType = "Recording";
-        //    captureThis.screenCapture();
-
-        //}
 
         private void btnScreenshot_Click(object sender, RoutedEventArgs e)
         {
@@ -224,6 +235,47 @@ namespace OSINTBrowser
         {
             //Russian but has a good image search.
             queryUrl = "https://yandex.com/search/?text=";
+        }
+
+        private void Sherlock_Click(object sender, RoutedEventArgs e)
+        {
+            Sherlock s = new Sherlock();
+            s.launchSherlock();
+        }
+
+        private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            Sherlock sh = new Sherlock();
+            string resultHtml = sh.makeNewTab();
+      
+            TabItem nt = new TabItem();
+            ChromiumWebBrowser b = new ChromiumWebBrowser();
+            tabControl.Items.Add(nt);
+            nt.Content = b;
+            nt.Header = "Results";
+
+
+            currentBrowser = b;
+            currentTabItem = nt;
+            b.LoadHtml(resultHtml, "http://results/");
+            b.MouseLeftButtonDown += B_MouseLeftButtonDown;
+        }
+
+        private void B_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TabItem newTab = new TabItem();
+            ChromiumWebBrowser browser = new ChromiumWebBrowser();
+            tabControl.Items.Add(newTab);
+            tabCount++;
+
+            newTab.Content = browser;
+            browser.Address = "https://www.google.com";
+
+            newTab.Header = "New Tab";
+
+            currentBrowser = browser;
+            currentTabItem = newTab;
+            browser.Loaded += FinishedLoadingWebpage;
         }
     }
 }

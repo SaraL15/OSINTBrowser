@@ -239,3 +239,6 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csp
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.exe
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.AssemblyReference.cache
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.pdb
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.xml

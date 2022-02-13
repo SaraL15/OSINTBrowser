@@ -7,17 +7,35 @@
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
         Title="OSIB" Height="450" Width="600" WindowStartupLocation="CenterScreen" Cursor="Arrow" ResizeMode="CanMinimize" SizeToContent="Width">
-    <Grid Background="#a9a9b0" Margin="0,0,0,0">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30*"/>
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnOpenCase" Content="Open Existing Case" HorizontalAlignment="Right" Margin="0,242,85,0" VerticalAlignment="Top" Width="180" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="16" BorderThickness="2" Cursor="Hand" Height="61" Grid.Column="1" Click="btnOpenCase_Click"/>
-        <Button x:Name="btnNewCase" Content="Create New Case" HorizontalAlignment="Left" Margin="85,242,0,0" VerticalAlignment="Top" Width="180" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="16" BorderThickness="2" Cursor="Hand" Height="61" Click="btnNewCase_Click"/>
-        <Label x:Name="lblTitle" Content="Open Source Investigation Browser" Margin="25,69,25,0" VerticalAlignment="Top" FontFamily="Leelawadee UI bold" FontSize="32" BorderBrush="#1d2428" Background="#dadae3" BorderThickness="2" Height="60" Grid.ColumnSpan="2">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="34"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="34"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource wbLight}" Grid.ColumnSpan="2" />
+        <Grid Grid.Row="1" Background="{StaticResource wbBlue}" Grid.ColumnSpan="2"/>
+        <Grid Grid.Row="2" Background="{StaticResource wbLight}" Grid.ColumnSpan="2"/>
+        <Grid Grid.Row="3" Background="{StaticResource wbLight}" Grid.ColumnSpan="2"/>
+        
+        <Label x:Name="lblTitle" Content="Open Source Investigation Browser" VerticalAlignment="Center" HorizontalAlignment="Center" 
+               Grid.Column="0" Grid.Row="1" FontFamily="Cascadia Code" FontSize="26" BorderBrush="#1d2428" Background="{StaticResource wbDarkerBlue}" 
+               Foreground="{StaticResource wbLight}" BorderThickness="2" Height="60" Grid.ColumnSpan="2" Width="516" Margin="42,0,42,0">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
+
+        <Button x:Name="btnOpenCase" Content="Open Existing Case" Margin="35,-30,55,0" VerticalAlignment="Center" 
+                Width="180" FontSize="16" BorderThickness="2" Cursor="Hand" Height="61" Grid.Column="1" Click="btnOpenCase_Click" Style="{StaticResource wbButtons}" Grid.Row="3"/>
+        <Button x:Name="btnNewCase" Content="Create New Case" Margin="55,-30,35,0" VerticalAlignment="Center" 
+                Width="180" BorderThickness="2" FontSize="16" Cursor="Hand" Height="61" Click="btnNewCase_Click" Style="{StaticResource wbButtons}" Grid.Row="3"/>
+
     </Grid>
 </Window>

@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:OSINTBrowser" xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
       
         mc:Ignorable="d"
-        Title="OSIB" Height="1080" Width="1920" Background="#d3ebfd" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Resources/logo.png">
+        Title="OSIB" Height="1080" Width="1920" Background="#d3ebfd" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Resources/logo.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60*"/>
@@ -60,12 +60,14 @@
                         <Image Source="/Resources/reload.png"></Image>
                     </Viewbox>
                 </Button>
-                <TextBox x:Name="txtAddressBar" Height="26" MinWidth="200" Width="500" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14"/>
+                <TextBox x:Name="txtAddressBar" Height="26" MinWidth="200" Width="400" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14"/>
                 <Button x:Name="btnGo" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2">
                     <Viewbox>
                         <Image Source="/Resources/go.png"></Image>
                     </Viewbox>
                 </Button>
+                <Button x:Name="btnSherlock" Content="Sherlock" Click="Sherlock_Click" Style="{StaticResource wbButtons}" Margin="10,0,0,0"/>
+                <Button x:Name="btnTest" Content="Test" Click="btnTest_Click"/>
             </StackPanel>
 
 

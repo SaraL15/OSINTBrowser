@@ -26,7 +26,7 @@ namespace OSINTBrowser
         {
             using (StreamWriter sw = new StreamWriter(Path.Combine(Case.CaseFilePath, "Log.txt"), true))
             {
-                sw.WriteLine(captureDate + ": " + captureSource + " " + captureDesc + " " + captureName, "/n");
+                sw.WriteLine(captureDate + ": Capture: " + captureSource + " " + captureDesc + " " + captureName, "/n");
             }
         }
 
@@ -34,6 +34,7 @@ namespace OSINTBrowser
         {
             
             DateTime dateTime = DateTime.Now.ToUniversalTime();
+            string dateForLog = dateTime.ToString();
             string captureDate = dateTime.ToString("yyMMddHHmmss");
             string captureName = "capture" + captureDate;
             //string saveCaptureName = "";
@@ -58,7 +59,7 @@ namespace OSINTBrowser
                 bmp.Save(saveDlog.FileName);
 
                 //saveCaptureName = new DirectoryInfo(captureName).Name;
-                logCapture(captureDate, captureName, description, source);
+                logCapture(dateForLog, captureName, description, source);
                 
 
             }
