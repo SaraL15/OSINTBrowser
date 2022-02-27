@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace OSINTBrowser
 {
+ 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

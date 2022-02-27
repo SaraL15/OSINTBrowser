@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,20 +8,30 @@ using CefSharp;
 using CefSharp.Wpf;
 using Xceed.Wpf.Toolkit;
 
+
 namespace OSINTBrowser
 {
+
     /// <summary>
     /// Interaction logic for Browser.xaml
     /// </summary>
+
     public partial class Browser : Window
     {
         TabItem currentTabItem = null;
         ChromiumWebBrowser currentBrowser = null;
+
+
         int tabCount = 0;
         public string currentUrl { get { return txtAddressBar.Text; } }
+        public string SherlockSearchTerm
+        {
+            get { return txtSearchBox.Text; }
+            set { txtSearchBox.Text = value; }
+        }
+ 
         string queryUrl = "https://duckduckgo.com/?q=";
-
-
+        Sherlock s = new Sherlock();
 
 
         public Browser()
@@ -48,7 +59,7 @@ namespace OSINTBrowser
 
         public void htmlTab(string resultHtml)
         {
-                     TabItem newTab = new TabItem();
+            TabItem newTab = new TabItem();
             ChromiumWebBrowser browser = new ChromiumWebBrowser();
             tabControl.Items.Add(newTab);
             tabCount++;
@@ -124,7 +135,7 @@ namespace OSINTBrowser
             }
         }
 
-        //Turn this into a search bar on the browser - be able to select different search engines. **TODO - add different search engines to select**
+        //Turn this into a search bar on the browser - be able to select different search engines.
         private void Search()
         {
             {
@@ -237,28 +248,77 @@ namespace OSINTBrowser
             queryUrl = "https://yandex.com/search/?text=";
         }
 
+        private Sherlock getSherlockInstance()
+        {
+            
+            return s;
+        }
         private void Sherlock_Click(object sender, RoutedEventArgs e)
         {
-            Sherlock s = new Sherlock();
-            s.launchSherlock();
+            string searchTermSherlock = txtSearchBox.Text;
+            Sherlock s = getSherlockInstance();
+            s.launchSherlock(searchTermSherlock);
+      
         }
+
+        public string getSherlockSearchTerm()
+        {
+            string searchTerm = txtSearchBox.Text;
+            return searchTerm;
+        }
+
+        //public void Sherlock_Exist()
+        //{
+        //    Sherlock sherlock = new Sherlock();
+        //    string sherlockedName = sherlock.searchForThis;
+        //    string filePathString = @":\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\" + sherlockedName + ".txt";
+        //    if (!File.Exists(filePathString))
+        //    {
+        //        //Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => btnTest.Visibility = Visibility.Visible));
+        //        //btnTest.Visibility = Visibility.Visible;
+        //        //Thread thread = new Thread(() => showBtn());
+        //        //thread.SetApartmentState(ApartmentState.STA);
+        //        //thread.Start();
+        //        btnTest.Visibility = Visibility.Visible;
+                
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
+
+        //public void showBtn()
+        //{
+        //    //btnTest.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action( () => btnTest.Visibility = Visibility.Visible));
+        //    //this.Dispatcher.Invoke(() =>
+        //    //{
+
+        //    //    btnTest.Visibility = Visibility.Visible;
+        //    //});
+            
+        //}
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            Sherlock sh = new Sherlock();
-            string resultHtml = sh.makeNewTab();
-      
-            TabItem nt = new TabItem();
-            ChromiumWebBrowser b = new ChromiumWebBrowser();
-            tabControl.Items.Add(nt);
-            nt.Content = b;
-            nt.Header = "Results";
 
 
-            currentBrowser = b;
-            currentTabItem = nt;
-            b.LoadHtml(resultHtml, "http://results/");
-            b.MouseLeftButtonDown += B_MouseLeftButtonDown;
+                Sherlock s = getSherlockInstance();
+                string thisSearch = s.searchForThis;
+                string resultHtml = s.makeNewTab(thisSearch);
+
+                TabItem nt = new TabItem();
+                ChromiumWebBrowser b = new ChromiumWebBrowser();
+                tabControl.Items.Add(nt);
+                nt.Content = b;
+                nt.Header = "Results";
+
+
+                currentBrowser = b;
+                currentTabItem = nt;
+                b.LoadHtml(resultHtml, "http://results/");
+                b.MouseLeftButtonDown += B_MouseLeftButtonDown;
+            
         }
 
         private void B_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

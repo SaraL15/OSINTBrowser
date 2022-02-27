@@ -190,6 +190,7 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\OSINTBrowser.exe
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\OSINTBrowser.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.dll
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\SharpAvi.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\System.Drawing.Common.dll
@@ -202,6 +203,8 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.xml
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.pdb
+C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\SharpAvi.xml
@@ -239,6 +242,3 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csp
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.exe
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\obj\Debug\OSINTBrowser.csproj.AssemblyReference.cache
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.dll
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.pdb
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.xml

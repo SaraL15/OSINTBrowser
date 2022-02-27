@@ -55,7 +55,7 @@
                         <Image Source="/Resources/forward.png"></Image>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnRefresh" Padding="5,0" Click="btnRefresh_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2">
+                <Button x:Name="btnRefresh" Padding="5,0" Click="btnRefresh_Click" Style="{DynamicResource wbButtons}" Margin="5,2,2,2">
                     <Viewbox>
                         <Image Source="/Resources/reload.png"></Image>
                     </Viewbox>
@@ -66,8 +66,12 @@
                         <Image Source="/Resources/go.png"></Image>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnSherlock" Content="Sherlock" Click="Sherlock_Click" Style="{StaticResource wbButtons}" Margin="10,0,0,0"/>
-                <Button x:Name="btnTest" Content="Test" Click="btnTest_Click"/>
+                <Button x:Name="btnSherlock" Content="Sherlock" Click="Sherlock_Click" Style="{StaticResource wbButtons}" Margin="10,2,0,2"/>
+                <Button x:Name="btnTest" Click="btnTest_Click" Style="{StaticResource wbButtons}">
+                    <Viewbox>
+                        <Image Source="Resources/tick.png"></Image>
+                    </Viewbox>
+                </Button>
             </StackPanel>
 
 
