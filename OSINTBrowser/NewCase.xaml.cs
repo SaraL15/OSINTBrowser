@@ -75,7 +75,7 @@ namespace OSINTBrowser
 
                 string subjectName = txtSubject.Text;
                 string description = txtDesc.Text;
-                DateTime now = DateTime.Today;
+                DateTime now = DateTime.Now;
                 string creationDate = DateTime.Now.ToString("yyyy_MM_dd");
                 string subfolder = creationDate + "_" + subjectName;
             

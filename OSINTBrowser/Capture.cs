@@ -6,8 +6,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
-
-
+using ScreenRecorderLib;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OSINTBrowser
 {
@@ -17,10 +20,13 @@ namespace OSINTBrowser
     */
     public abstract class Capture
     {
+
         public string captureType { get; set; }
         
 
         public abstract void screenCapture(string source);
+
+
 
         public void logCapture(string captureDate, string captureName, string captureDesc, string captureSource)
         {
@@ -46,7 +52,7 @@ namespace OSINTBrowser
             string captureSaveLocation = saveDlog.InitialDirectory;
             saveDlog.Title = "Save Capture";
             saveDlog.Filter = "PNG File | *.png";
-            ImageFormat format = ImageFormat.Png;
+            System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
 
 
             //bmp.Save(saveDlog.FileName);
@@ -85,7 +91,7 @@ namespace OSINTBrowser
     //Take a Screenshot
     public class Screenshot : Capture
     {
-
+        
         //Screenshots - currently only the primary display.
         public override void screenCapture(string source)
         {
@@ -117,7 +123,7 @@ namespace OSINTBrowser
     //Take a snip
     public class Screensnip : Capture
     {
-        private Rectangle canvasBounds = Screen.GetBounds(Point.Empty);
+        private Rectangle canvasBounds = Screen.GetBounds(System.Drawing.Point.Empty);
         public override void screenCapture(string source)
         {
             //string desc = "test";
@@ -163,9 +169,43 @@ namespace OSINTBrowser
 
     public class Record : Capture
     {
+        Recorder _rec;
+        bool active = false;
         public override void screenCapture(string source)
         {
-
+            active = true;
+            CreateRecording();
         }
+
+        
+        public void CreateRecording()
+        {
+            //string videoPath = Path.Combine(Path.GetTempPath(), "test.mp4");
+            _rec = Recorder.CreateRecorder();
+            _rec.OnRecordingComplete += Rec_OnRecordingComplete;
+            _rec.OnRecordingFailed += Rec_OnRecordingFailed;
+            _rec.OnStatusChanged += Rec_OnStatusChanged;
+            //Record to a file
+            string videoPath = Path.Combine(Case.CaseFilePath, "test.mp4");
+            _rec.Record(videoPath);
+        }
+        public void EndRecording()
+        {
+            _rec.Stop();
+        }
+        private void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
+        {
+            //Get the file path if recorded to a file
+            string path = e.FilePath;
+        }
+        private void Rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
+        {
+            string error = e.Error;
+        }
+        private void Rec_OnStatusChanged(object sender, RecordingStatusEventArgs e)
+        {
+            RecorderStatus status = e.Status;
+        }
+
     }
 }

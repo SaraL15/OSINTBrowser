@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using CefSharp;
 using CefSharp.Wpf;
-using Xceed.Wpf.Toolkit;
 
 
 namespace OSINTBrowser
@@ -21,7 +20,7 @@ namespace OSINTBrowser
         TabItem currentTabItem = null;
         ChromiumWebBrowser currentBrowser = null;
 
-
+        
         int tabCount = 0;
         public string currentUrl { get { return txtAddressBar.Text; } }
         public string SherlockSearchTerm
@@ -32,11 +31,13 @@ namespace OSINTBrowser
  
         string queryUrl = "https://duckduckgo.com/?q=";
         Sherlock s = new Sherlock();
+        Capture c = null;
 
 
         public Browser()
         {
             InitializeComponent();
+            loadBookmarks();
         }
 
         //Opens a new tab containing a browser.
@@ -258,7 +259,13 @@ namespace OSINTBrowser
             string searchTermSherlock = txtSearchBox.Text;
             Sherlock s = getSherlockInstance();
             s.launchSherlock(searchTermSherlock);
-      
+            string folder = Case.CaseFilePath;
+            using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+            {
+                string date = DateTime.Now.ToString();
+                sw.WriteLine(date + ": Sherlock Search: " + searchTermSherlock, "/n");
+            }
+
         }
 
         public string getSherlockSearchTerm()
@@ -336,6 +343,50 @@ namespace OSINTBrowser
             currentBrowser = browser;
             currentTabItem = newTab;
             browser.Loaded += FinishedLoadingWebpage;
+        }
+
+        //private void menuItemBookmarks()
+        //{
+        //    MenuItem menuItem1 = new MenuItem();
+        //    menuItem1.Header = "Test 123";
+        //    this.mnuBookmark.Items.Add(menuItem1);
+        //}
+
+        private void loadBookmarks()
+        { 
+            MenuItem bookmarks = new MenuItem();
+            bookmarks.Header = "facebook";
+            mnuBookmark.Items.Add(bookmarks);
+
+            MenuItem openMenuItem = new MenuItem();
+            bookmarks.Items.Add(openMenuItem);
+            openMenuItem.Header = "Open";
+            openMenuItem.Click += OpenMenuItem_Click;
+        }
+
+        private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void btnRecord_Click(object sender, RoutedEventArgs e)
+        {
+            c = new Record();
+            c.captureType = "Record";
+            c.screenCapture(currentUrl);
+
+            
+        }
+
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            stop_Recording(c as Record);
+        }
+
+        private void stop_Recording (Record c)
+        {
+            c.EndRecording();
+
         }
     }
 }

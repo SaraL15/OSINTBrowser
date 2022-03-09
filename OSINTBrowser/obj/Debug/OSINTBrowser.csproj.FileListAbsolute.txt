@@ -192,7 +192,6 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Core.dl
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.dll
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\SharpAvi.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\System.Drawing.Common.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\Xceed.Wpf.AvalonDock.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
@@ -207,7 +206,6 @@ C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForm
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.WinForms.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.pdb
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\CefSharp.Wpf.xml
-C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\SharpAvi.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\System.Drawing.Common.xml
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\cs-CZ\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
