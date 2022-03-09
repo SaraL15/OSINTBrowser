@@ -1,24 +1,43 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CefSharp;
 using CefSharp.Wpf;
 
+
 namespace OSINTBrowser
 {
+
     /// <summary>
     /// Interaction logic for Browser.xaml
     /// </summary>
+
     public partial class Browser : Window
     {
         TabItem currentTabItem = null;
         ChromiumWebBrowser currentBrowser = null;
-        int tabCount = 0;
-      
+
         
+        int tabCount = 0;
+        public string currentUrl { get { return txtAddressBar.Text; } }
+        public string SherlockSearchTerm
+        {
+            get { return txtSearchBox.Text; }
+            set { txtSearchBox.Text = value; }
+        }
+ 
+        string queryUrl = "https://duckduckgo.com/?q=";
+        Sherlock s = new Sherlock();
+        Capture c = null;
+
+
         public Browser()
         {
             InitializeComponent();
+            loadBookmarks();
         }
 
         //Opens a new tab containing a browser.
@@ -37,6 +56,24 @@ namespace OSINTBrowser
             currentBrowser = browser;
             currentTabItem = newTab;
             browser.Loaded += FinishedLoadingWebpage;
+        }
+
+        public void htmlTab(string resultHtml)
+        {
+            TabItem newTab = new TabItem();
+            ChromiumWebBrowser browser = new ChromiumWebBrowser();
+            tabControl.Items.Add(newTab);
+            tabCount++;
+
+            newTab.Content = browser;
+            browser.Address = "https://www.google.com";
+
+            newTab.Header = "New Tab";
+
+            currentBrowser = browser;
+            currentTabItem = newTab;
+            browser.Loaded += FinishedLoadingWebpage;
+
         }
 
 
@@ -99,12 +136,18 @@ namespace OSINTBrowser
             }
         }
 
-        //Turn this into a search bar on the browser - be able to select different search engines. **TODO - add different search engines to select**
+        //Turn this into a search bar on the browser - be able to select different search engines.
         private void Search()
         {
             {
-                currentBrowser.Address = "https://www.google.com/search?q=" + txtSearchBox.Text;
+                currentBrowser.Address = queryUrl + txtSearchBox.Text;
                 currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+                string folder = Case.CaseFilePath;
+                using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+                {
+                    string date = DateTime.Now.ToString();
+                    sw.WriteLine(date + ": Search Term: " + txtSearchBox.Text + " " + queryUrl, "/n");
+                }
             }
         }
 
@@ -112,6 +155,14 @@ namespace OSINTBrowser
         {
             currentBrowser.Load(txtAddressBar.Text);
             currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+            string folder = Case.CaseFilePath;
+            using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+            {
+                string date = DateTime.Now.ToString();
+                sw.WriteLine(date + ": Site Visited: " + txtAddressBar.Text, "/n");
+            }
+
+
         }
 
         //Changes the text within the txtAddressBar to show current url.
@@ -147,33 +198,11 @@ namespace OSINTBrowser
             Search();
         }
 
-        //Full screenshot of the current display - goes to Capture class.
-        //private void screenshotMenuItem_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Capture captureThis = new Screenshot();
-
-        //    captureThis.screenCapture();
-        //}
-
-        //private void snipMenuItem_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    Capture captureThis = new Screensnip();
-        //    captureThis.captureType = "Screen Snip";
-        //    captureThis.screenCapture();
-        //}
-
-        //private void recordMenuItem_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Capture captureThis = new Record();
-        //    captureThis.captureType = "Recording";
-        //    captureThis.screenCapture();
-
-        //}
 
         private void btnScreenshot_Click(object sender, RoutedEventArgs e)
         {
             Capture captureThis = new Screenshot();
-            captureThis.screenCapture();
+            captureThis.screenCapture(currentUrl);
         }
 
 
@@ -182,7 +211,182 @@ namespace OSINTBrowser
         {
             Capture captureThisSnip = new Screensnip();
             captureThisSnip.captureType = "Screen Snip";
-            captureThisSnip.screenCapture();
+            captureThisSnip.screenCapture(currentUrl);
+        }
+
+        private void ChangeSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var selectSearch = sender as FrameworkElement;
+            if (selectSearch != null)
+            {
+               // ChangeSearch.ContextMenu.IsOpen = true;
+            }
+        }
+        
+        //Google
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            queryUrl = "https://www.google.com/search?q=";
+        }
+
+        //Bing
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            queryUrl = "https://www.bing.com/search?q=";     
+        }
+
+        //DuckDuckGo
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            //Probably set as a default rather than google.
+            queryUrl = "https://duckduckgo.com/?q=";
+        }
+
+        //Yandex
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            //Russian but has a good image search.
+            queryUrl = "https://yandex.com/search/?text=";
+        }
+
+        private Sherlock getSherlockInstance()
+        {
+            
+            return s;
+        }
+        private void Sherlock_Click(object sender, RoutedEventArgs e)
+        {
+            string searchTermSherlock = txtSearchBox.Text;
+            Sherlock s = getSherlockInstance();
+            s.launchSherlock(searchTermSherlock);
+            string folder = Case.CaseFilePath;
+            using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+            {
+                string date = DateTime.Now.ToString();
+                sw.WriteLine(date + ": Sherlock Search: " + searchTermSherlock, "/n");
+            }
+
+        }
+
+        public string getSherlockSearchTerm()
+        {
+            string searchTerm = txtSearchBox.Text;
+            return searchTerm;
+        }
+
+        //public void Sherlock_Exist()
+        //{
+        //    Sherlock sherlock = new Sherlock();
+        //    string sherlockedName = sherlock.searchForThis;
+        //    string filePathString = @":\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\" + sherlockedName + ".txt";
+        //    if (!File.Exists(filePathString))
+        //    {
+        //        //Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => btnTest.Visibility = Visibility.Visible));
+        //        //btnTest.Visibility = Visibility.Visible;
+        //        //Thread thread = new Thread(() => showBtn());
+        //        //thread.SetApartmentState(ApartmentState.STA);
+        //        //thread.Start();
+        //        btnTest.Visibility = Visibility.Visible;
+                
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
+
+        //public void showBtn()
+        //{
+        //    //btnTest.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action( () => btnTest.Visibility = Visibility.Visible));
+        //    //this.Dispatcher.Invoke(() =>
+        //    //{
+
+        //    //    btnTest.Visibility = Visibility.Visible;
+        //    //});
+            
+        //}
+
+        private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+
+
+                Sherlock s = getSherlockInstance();
+                string thisSearch = s.searchForThis;
+                string resultHtml = s.makeNewTab(thisSearch);
+
+                TabItem nt = new TabItem();
+                ChromiumWebBrowser b = new ChromiumWebBrowser();
+                tabControl.Items.Add(nt);
+                nt.Content = b;
+                nt.Header = "Results";
+
+
+                currentBrowser = b;
+                currentTabItem = nt;
+                b.LoadHtml(resultHtml, "http://results/");
+                b.MouseLeftButtonDown += B_MouseLeftButtonDown;
+            
+        }
+
+        private void B_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TabItem newTab = new TabItem();
+            ChromiumWebBrowser browser = new ChromiumWebBrowser();
+            tabControl.Items.Add(newTab);
+            tabCount++;
+
+            newTab.Content = browser;
+            browser.Address = "https://www.google.com";
+
+            newTab.Header = "New Tab";
+
+            currentBrowser = browser;
+            currentTabItem = newTab;
+            browser.Loaded += FinishedLoadingWebpage;
+        }
+
+        //private void menuItemBookmarks()
+        //{
+        //    MenuItem menuItem1 = new MenuItem();
+        //    menuItem1.Header = "Test 123";
+        //    this.mnuBookmark.Items.Add(menuItem1);
+        //}
+
+        private void loadBookmarks()
+        { 
+            MenuItem bookmarks = new MenuItem();
+            bookmarks.Header = "facebook";
+            mnuBookmark.Items.Add(bookmarks);
+
+            MenuItem openMenuItem = new MenuItem();
+            bookmarks.Items.Add(openMenuItem);
+            openMenuItem.Header = "Open";
+            openMenuItem.Click += OpenMenuItem_Click;
+        }
+
+        private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void btnRecord_Click(object sender, RoutedEventArgs e)
+        {
+            c = new Record();
+            c.captureType = "Record";
+            c.screenCapture(currentUrl);
+
+            
+        }
+
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            stop_Recording(c as Record);
+        }
+
+        private void stop_Recording (Record c)
+        {
+            c.EndRecording();
+
         }
     }
 }

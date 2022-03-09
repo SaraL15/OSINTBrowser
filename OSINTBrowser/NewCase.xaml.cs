@@ -23,7 +23,8 @@ namespace OSINTBrowser
         }
 
         private void browseForFolder()
-        {
+        { 
+            Directory.CreateDirectory("OSIB_Cases");
             //Opens the Windows Browser Explorer to select where to save the newly...
             //...created folder.
             string selectedFolder = "";
@@ -74,7 +75,7 @@ namespace OSINTBrowser
 
                 string subjectName = txtSubject.Text;
                 string description = txtDesc.Text;
-                DateTime now = DateTime.Today;
+                DateTime now = DateTime.Now;
                 string creationDate = DateTime.Now.ToString("yyyy_MM_dd");
                 string subfolder = creationDate + "_" + subjectName;
             
@@ -118,6 +119,12 @@ namespace OSINTBrowser
                     DbConnect dbc = new DbConnect();
                     //dbc.create_new_table();
                     dbc.addNewCase(now, subjectName, description);
+
+                    Case.CaseFilePath = folder;
+                    ;
+                    string lastFolderName = Path.GetFileName(pathString);
+                    string folderName = lastFolderName.Substring(11);
+                    dbc.getTheCase(folderName);
                     Browser browser = new Browser();
                     browser.Show();
                     this.Close();
@@ -162,7 +169,10 @@ namespace OSINTBrowser
 
         private void btnCancel_Click_1(object sender, RoutedEventArgs e)
         {
+            MainWindow mw = new MainWindow();
+            mw.Show();
             this.Close();
+            
         }
 
     }

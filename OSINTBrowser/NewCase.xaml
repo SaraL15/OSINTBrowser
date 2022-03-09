@@ -6,29 +6,54 @@
         xmlns:local="clr-namespace:OSINTBrowser"
         mc:Ignorable="d"
         Title="OSIB" Height="350" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SizeToContent="Manual">
-    <Grid Background="#a9a9b0" Margin="0,0,0,0" Height="350" Width="600">
-        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="22" Margin="42,128,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
-        <TextBox x:Name="txtDesc" HorizontalAlignment="Left" MaxHeight="170" Margin="42,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="247" AcceptsReturn="True"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" Height="78"/>
-        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="339,239,0,0" VerticalAlignment="Top" Width="90" Height="44" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="14" Click="btnCreate_Click" Cursor="Hand"/>
-        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="470,239,0,0" VerticalAlignment="Top" Width="90" Height="44" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI light" FontSize="14" Click="btnCancel_Click_1" Cursor="Hand">
-        </Button>
-        <Button x:Name="btnFolderPath" Content="Save Location" HorizontalAlignment="Left" Margin="401,64,0,0" VerticalAlignment="Top" BorderBrush="#1d2428" Background="#dadae3" FontFamily="Leelawadee UI bold" FontSize="12" Width="90" Height="44" Click="btnFolderPath_Click" RenderTransformOrigin="-0.106,0.604" Cursor="Hand"/>
-        <TextBox x:Name="txtFolderPath" HorizontalAlignment="Left" Height="23" Margin="321,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
-        <Label x:Name="lblError" Content="" HorizontalAlignment="Left" Margin="350,154,0,0" VerticalAlignment="Top" FontFamily="Leelawadee UI bold"/>
-        <Label x:Name="lblTitle" Content="Create New Case" HorizontalAlignment="Left" Margin="30,27,0,0" VerticalAlignment="Top" FontFamily="Leelawadee UI bold" FontSize="30"/>
-        <Label x:Name="lblSubject" Content="Subject Name:" HorizontalAlignment="Left" Margin="40,106,0,0" VerticalAlignment="Top" Height="31" Width="95" FontFamily="Leelawadee UI bold"/>
-        <Label x:Name="lblInvestName" Content="Case Description:" HorizontalAlignment="Left" Margin="40,182,0,0" VerticalAlignment="Top" Height="31" Width="110" FontFamily="Leelawadee UI bold"/>
-        <Label x:Name="lblTooltipOne" Content="?" ToolTip="Enter subject name or alais. This will be your case name" Cursor="Help" Margin="190,104,385,222">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        
+        <Grid Grid.Row="0" Background="{StaticResource wbBlue}"/>
+        <Label x:Name="lblTitle" Content="Create New Case" HorizontalAlignment="Left" Margin="30,10,0,10" Foreground="{StaticResource wbLight}" 
+               VerticalAlignment="Top" FontFamily="Cascadia Code" FontSize="30" Height="44" Width="280"/>
+
+        <Grid Grid.Row="1" Background="{StaticResource wbLight}"/>
+
+        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="22" Margin="42,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163" Grid.Row="1"/>
+        <TextBox x:Name="txtDesc" HorizontalAlignment="Left" MaxHeight="170" Margin="42,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="247" AcceptsReturn="True"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Height="78" Grid.Row="1"/>
+        
+        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="339,190,0,0" VerticalAlignment="Top" Width="90" Height="44" 
+                Style="{StaticResource wbButtons}" Click="btnCreate_Click" Cursor="Hand" Grid.Row="1"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="470,190,0,0" VerticalAlignment="Top" Width="90" Height="44" 
+                Style="{StaticResource wbButtons}" Click="btnCancel_Click_1" Cursor="Hand" Grid.Row="1"/>
+
+        <Button x:Name="btnFolderPath" Content="Save Location" HorizontalAlignment="Left" Margin="401,15,0,0" VerticalAlignment="Top" Width="100" Height="44" 
+               Style="{StaticResource wbButtons}" Click="btnFolderPath_Click" Cursor="Hand" Grid.Row="1"/>
+       
+        <TextBox x:Name="txtFolderPath" HorizontalAlignment="Left" Height="23" Margin="321,70,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240" Grid.Row="1"/>
+
+        <Label x:Name="lblTooltipOne" Content="?" ToolTip="Enter subject name or alais. This will be your case name" Cursor="Help" Margin="205,75,370,169" Grid.Row="1" Grid.Column="0">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <Label x:Name="lblTooltipTwo" Content="?" ToolTip="Brief description of why you will be preforming OSINT on the subject, e.g 'Find out of subject is known to another person of interest.'" Cursor="Help" Margin="275,182,300,145">
+        <Label x:Name="lblTooltipTwo" Content="?" ToolTip="Brief description of why you will be preforming OSINT on the subject, e.g 'Find out of subject is known to another person of interest.'"
+               Cursor="Help" Margin="288,150,288,93" Grid.Row="1" Grid.Column="0">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
+        <Label x:Name="lblError" Content="" HorizontalAlignment="Left" Margin="350,105,0,0" VerticalAlignment="Top" FontFamily="Leelawadee UI bold" Height="0" Grid.Row="1" Width="10"/>
+
+        <Label x:Name="lblSubject" Content="Subject Name:" HorizontalAlignment="Left" Margin="40,48,0,0" VerticalAlignment="Top" Height="31" Width="95" FontFamily="Microsoft Sans Serif" Grid.Row="1"/>
+        <Label x:Name="lblDesc" Content="Case Description:" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Height="30" Width="110" FontFamily="Microsoft Sans Serif" Grid.Row="1"/>
+        
 
     </Grid>
 </Window>

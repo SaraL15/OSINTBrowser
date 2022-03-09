@@ -28,13 +28,10 @@ namespace OSINTBrowser
             cnn.Close();
         }
 
-        public void captureToDatabase(DateTime captureDate, string desc, string source, string captureLocation, bool? check)
+        public void captureToDatabase(DateTime captureDate, string desc, string source, string captureLocation, bool? check, byte[] hash)
         {
             int caseid = Case.caseID;
             int userid = Case.userID;
-            //string evidescription = "This is a test of a description for a screenshot";
-            //string source = "https://www.sourcelinktest.com/profilename";
-            var hashOfFile = 76543;
 
             SqlCommand cmd;
             //SqlDataAdapter adapter = new SqlDataAdapter();
@@ -52,7 +49,7 @@ namespace OSINTBrowser
                 cmd.Parameters.AddWithValue("@captureDate", captureDate);
                 cmd.Parameters.AddWithValue("sourceLink", source);
                 cmd.Parameters.Add("@filepath", SqlDbType.VarBinary).Value = filepath;
-                cmd.Parameters.AddWithValue("@fileHash", hashOfFile);
+                cmd.Parameters.Add("@fileHash", SqlDbType.VarBinary).Value = hash;
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
@@ -106,23 +103,32 @@ namespace OSINTBrowser
             return id;
         }
 
-        //public int getCaseId()
-        //{
-        //    int id = 0;
-        //    open_connection();
-        //    string caseName = Case.caseName;
-        //    SqlCommand cmd;
-        //    string query = "SELECT caseID FROM Cases WHERE caseName = @name";
-        //    using (cmd = new SqlCommand(query, cnn))
-        //    {
-        //        cmd.Parameters.AddWithValue("@name", caseName);
-        //        //cmd.ExecuteReader();
-        //        id = Convert.ToInt32(cmd.ExecuteScalar());
-        //        cmd.Dispose();
-
+        public void updateDateAccessed(int caseID)
+        {
+            DateTime now = DateTime.Now;
+            open_connection();
+            SqlCommand cmd;
+            string query = "UPDATE dbo.Cases SET dateAccessed = @now WHERE caseID = @caseID";
+            using (cmd = new SqlCommand(query, cnn))
+            {
+                cmd.Parameters.AddWithValue("@now", now);
+                cmd.Parameters.AddWithValue("@caseID", caseID);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+        //        {
+        //            cmd.Dispose();
+        //            try
+        //        {
+        //cmd.Dispose();
+        //        }
         //    }
-        //    return id;
-        //}
+        //    catch (Exception ex)
+        //    {
+        //        Console.Write(ex.ToString());
+        //        return;
+            }
+          
+        }
 
         public void getTheCase(string caseName)
         {
@@ -142,6 +148,7 @@ namespace OSINTBrowser
                 cmd.Dispose();
 
             }
+            updateDateAccessed(Case.caseID);
         }
     }
 
