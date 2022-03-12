@@ -16,7 +16,7 @@ namespace OSINTBrowser
             get { return SearchForThis; }
             set { SearchForThis = value; }
         }
-        public void launchSherlock(string sherlockSearchTerm)
+        public bool launchSherlock(string sherlockSearchTerm)
         {
             //string FileName = "cmd.exe";
             //string Arguments = "/c C:\\Users\\saral\\source\\repos\\sherlock\\sherlock\\sherlock.py " + searchForThis;
@@ -34,10 +34,12 @@ namespace OSINTBrowser
                 Process myProcess = new Process();
                 myProcess.StartInfo = myProcessStartInfo;
                 myProcess.Start();
-                myProcess.WaitForExit();
+                //myProcess.WaitForExit();
+                myProcess.EnableRaisingEvents = true;
+                myProcess.Exited += new EventHandler(processExit);
                 Console.WriteLine("Sherlock Finished");
 
-
+                return true;
                 //string displayThis = displayHTML(searchForThis);
                 //makeNewTab(displayThis);
 
@@ -55,13 +57,23 @@ namespace OSINTBrowser
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message, "Sherlock could not launch, try again later.");
-
+                return false;
 
             }
 
 
         }
+        private void processExit(object sender, EventArgs e)
+        {
+            Process p = sender as Process;
+            Console.WriteLine(p.ExitCode);
+            processFinished();
+        }
 
+        public bool processFinished()
+        {
+            return true;
+        }
         //private void sherlockFinished(object sender, EventArgs e)
         //{
 
@@ -143,7 +155,7 @@ namespace OSINTBrowser
 
         private string displayHTML(string search)
         {
-            string path = @"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\Debug\" + search + ".txt";
+            string path = @"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\x64\Debug\" + search + ".txt";
             string readText = File.ReadAllText(path);
 
             var sb = new StringBuilder();

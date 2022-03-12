@@ -13,6 +13,10 @@ namespace OSINTBrowser
     {
         Bitmap saveThisImage = null;
         int captureType = 0;
+
+        //For video capture
+
+        //For snip and screenshot
         public CaptureWindow(string source)
         {
             
@@ -75,8 +79,12 @@ namespace OSINTBrowser
                 s.saveCapture(saveThisImage, desc, source, check);
                 this.Close();
             }
-
-
+            else
+            {
+                Record r = new Record();
+                r.saveRecording(desc, source, check);
+                this.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

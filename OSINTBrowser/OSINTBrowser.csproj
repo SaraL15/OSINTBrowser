@@ -77,6 +77,7 @@
     </Reference>
     <Reference Include="SharpAvi, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpAvi.3.0.0\lib\net45\SharpAvi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -215,19 +216,33 @@
   <ItemGroup>
     <Resource Include="Resources\close.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\record.png" />
+    <Resource Include="Resources\screenshot.png" />
+    <Resource Include="Resources\snip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\rec_placeholder.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
     <Error Condition="!Exists('..\packages\cef.redist.x64.98.1.21\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.98.1.21\build\cef.redist.x64.props'))" />
     <Error Condition="!Exists('..\packages\cef.redist.x86.98.1.21\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.98.1.21\build\cef.redist.x86.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.98.1.210\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.98.1.210\build\CefSharp.Common.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets'))" />
-    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
     <Error Condition="!Exists('..\packages\ScreenRecorderLib.5.1.0\build\ScreenRecorderLib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ScreenRecorderLib.5.1.0\build\ScreenRecorderLib.targets'))" />
   </Target>
   <Import Project="..\packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets')" />
-  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Import Project="..\packages\ScreenRecorderLib.5.1.0\build\ScreenRecorderLib.targets" Condition="Exists('..\packages\ScreenRecorderLib.5.1.0\build\ScreenRecorderLib.targets')" />
 </Project>

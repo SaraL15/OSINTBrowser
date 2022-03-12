@@ -11,7 +11,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Threading;
 using System.Threading.Tasks;
-
 namespace OSINTBrowser
 {
     /*Capture is an abstract class. Screenshot, Screensnip and Video are inherited from it.
@@ -170,24 +169,52 @@ namespace OSINTBrowser
     public class Record : Capture
     {
         Recorder _rec;
-        bool active = false;
+        string videoPath = "";
+
         public override void screenCapture(string source)
         {
-            active = true;
-            CreateRecording();
+            string dateTime = DateTime.Now.ToString();
+            try
+            {
+                
+                CreateRecording(dateTime);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
+            logCapture(dateTime, videoPath, "Capture recording", source);
+
         }
 
         
-        public void CreateRecording()
+        public void CreateRecording(string dateTime)
         {
-            //string videoPath = Path.Combine(Path.GetTempPath(), "test.mp4");
-            _rec = Recorder.CreateRecorder();
-            _rec.OnRecordingComplete += Rec_OnRecordingComplete;
-            _rec.OnRecordingFailed += Rec_OnRecordingFailed;
-            _rec.OnStatusChanged += Rec_OnStatusChanged;
-            //Record to a file
-            string videoPath = Path.Combine(Case.CaseFilePath, "test.mp4");
-            _rec.Record(videoPath);
+            try
+            {
+                
+                //string videoPath = Path.Combine(Path.GetTempPath(), "test.mp4");
+                _rec = Recorder.CreateRecorder(new RecorderOptions
+                {
+                    AudioOptions = new AudioOptions
+                    {
+                        IsAudioEnabled = true,
+                    }
+                }); 
+                _rec.OnRecordingComplete += Rec_OnRecordingComplete;
+                _rec.OnRecordingFailed += Rec_OnRecordingFailed;
+                _rec.OnStatusChanged += Rec_OnStatusChanged;
+                //Record to a file
+                videoPath = Path.Combine(Case.CaseFilePath, dateTime);
+                _rec.Record(videoPath);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Failed to record, try again." + ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+            
         }
         public void EndRecording()
         {
@@ -207,5 +234,23 @@ namespace OSINTBrowser
             RecorderStatus status = e.Status;
         }
 
+        public void saveRecording(string description, string source, bool? check)
+        {
+            DateTime dateTime = DateTime.Now.ToUniversalTime();
+            string captureSaveLocation = Case.CaseFilePath;
+
+            //**TODO get hash for MP3 file** **Currently a placeholder image**
+
+            System.Drawing.Bitmap placeholder = (Bitmap)System.Drawing.Image.FromFile(@"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\Resources\rec_placeholder.bmp");
+            Hashing h = new Hashing();
+            Byte[] data = h.ImageToByte(placeholder);
+            SHA512 shaM = new SHA512Managed();
+            Byte[] result = shaM.ComputeHash(data);
+
+            //Open database connection and save
+            DbConnect dbc = new DbConnect();
+            dbc.open_connection();
+            dbc.captureToDatabase(dateTime, description, source, captureSaveLocation, check, result);
+        }
     }
 }

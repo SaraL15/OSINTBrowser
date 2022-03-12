@@ -24,15 +24,24 @@
 
 
         <!--Menu bar and options -->
-        <Menu Height="25" VerticalAlignment="Center" Background="{StaticResource wbBlue}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">
-            <Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>
-            <Button x:Name="btnScreenshot" Content="Screenshot" Style="{StaticResource wbMenuButtons}" Click="btnScreenshot_Click"></Button>
-            <Button x:Name="btnSnip" Content="Snip" Style="{StaticResource wbMenuButtons}" Click="btnSnip_Click"/>
-            <Button x:Name="btnRecord" Content="Record" Style="{StaticResource wbMenuButtons}" Click="btnRecord_Click"/>
-            <Button x:Name="btnStop" Content="Stop" Style="{StaticResource wbMenuButtons}" Click="btnStop_Click"/>
-        </Menu>
+        <!--<Menu Height="25" VerticalAlignment="Center" Background="{StaticResource wbBlue}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">-->
+            <!--<Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>-->
+        <Grid Grid.Row="0" Background="{StaticResource wbBlue}" Grid.ColumnSpan="3" />
+        <Button x:Name="btnSherlock" Content="Sherlock" Click="Sherlock_Click" Style="{StaticResource wbMenuButtons}" Margin="10,2,0,2" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right"/>
+        <Button x:Name="btnTest" Click="btnTest_Click" Style="{StaticResource wbMenuButtons}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,2,0,2" Visibility="Hidden">
+                <Viewbox>
+                    <Image Source="Resources/tick.png"></Image>
+                </Viewbox>
+        </Button>
+
+
+
+       <!-- </Menu>-->
+        
+       
 
         <!--Window is split into three columns and three rows-->
+       
         <Grid Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -40,7 +49,35 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <!--Webbrowser buttons, URL and search text boxes-->
+            <!--Capture Buttons -->
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="10,0,20,0">
+                <Button x:Name="btnScreenshot" Style="{StaticResource wbButtons}" Click="btnScreenshot_Click">
+                    <Viewbox>
+                        <Image Source="Resources/screenshot.png"/>
+                    </Viewbox>
+                </Button>
+                <Button x:Name="btnSnip" Style="{StaticResource wbButtons}" Click="btnSnip_Click">
+                    <Viewbox>
+                        <Image Source="Resources/snip.png"/>
+                    </Viewbox>
+                </Button>
+                <Button x:Name="btnRecord" Style="{StaticResource wbButtons}" Click="btnRecord_Click" Visibility="Visible">
+                    <Viewbox>
+                        <Image Source="Resources/record.png"/>
+                    </Viewbox>  
+                </Button>
+                <Button x:Name="btnStop" Style="{StaticResource wbButtons}" Click="btnStop_Click" Visibility="Hidden" Margin="-26,5,5,5">
+                    <Viewbox>
+                        <Image Source="Resources/stop.png"/>
+                    </Viewbox>
+                </Button>
+
+
+
+
+            </StackPanel>
+
+                <!--Webbrowser buttons, URL and search text boxes-->
             <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
 
             </StackPanel>
@@ -66,12 +103,6 @@
                 <Button x:Name="btnGo" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2">
                     <Viewbox>
                         <Image Source="/Resources/go.png"></Image>
-                    </Viewbox>
-                </Button>
-                <Button x:Name="btnSherlock" Content="Sherlock" Click="Sherlock_Click" Style="{StaticResource wbButtons}" Margin="10,2,0,2"/>
-                <Button x:Name="btnTest" Click="btnTest_Click" Style="{StaticResource wbButtons}">
-                    <Viewbox>
-                        <Image Source="Resources/tick.png"></Image>
                     </Viewbox>
                 </Button>
             </StackPanel>
@@ -111,6 +142,14 @@
             </Button>
         </Grid>
 
+        <!--New Tab Button-->
+        <Button x:Name="btnNewTab" Click="btnNewTab_Click" Grid.Column="0" Grid.Row="1" Width="24" Height="24" HorizontalAlignment="Left" Style="{StaticResource wbButtons}">
+            <Viewbox>
+                <Image Source="/Resources/new.png"/>
+            </Viewbox>
+        </Button>
+
+
 
 
         <!--TabItems-->
@@ -133,8 +172,8 @@
                         <Setter.Value>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-
-                                    <TextBlock Text="{Binding}" />
+                                    <Rectangle Fill="Black"/>
+                                    <TextBlock Text="{Binding}"  Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource wbLight}" />
                                     <Button x:Name="btnCloseTab" Click="btnCloseTab_Click" Padding="0" Margin="0,0,0,0" Style="{DynamicResource wbButtons}"
                                         Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}">
                                         <Viewbox>
@@ -149,10 +188,14 @@
             </TabControl.Resources>
 
             <!--ChromiumWebBrowser inside of a Tabitem-->
+           
             <TabItem HeaderTemplate="{DynamicResource BrowserTabHeaderTemplate}">
 
                 <cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com"/>
             </TabItem>
+            
         </TabControl>
+
+
     </Grid>
 </Window>

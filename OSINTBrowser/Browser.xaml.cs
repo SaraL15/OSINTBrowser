@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -58,23 +59,23 @@ namespace OSINTBrowser
             browser.Loaded += FinishedLoadingWebpage;
         }
 
-        public void htmlTab(string resultHtml)
-        {
-            TabItem newTab = new TabItem();
-            ChromiumWebBrowser browser = new ChromiumWebBrowser();
-            tabControl.Items.Add(newTab);
-            tabCount++;
+        //public void htmlTab(string resultHtml)
+        //{
+        //    TabItem newTab = new TabItem();
+        //    ChromiumWebBrowser browser = new ChromiumWebBrowser();
+        //    tabControl.Items.Add(newTab);
+        //    tabCount++;
 
-            newTab.Content = browser;
-            browser.Address = "https://www.google.com";
+        //    newTab.Content = browser;
+        //    browser.Address = "https://www.google.com";
 
-            newTab.Header = "New Tab";
+        //    newTab.Header = "New Tab";
 
-            currentBrowser = browser;
-            currentTabItem = newTab;
-            browser.Loaded += FinishedLoadingWebpage;
+        //    currentBrowser = browser;
+        //    currentTabItem = newTab;
+        //    browser.Loaded += FinishedLoadingWebpage;
 
-        }
+        //}
 
 
         //Tries to put name of the site on the tab **TODO - needs to be fixed as it shows massive urls still :D**
@@ -257,14 +258,32 @@ namespace OSINTBrowser
         private void Sherlock_Click(object sender, RoutedEventArgs e)
         {
             string searchTermSherlock = txtSearchBox.Text;
-            Sherlock s = getSherlockInstance();
-            s.launchSherlock(searchTermSherlock);
-            string folder = Case.CaseFilePath;
-            using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+            bool success = false;
+            try
             {
-                string date = DateTime.Now.ToString();
-                sw.WriteLine(date + ": Sherlock Search: " + searchTermSherlock, "/n");
+                Sherlock s = getSherlockInstance();
+                s.launchSherlock(searchTermSherlock);
+                string folder = Case.CaseFilePath;
+                using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+                {
+                    string date = DateTime.Now.ToString();
+                    sw.WriteLine(date + ": Sherlock Search: " + searchTermSherlock, "/n");
+                }
+                success = s.processFinished();
+                while (success != true)
+                {
+       
+                    btnSherlock.Visibility = Visibility.Visible;
+                }
+                btnTest.Visibility = Visibility.Visible;
+                btnSherlock.Visibility = Visibility.Hidden;
+
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+     
 
         }
 
@@ -373,6 +392,8 @@ namespace OSINTBrowser
         {
             c = new Record();
             c.captureType = "Record";
+            btnRecord.Visibility = Visibility.Hidden;
+            btnStop.Visibility = Visibility.Visible;
             c.screenCapture(currentUrl);
 
             
@@ -380,7 +401,16 @@ namespace OSINTBrowser
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
+            btnRecord.Visibility = Visibility.Visible;
+            btnStop.Visibility = Visibility.Hidden;
             stop_Recording(c as Record);
+            
+            System.Drawing.Bitmap bmp = (Bitmap)System.Drawing.Image.FromFile(@"C:\Users\saral\OneDrive\Desktop\Misc\2022_03_02_Testernson");
+            CaptureWindow cpw = new CaptureWindow(txtAddressBar.Text);
+            cpw.showScreenshot(bmp, 3);
+            cpw.Topmost = true;
+            cpw.Show();
+
         }
 
         private void stop_Recording (Record c)

@@ -64,9 +64,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-   
 
+        
         <DataTemplate x:Key="BrowserTabHeaderTemplate">
             <Grid Height="20">
                 <Grid.ColumnDefinitions>
@@ -76,7 +75,8 @@
                 </Grid.ColumnDefinitions>
                 <Rectangle Fill="Black"/>
                 <TextBlock Text="jhkhjh" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource wbLight}"/>
-                <Button Grid.Column="2" Width="16" Height="16" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}">
+                <Button Grid.Column="2" Width="16" Height="16" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" 
+                        Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}">
                     <Viewbox>
                         <Image Source="/Resources/close.png"/>
                     </Viewbox>
