@@ -28,15 +28,20 @@ namespace OSINTBrowser
                 myProcessStartInfo.CreateNoWindow = true;
                 myProcessStartInfo.UseShellExecute = false;
                 myProcessStartInfo.RedirectStandardOutput = true;
-                myProcessStartInfo.Arguments = "/r C:\\Users\\saral\\source\\repos\\sherlock\\sherlock\\sherlock.py " + searchForThis;
+                myProcessStartInfo.Arguments = "/r C:\\Users\\saral\\source\\repos\\sherlock\\sherlock\\sherlock.py -fo " + Case.CaseFilePath + " " + searchForThis;
                 myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
                 Process myProcess = new Process();
                 myProcess.StartInfo = myProcessStartInfo;
-                myProcess.Start();
+                
                 //myProcess.WaitForExit();
                 myProcess.EnableRaisingEvents = true;
-                myProcess.Exited += new EventHandler(processExit);
+                myProcess.Exited += (a, b) =>
+                {
+                    MessageBox.Show("Sherlock scan finished");
+                    processFinished();
+                };
+                myProcess.Start();
                 Console.WriteLine("Sherlock Finished");
 
                 return true;
@@ -56,19 +61,23 @@ namespace OSINTBrowser
 
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message, "Sherlock could not launch, try again later.");
+                MessageBox.Show(ex.Message, "Sherlock could not launch, try again later.");
                 return false;
 
             }
 
 
         }
-        private void processExit(object sender, EventArgs e)
-        {
-            Process p = sender as Process;
-            Console.WriteLine(p.ExitCode);
-            processFinished();
-        }
+        //private void processExit(object sender, EventArgs e)
+        //{
+        //    Process p = sender as Process;
+        //    Console.WriteLine(p.ExitCode);
+        //    if (p.ExitCode == 0)
+        //    {
+        //        processFinished();
+        //    }
+        //    return;
+        //}
 
         public bool processFinished()
         {
@@ -155,29 +164,36 @@ namespace OSINTBrowser
 
         private string displayHTML(string search)
         {
-            string path = @"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\bin\x64\Debug\" + search + ".txt";
-            string readText = File.ReadAllText(path);
-
-            var sb = new StringBuilder();
-
-            var sr = new StringReader(readText);
-            var str = sr.ReadLine();
-            while (str != null)
+            try
             {
-                str = str.TrimEnd();
-                str.Replace("  ", " &nbsp;");
-                if (str.Length > 80)
-                {
-                    sb.AppendLine($"<p>{str}</p>");
-                }
-                else if (str.Length > 0)
-                {
-                    sb.AppendLine($"<a href=''>{str}</a></br>");
-                }
-                str = sr.ReadLine();
-            }
+                string path = Case.CaseFilePath + "\\" + search + ".txt";
+                string readText = File.ReadAllText(path);
 
-            return sb.ToString();
+                var sb = new StringBuilder();
+
+                var sr = new StringReader(readText);
+                var str = sr.ReadLine();
+                while (str != null)
+                {
+                    str = str.TrimEnd();
+                    str.Replace("  ", " &nbsp;");
+                    if (str.Length > 80)
+                    {
+                        sb.AppendLine($"<p>{str}</p>");
+                    }
+                    else if (str.Length > 0)
+                    {
+                        sb.AppendLine($"<a href=''>{str}</a></br>");
+                    }
+                    str = sr.ReadLine();
+                }
+
+                return sb.ToString();
+            }
+            catch
+            {
+                return "Sherlock results return failed - possible empty field name. Try again :)";
+            }
 
         }
 

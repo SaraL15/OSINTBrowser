@@ -108,7 +108,7 @@ namespace OSINTBrowser
                         {
                             string[] logLines =
                             {
-                            //Case.CaseCreationDate, "Case Name: " + Case.CaseName, "Investigator Name: " + Case.CaseUser
+                            "Case Name: " + Case.CaseName + "  Case opened: " + Case.CaseCreationDate
                         };
                             foreach (string l in logLines)
                             {
@@ -120,8 +120,8 @@ namespace OSINTBrowser
                     //dbc.create_new_table();
                     dbc.addNewCase(now, subjectName, description);
 
-                    Case.CaseFilePath = folder;
-                    ;
+                    Case.CaseFilePath = pathString;
+                    
                     string lastFolderName = Path.GetFileName(pathString);
                     string folderName = lastFolderName.Substring(11);
                     dbc.getTheCase(folderName);

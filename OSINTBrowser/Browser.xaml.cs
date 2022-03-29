@@ -31,7 +31,7 @@ namespace OSINTBrowser
         }
  
         string queryUrl = "https://duckduckgo.com/?q=";
-        Sherlock s = new Sherlock();
+        Sherlock s = null;
         Capture c = null;
 
 
@@ -41,6 +41,7 @@ namespace OSINTBrowser
             loadBookmarks();
         }
 
+        //Webbrowser buttons and tabs.
         //Opens a new tab containing a browser.
         private void btnNewTab_Click(object sender, RoutedEventArgs e)
         {
@@ -58,25 +59,6 @@ namespace OSINTBrowser
             currentTabItem = newTab;
             browser.Loaded += FinishedLoadingWebpage;
         }
-
-        //public void htmlTab(string resultHtml)
-        //{
-        //    TabItem newTab = new TabItem();
-        //    ChromiumWebBrowser browser = new ChromiumWebBrowser();
-        //    tabControl.Items.Add(newTab);
-        //    tabCount++;
-
-        //    newTab.Content = browser;
-        //    browser.Address = "https://www.google.com";
-
-        //    newTab.Header = "New Tab";
-
-        //    currentBrowser = browser;
-        //    currentTabItem = newTab;
-        //    browser.Loaded += FinishedLoadingWebpage;
-
-        //}
-
 
         //Tries to put name of the site on the tab **TODO - needs to be fixed as it shows massive urls still :D**
         private void FinishedLoadingWebpage(object sender, RoutedEventArgs e)
@@ -137,7 +119,7 @@ namespace OSINTBrowser
             }
         }
 
-        //Turn this into a search bar on the browser - be able to select different search engines.
+        //Turn this into a search bar on the browser - able to select different search engines.
         private void Search()
         {
             {
@@ -203,25 +185,15 @@ namespace OSINTBrowser
         private void btnScreenshot_Click(object sender, RoutedEventArgs e)
         {
             Capture captureThis = new Screenshot();
-            captureThis.screenCapture(currentUrl);
+            captureThis.ScreenCapture(currentUrl);
         }
-
 
 
         private void btnSnip_Click(object sender, RoutedEventArgs e)
         {
             Capture captureThisSnip = new Screensnip();
             captureThisSnip.captureType = "Screen Snip";
-            captureThisSnip.screenCapture(currentUrl);
-        }
-
-        private void ChangeSearch_Click(object sender, RoutedEventArgs e)
-        {
-            var selectSearch = sender as FrameworkElement;
-            if (selectSearch != null)
-            {
-               // ChangeSearch.ContextMenu.IsOpen = true;
-            }
+            captureThisSnip.ScreenCapture(currentUrl);
         }
         
         //Google
@@ -239,7 +211,7 @@ namespace OSINTBrowser
         //DuckDuckGo
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
-            //Probably set as a default rather than google.
+            //Set as a default search.
             queryUrl = "https://duckduckgo.com/?q=";
         }
 
@@ -250,18 +222,14 @@ namespace OSINTBrowser
             queryUrl = "https://yandex.com/search/?text=";
         }
 
-        private Sherlock getSherlockInstance()
-        {
-            
-            return s;
-        }
         private void Sherlock_Click(object sender, RoutedEventArgs e)
         {
             string searchTermSherlock = txtSearchBox.Text;
             bool success = false;
             try
             {
-                Sherlock s = getSherlockInstance();
+                //Sherlock s = getSherlockInstance();
+                s = new Sherlock();
                 s.launchSherlock(searchTermSherlock);
                 string folder = Case.CaseFilePath;
                 using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
@@ -327,9 +295,7 @@ namespace OSINTBrowser
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-
-
-                Sherlock s = getSherlockInstance();
+                //Sherlock s = getSherlockInstance();
                 string thisSearch = s.searchForThis;
                 string resultHtml = s.makeNewTab(thisSearch);
 
@@ -337,12 +303,13 @@ namespace OSINTBrowser
                 ChromiumWebBrowser b = new ChromiumWebBrowser();
                 tabControl.Items.Add(nt);
                 nt.Content = b;
-                nt.Header = "Results";
+                nt.Header = "Sherlock";
 
 
                 currentBrowser = b;
                 currentTabItem = nt;
                 b.LoadHtml(resultHtml, "http://results/");
+            
                 b.MouseLeftButtonDown += B_MouseLeftButtonDown;
             
         }
@@ -394,7 +361,7 @@ namespace OSINTBrowser
             c.captureType = "Record";
             btnRecord.Visibility = Visibility.Hidden;
             btnStop.Visibility = Visibility.Visible;
-            c.screenCapture(currentUrl);
+            c.ScreenCapture(currentUrl);
 
             
         }
@@ -405,9 +372,9 @@ namespace OSINTBrowser
             btnStop.Visibility = Visibility.Hidden;
             stop_Recording(c as Record);
             
-            System.Drawing.Bitmap bmp = (Bitmap)System.Drawing.Image.FromFile(@"C:\Users\saral\OneDrive\Desktop\Misc\2022_03_02_Testernson");
+            System.Drawing.Bitmap bmp = (Bitmap)System.Drawing.Image.FromFile(@"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\Resources\rec_placeholder.bmp");
             CaptureWindow cpw = new CaptureWindow(txtAddressBar.Text);
-            cpw.showScreenshot(bmp, 3);
+            cpw.ShowScreenshot(bmp, 3);
             cpw.Topmost = true;
             cpw.Show();
 
@@ -417,6 +384,26 @@ namespace OSINTBrowser
         {
             c.EndRecording();
 
+        }
+
+        private void btnReport_Click(object sender, RoutedEventArgs e)
+        {
+            ReportHTML r = new ReportHTML();
+            r.GetFiles();
+            MessageBox.Show("Report created.");
+
+            string resultHtml = r.GetFiles();
+
+            TabItem nt = new TabItem();
+            ChromiumWebBrowser b = new ChromiumWebBrowser();
+            tabControl.Items.Add(nt);
+            nt.Content = b;
+            nt.Header = "Report";
+
+
+            currentBrowser = b;
+            currentTabItem = nt;
+            b.LoadHtml(resultHtml, "http://results/");
         }
     }
 }

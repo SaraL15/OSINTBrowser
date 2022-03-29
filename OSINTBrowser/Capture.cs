@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using ScreenRecorderLib;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Threading;
-using System.Threading.Tasks;
 namespace OSINTBrowser
 {
     /*Capture is an abstract class. Screenshot, Screensnip and Video are inherited from it.
@@ -22,12 +16,11 @@ namespace OSINTBrowser
 
         public string captureType { get; set; }
         
-
-        public abstract void screenCapture(string source);
-
+        public abstract void ScreenCapture(string source);
 
 
-        public void logCapture(string captureDate, string captureName, string captureDesc, string captureSource)
+        //Logs the capture within Log.txt
+        public void LogCapture(string captureDate, string captureName, string captureDesc, string captureSource)
         {
             using (StreamWriter sw = new StreamWriter(Path.Combine(Case.CaseFilePath, "Log.txt"), true))
             {
@@ -35,14 +28,13 @@ namespace OSINTBrowser
             }
         }
 
-        public void saveCapture(Image bmp, string description, string source, bool? check)
-        {
-            
+        //Saves the capture in the Case folder and the database. A hash of the file is created and also saved into database.
+        public void SaveCapture(Image bmp, string description, string source, bool? check)
+        {            
             DateTime dateTime = DateTime.Now.ToUniversalTime();
             string dateForLog = dateTime.ToString();
             string captureDate = dateTime.ToString("yyMMddHHmmss");
             string captureName = "capture" + captureDate;
-            //string saveCaptureName = "";
 
             SaveFileDialog saveDlog = new SaveFileDialog();
             saveDlog.InitialDirectory = Case.CaseFilePath;
@@ -53,20 +45,11 @@ namespace OSINTBrowser
             saveDlog.Filter = "PNG File | *.png";
             System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
 
-
-            //bmp.Save(saveDlog.FileName);
-            //logCapture(captureDate, captureName, description, source);
-            //MessageBox.Show("Capture Saved in Case Folder");
-
             if (saveDlog.ShowDialog() == DialogResult.OK)
             {
                 captureName = saveDlog.FileName;
                 bmp.Save(saveDlog.FileName);
-
-                //saveCaptureName = new DirectoryInfo(captureName).Name;
-                logCapture(dateForLog, captureName, description, source);
-                
-
+                LogCapture(dateForLog, captureName, description, source);
             }
 
             //Get the hash of the file to store into the database.
@@ -76,150 +59,128 @@ namespace OSINTBrowser
             SHA512 shaM = new SHA512Managed();
             result = shaM.ComputeHash(data);
 
-
             //Open database connection and save
             DbConnect dbc = new DbConnect();
             dbc.open_connection();
             dbc.captureToDatabase(dateTime, description, source, captureSaveLocation, check, result);
-
-
-
         }
     }
 
-    //Take a Screenshot
+    //Screenshot class, inherited from Capture
     public class Screenshot : Capture
-    {
-        
-        //Screenshots - currently only the primary display.
-        public override void screenCapture(string source)
+    {      
+        //Screenshot - **currently only the primary display.**
+        public override void ScreenCapture(string source)
         {
             captureType = "Screenshot";
             //Create a new bitmap.
             var bmpScreenshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, PixelFormat.Format32bppArgb);
-
             // Create a graphics object from the bitmap.
-            var gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-
+            var gfxScreenshot = Graphics.FromImage(bmpScreenshot);                     
             // Take the screenshot from the upper left corner to the right bottom corner.
             gfxScreenshot.CopyFromScreen(Screen.PrimaryScreen.Bounds.X, Screen.PrimaryScreen.Bounds.Y, 0, 0, Screen.PrimaryScreen.Bounds.Size,
                                         CopyPixelOperation.SourceCopy);
 
-            //saveCapture(bmpScreenshot);
+            //Opens CaptureWindow for user to add some more infomation.
             CaptureWindow cpw = new CaptureWindow(source);
-            cpw.showScreenshot(bmpScreenshot, 1);
+            cpw.ShowScreenshot(bmpScreenshot, 1);
             cpw.Topmost = true;
             cpw.Show();
-
-
-            //saveCapture(bmpScreenshot, captureType);
-
         }
-
-
     }
 
-    //Take a snip
+    //Snipping class, inherited from Capture
     public class Screensnip : Capture
     {
-        private Rectangle canvasBounds = Screen.GetBounds(System.Drawing.Point.Empty);
-        public override void screenCapture(string source)
+        private Rectangle canvasBounds = Screen.GetBounds(Point.Empty);
+        public override void ScreenCapture(string source)
         {
-            //string desc = "test";
-            //string source = "test1";
-            //bool check = false;
+            try
+            {
+                SetCanvas();
+                Console.WriteLine(canvasBounds.Width + " " + canvasBounds.Height);
+                var bmpScreenshot = new Bitmap(canvasBounds.Width, canvasBounds.Height, PixelFormat.Format32bppArgb);
+                var gfxScreenshot = Graphics.FromImage(bmpScreenshot);
+                gfxScreenshot.CopyFromScreen(canvasBounds.Left, canvasBounds.Top, 0, 0, bmpScreenshot.Size);
+                gfxScreenshot.Save();
 
-            setCanvas();
-            Console.WriteLine(canvasBounds.Width + " " + canvasBounds.Height);
-            var bmpScreenshot = new Bitmap(canvasBounds.Width, canvasBounds.Height, PixelFormat.Format32bppArgb);
-            var gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-            gfxScreenshot.CopyFromScreen(canvasBounds.Left, canvasBounds.Top, 0, 0, bmpScreenshot.Size);
-
-            gfxScreenshot.Save();
-            //saveCapture(bmpScreenshot, desc, source, check);
-
-            CaptureWindow cpw = new CaptureWindow(source);
-            cpw.showScreenshot(bmpScreenshot, 2);
-            cpw.Topmost = true;
-            cpw.Show();
-
-
-            //Bitmap snipped = new Bitmap(bmpScreenshot);
-            //Rectangle snippedRect = new Rectangle(0, 0, 100, 100);
-            //Bitmap snippedBitmap = snipped.Clone(snippedRect, snipped.PixelFormat);
-
-
+                CaptureWindow cpw = new CaptureWindow(source);
+                cpw.ShowScreenshot(bmpScreenshot, 2);
+                cpw.Topmost = true;
+                cpw.Show();
+            }
+            catch
+            {
+                return;
+            }
 
         }
 
         //Sets the 'overlay' canvas for the screensnip
-        public void setCanvas()
+        public void SetCanvas()
         {
             using (Canvas canvas = new Canvas())
             {
-                if (canvas.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (canvas.ShowDialog() == DialogResult.OK)
                 {
                     canvasBounds = canvas.GetRectangle();
                 }
             }
-
         }
     }
 
+    //Record class, inherited from Capture
     public class Record : Capture
     {
-        Recorder _rec;
+        Recorder rec;
         string videoPath = "";
 
-        public override void screenCapture(string source)
+        //Entry method. Calls createRecording and LogCapture
+        public override void ScreenCapture(string source)
         {
             string dateTime = DateTime.Now.ToString();
             try
-            {
-                
+            {               
                 CreateRecording(dateTime);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            }
-            
-            logCapture(dateTime, videoPath, "Capture recording", source);
-
+            }           
+            LogCapture(dateTime, videoPath, "Capture recording", source);
         }
 
-        
+        //Records the main display with audio.
         public void CreateRecording(string dateTime)
         {
             try
-            {
-                
-                //string videoPath = Path.Combine(Path.GetTempPath(), "test.mp4");
-                _rec = Recorder.CreateRecorder(new RecorderOptions
+            {               
+                rec = Recorder.CreateRecorder(new RecorderOptions
                 {
                     AudioOptions = new AudioOptions
                     {
                         IsAudioEnabled = true,
                     }
                 }); 
-                _rec.OnRecordingComplete += Rec_OnRecordingComplete;
-                _rec.OnRecordingFailed += Rec_OnRecordingFailed;
-                _rec.OnStatusChanged += Rec_OnStatusChanged;
+                rec.OnRecordingComplete += Rec_OnRecordingComplete;
+                rec.OnRecordingFailed += Rec_OnRecordingFailed;
+                rec.OnStatusChanged += Rec_OnStatusChanged;
                 //Record to a file
                 videoPath = Path.Combine(Case.CaseFilePath, dateTime);
-                _rec.Record(videoPath);
+                rec.Record(videoPath);
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Failed to record, try again." + ex.Message);
                 Console.WriteLine(ex.Message);
-            }
-            
+            }            
         }
         public void EndRecording()
         {
-            _rec.Stop();
+            rec.Stop();
         }
+
+        //From ScreenRecorderLib documentation.
         private void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
         {
             //Get the file path if recorded to a file
@@ -234,14 +195,15 @@ namespace OSINTBrowser
             RecorderStatus status = e.Status;
         }
 
-        public void saveRecording(string description, string source, bool? check)
+        //Saves the recording to the database
+        public void SaveRecording(string description, string source, bool? check)
         {
             DateTime dateTime = DateTime.Now.ToUniversalTime();
             string captureSaveLocation = Case.CaseFilePath;
 
             //**TODO get hash for MP3 file** **Currently a placeholder image**
 
-            System.Drawing.Bitmap placeholder = (Bitmap)System.Drawing.Image.FromFile(@"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\Resources\rec_placeholder.bmp");
+            Bitmap placeholder = (Bitmap)Image.FromFile(@"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\Resources\rec_placeholder.bmp");
             Hashing h = new Hashing();
             Byte[] data = h.ImageToByte(placeholder);
             SHA512 shaM = new SHA512Managed();

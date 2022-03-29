@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -26,7 +27,7 @@ namespace OSINTBrowser
         }
 
   
-        public void showScreenshot(Bitmap image, int type)
+        public void ShowScreenshot(Bitmap image, int type)
         {          
             AddToPreview(image);
             captureType = type;
@@ -69,21 +70,28 @@ namespace OSINTBrowser
             if (captureType == 1)
             {           
                 Capture c = new Screenshot();
-                c.saveCapture(saveThisImage, desc, source, check);
+                c.SaveCapture(saveThisImage, desc, source, check);
                 this.Close();
+                return;
             }
 
             if (captureType == 2)
             {
                 Capture s = new Screensnip();
-                s.saveCapture(saveThisImage, desc, source, check);
+                s.SaveCapture(saveThisImage, desc, source, check);
                 this.Close();
+                return;
+            }
+            if (captureType == 3)
+            {
+                Record r = new Record();
+                r.SaveRecording(desc, source, check);
+                this.Close();
+                return;
             }
             else
             {
-                Record r = new Record();
-                r.saveRecording(desc, source, check);
-                this.Close();
+                Console.WriteLine("Unknown Capture");
             }
         }
 

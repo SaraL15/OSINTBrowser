@@ -24,9 +24,11 @@
 
 
         <!--Menu bar and options -->
+        
         <!--<Menu Height="25" VerticalAlignment="Center" Background="{StaticResource wbBlue}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">-->
             <!--<Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>-->
         <Grid Grid.Row="0" Background="{StaticResource wbBlue}" Grid.ColumnSpan="3" />
+        <Button x:Name="btnReport" Content="Report" Click="btnReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top"/>
         <Button x:Name="btnSherlock" Content="Sherlock" Click="Sherlock_Click" Style="{StaticResource wbMenuButtons}" Margin="10,2,0,2" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right"/>
         <Button x:Name="btnTest" Click="btnTest_Click" Style="{StaticResource wbMenuButtons}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,2,0,2" Visibility="Hidden">
                 <Viewbox>
