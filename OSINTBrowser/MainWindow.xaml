@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:OSINTBrowser"
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
-        Title="OSIB" Height="450" Width="600" WindowStartupLocation="CenterScreen" Cursor="Arrow" ResizeMode="CanMinimize" SizeToContent="Width">
+        Title="Marple" Height="450" Width="600" WindowStartupLocation="CenterScreen" Cursor="Arrow" ResizeMode="CanMinimize" SizeToContent="Width">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30*"/>
@@ -23,10 +23,10 @@
         <Grid Grid.Row="1" Background="{StaticResource wbBlue}" Grid.ColumnSpan="2"/>
         <Grid Grid.Row="2" Background="{StaticResource wbLight}" Grid.ColumnSpan="2"/>
         <Grid Grid.Row="3" Background="{StaticResource wbLight}" Grid.ColumnSpan="2"/>
-        
-        <Label x:Name="lblTitle" Content="Open Source Investigation Browser" VerticalAlignment="Center" HorizontalAlignment="Center" 
+
+        <Label x:Name="lblTitle" Content="Marple" VerticalAlignment="Center" HorizontalAlignment="Center" 
                Grid.Column="0" Grid.Row="1" FontFamily="Cascadia Code" FontSize="26" BorderBrush="#1d2428" Background="{StaticResource wbDarkerBlue}" 
-               Foreground="{StaticResource wbLight}" BorderThickness="2" Height="60" Grid.ColumnSpan="2" Width="516" Margin="42,0,42,0">
+               Foreground="{StaticResource wbLight}" BorderThickness="2" Height="60" Grid.ColumnSpan="2" Width="110">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>

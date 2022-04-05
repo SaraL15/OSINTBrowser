@@ -1,0 +1,53 @@
+﻿<Window x:Class="OSINTBrowser.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OSINTBrowser"
+        mc:Ignorable="d"
+        Title="Marple - Report" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+            <RowDefinition Height="90"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{StaticResource wbBlue}" Grid.ColumnSpan="2"/>
+        <Label x:Name="lblTitle" Content="Report" HorizontalAlignment="Left" Margin="30,10,0,10" Foreground="{StaticResource wbLight}" 
+               VerticalAlignment="Center" FontFamily="Cascadia Code" FontSize="30" Height="44" Width="280"/>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Label x:Name="lblCaseDescription" Content="Brief case description:" FontSize="20" Margin="20"/>
+        </Grid>
+        
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Label x:Name="lblAnyOtherDetails" Content="Any other comments:" FontSize="20" Margin="20"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="0">
+            <TextBox x:Name="txtDesc" Height="180" Width="350" AcceptsReturn="True" TextWrapping="Wrap"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <TextBox x:Name="txtComment" Height="180" Width="350" AcceptsReturn="True" TextWrapping="Wrap"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="2">
+            <Button x:Name="btnProduceReport" Content="Report" Style="{DynamicResource wbButtons}" Height="50" Width="100" Margin="100,20,200,20" Click="btnProduceReport_Click"/>
+            <Button x:Name="btnCancelReport" Content="Cancel" Style="{DynamicResource wbButtons}" Height="50" Width="100" Margin="250,20,50,20" Click="btnCancelReport_Click"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="0">
+            <CheckBox x:Name="chkCloseCase" Content="Check to close the case" IsChecked="False" Height="30" FontSize="16" Margin="25"/>
+
+        </Grid>
+
+    </Grid>
+</Window>

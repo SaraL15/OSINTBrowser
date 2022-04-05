@@ -175,6 +175,9 @@
     </ApplicationDefinition>
     <Compile Include="Report.cs" />
     <Compile Include="ReportHTML.cs" />
+    <Compile Include="ReportWindow.xaml.cs">
+      <DependentUpon>ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sherlock.cs" />
     <Page Include="Browser.xaml">
       <SubType>Designer</SubType>
@@ -210,6 +213,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NewCase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

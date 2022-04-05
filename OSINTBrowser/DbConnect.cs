@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace OSINTBrowser
 {
@@ -23,19 +22,18 @@ namespace OSINTBrowser
             Console.WriteLine("Connection Open");
         }
 
-        public void close_connection()
-        {
-            cnn.Close();
-        }
+        //public void close_connection()
+        //{
+        //    cnn.Close();
+        //}
 
+        //Evidence capture - added to database.
         public void captureToDatabase(DateTime captureDate, string desc, string source, string captureLocation, bool? check, byte[] hash)
         {
             int caseid = Case.caseID;
             int userid = Case.userID;
 
             SqlCommand cmd;
-            //SqlDataAdapter adapter = new SqlDataAdapter();
-            //int caseid = get_caseID();
             byte[] filepath = Encoding.ASCII.GetBytes(captureLocation);
 
             string query = "INSERT INTO Evidence (caseID, userID, eviDesc, indecentFlag, captureDate, sourceLink, filePath, fileHash) " +
@@ -53,16 +51,15 @@ namespace OSINTBrowser
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
-            cnn.Close();
-            
-
+            cnn.Close();          
         }
         
+        //Adding a new case to the database.
         public void addNewCase(DateTime creationDate, string subjectName, string description)
         {
             int userid = getUserId();
             SqlCommand cmd;
-            //**TEMP VARIABLES WHILE TESTING**
+            //**TEMP VARIABLES**
             string tempEncryptionKey = "1111";
 
             byte[] tempKey = Encoding.ASCII.GetBytes(tempEncryptionKey);
@@ -82,8 +79,10 @@ namespace OSINTBrowser
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
+            cnn.Close();
         }
 
+        //Getting the user ID
         public int getUserId()
         {
             //**TEMP HARD CODED USERNAME TO GET ID**
@@ -95,14 +94,14 @@ namespace OSINTBrowser
             using (cmd = new SqlCommand(query, cnn))
             {
                 cmd.Parameters.AddWithValue("@name", invest);
-                //cmd.ExecuteReader();
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cmd.Dispose();
-
             }
             return id;
+            cnn.Close();
         }
 
+        //Updating the case when it has last been accessed.
         public void updateDateAccessed(int caseID)
         {
             DateTime now = DateTime.Now;
@@ -115,21 +114,11 @@ namespace OSINTBrowser
                 cmd.Parameters.AddWithValue("@caseID", caseID);
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
-        //        {
-        //            cmd.Dispose();
-        //            try
-        //        {
-        //cmd.Dispose();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.Write(ex.ToString());
-        //        return;
             }
-          
+            cnn.Close();        
         }
 
+        //Updates the Case class with caseId, userId and caseName.
         public void getTheCase(string caseName)
         {
             open_connection();
@@ -146,10 +135,38 @@ namespace OSINTBrowser
                     Case.caseName = reading["caseName"].ToString();
                 }
                 cmd.Dispose();
-
             }
             updateDateAccessed(Case.caseID);
+            cnn.Close();
         }
+
+        //Used for the end report
+        public List<String> getReport()
+        {
+            List<String> data = new List<string>()
+                ;
+            int thisCase = Case.caseID;
+            open_connection();
+            SqlCommand cmd;
+            string query = "SELECT captureDate, sourceLink, eviDesc, filePath, indecentFlag FROM Evidence WHERE caseID = @caseID";
+            using (cmd = new SqlCommand(query, cnn))
+            {
+                cmd.Parameters.AddWithValue("@caseID", thisCase);
+                SqlDataReader reading = cmd.ExecuteReader();
+                while (reading.Read())
+                {
+                    data.Add(reading["captureDate"].ToString());
+                    data.Add(reading["sourceLink"].ToString());
+                    data.Add(reading["eviDesc"].ToString());
+                    data.Add(reading["filePath"].ToString());
+                    data.Add(reading["indecentFlag"].ToString());
+                }
+            }
+            cmd.Dispose();
+            return data;
+        }
+        
+
     }
 
 }

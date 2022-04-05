@@ -9,7 +9,7 @@
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
       
         mc:Ignorable="d"
-        Title="OSIB" Height="1080" Width="1920" Background="#d3ebfd" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Resources/logo.png">
+        Title="Marple" Height="1080" Width="1920" Background="#d3ebfd" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Resources/logo.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60*"/>
@@ -24,26 +24,27 @@
 
 
         <!--Menu bar and options -->
-        
+
         <!--<Menu Height="25" VerticalAlignment="Center" Background="{StaticResource wbBlue}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">-->
-            <!--<Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>-->
+        <!--<Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>-->
         <Grid Grid.Row="0" Background="{StaticResource wbBlue}" Grid.ColumnSpan="3" />
-        <Button x:Name="btnReport" Content="Report" Click="btnReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top"/>
-        <Button x:Name="btnSherlock" Content="Sherlock" Click="Sherlock_Click" Style="{StaticResource wbMenuButtons}" Margin="10,2,0,2" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right"/>
-        <Button x:Name="btnTest" Click="btnTest_Click" Style="{StaticResource wbMenuButtons}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,2,0,2" Visibility="Hidden">
-                <Viewbox>
+        <Button x:Name="btnReport" Content="Produce Report" Click="btnReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95"/>
+        <Button x:Name="btnShowReport" Content="Show Report" Click="btnShowReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95" Visibility="Hidden"/>
+        <!--<Button x:Name="btnSherlock" Content="Running..." Style="{StaticResource wbMenuButtons}" Margin="10,2,0,2" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Visibility="Hidden"/>-->
+        <Button x:Name="btnSherlockResults" Content="Sherlock" Click="btnSherlockResults_Click" Style="{StaticResource wbMenuButtons}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,2,0,2" Visibility="Hidden">
+            <!--<Viewbox>
                     <Image Source="Resources/tick.png"></Image>
-                </Viewbox>
+                </Viewbox>-->
         </Button>
 
 
 
-       <!-- </Menu>-->
-        
-       
+        <!-- </Menu>-->
+
+
 
         <!--Window is split into three columns and three rows-->
-       
+
         <Grid Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -66,7 +67,7 @@
                 <Button x:Name="btnRecord" Style="{StaticResource wbButtons}" Click="btnRecord_Click" Visibility="Visible">
                     <Viewbox>
                         <Image Source="Resources/record.png"/>
-                    </Viewbox>  
+                    </Viewbox>
                 </Button>
                 <Button x:Name="btnStop" Style="{StaticResource wbButtons}" Click="btnStop_Click" Visibility="Hidden" Margin="-26,5,5,5">
                     <Viewbox>
@@ -79,30 +80,30 @@
 
             </StackPanel>
 
-                <!--Webbrowser buttons, URL and search text boxes-->
+            <!--Webbrowser buttons, URL and search text boxes-->
             <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
 
             </StackPanel>
 
             <!-- Address box and go button -->
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                <Button x:Name="btnBack" Padding="5,0" Click="btnBack_Click" Style="{DynamicResource wbButtons}" Margin="175,2,0,2">
+                <Button x:Name="btnBack" Padding="5,0" Click="btnBack_Click" Style="{DynamicResource wbButtons}" Margin="175,2,0,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/back.png"></Image>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnFwd" Padding="5,0" Click="btnFwd_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2">
+                <Button x:Name="btnFwd" Padding="5,0" Click="btnFwd_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/forward.png"></Image>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnRefresh" Padding="5,0" Click="btnRefresh_Click" Style="{DynamicResource wbButtons}" Margin="5,2,2,2">
+                <Button x:Name="btnRefresh" Padding="5,0" Click="btnRefresh_Click" Style="{DynamicResource wbButtons}" Margin="5,2,2,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/reload.png"></Image>
                     </Viewbox>
                 </Button>
-                <TextBox x:Name="txtAddressBar" Height="26" MinWidth="200" Width="400" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14"/>
-                <Button x:Name="btnGo" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2">
+                <TextBox x:Name="txtAddressBar" Height="26" MinWidth="200" Width="400" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14" IsEnabled="False"/>
+                <Button x:Name="btnGo" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/go.png"></Image>
                     </Viewbox>
@@ -111,37 +112,40 @@
 
 
             <!-- Search box and button -->
+            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right">
 
-            <Menu x:Name="mnuSearch" Grid.Column="2" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Center" Style="{StaticResource wbSubMenuItem}">
-                <MenuItem Header="" Style="{StaticResource wbMenuItem}">
-                    <MenuItem.Icon>
-                        <Image Source="/resources/searchsettings.png"/>
-                    </MenuItem.Icon>
-                    <MenuItem Header="Google" Background="{StaticResource wbBlue}" Click="MenuItem_Click_1"/>
-                    <MenuItem Header="Bing" Background="{StaticResource wbBlue}" Click="MenuItem_Click"/>
-                    <MenuItem Header="Duckduckgo" Background="{StaticResource wbBlue}" Click="MenuItem_Click_2"/>
-                    <MenuItem Header="Yandex" Background="{StaticResource wbBlue}" Click="MenuItem_Click_3"/>
-                </MenuItem>
-            </Menu>
-            <Menu x:Name="mnuBookmark" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="180,0,0,0" Style="{StaticResource wbSubMenuItem}">
-                <MenuItem Header="" Style="{StaticResource wbMenuItem}">
-                    <MenuItem.Icon>
-                        <Image Source="/resources/bookmark.png"/>
-                    </MenuItem.Icon>
-                    <MenuItem Header="Twitter" Background="{StaticResource wbBlue}"/>
-                </MenuItem>
-            </Menu>
+                <Menu x:Name="mnuBookmark" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,5,0" Style="{StaticResource wbSubMenuItem}">
+                    <MenuItem Header="" Style="{StaticResource wbMenuItem}">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/bookmark.png"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="Twitter" Background="{StaticResource wbBlue}"/>
+                    </MenuItem>
+                </Menu>
+                <Menu x:Name="mnuSearch" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Style="{StaticResource wbSubMenuItem}">
+                    <MenuItem Header="" Style="{StaticResource wbMenuItem}">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/searchsettings.png"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="Google" Background="{StaticResource wbBlue}" Click="MenuItem_Click_1"/>
+                        <MenuItem Header="Bing" Background="{StaticResource wbBlue}" Click="MenuItem_Click"/>
+                        <MenuItem Header="Duckduckgo" Background="{StaticResource wbBlue}" Click="MenuItem_Click_2"/>
+                        <MenuItem Header="Yandex" Background="{StaticResource wbBlue}" Click="MenuItem_Click_3"/>
+                        <MenuItem Header="Sherlock" Background="{StaticResource wbBlue}" Click="btnSherlock_Click"/>
+                    </MenuItem>
+                </Menu>
 
 
 
 
-            <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" HorizontalAlignment="Right" MinWidth="200" VerticalAlignment="Center" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="0,0,40,0" FontSize="14"/>
+                <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" HorizontalAlignment="Right" MinWidth="200" VerticalAlignment="Center" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="0,0,40,0" FontSize="14" IsEnabled="False"/>
 
-            <Button x:Name="btnSearch" Grid.Column="2" HorizontalAlignment="Right" Margin="5,0,10,0" VerticalAlignment="Center" Width="26" Click="btnSearch_Click" Style="{DynamicResource wbButtons}">
-                <Viewbox>
-                    <Image Source="/Resources/search.png"></Image>
-                </Viewbox>
-            </Button>
+                <Button x:Name="btnSearch" Grid.Column="2" Margin="-50,0,0,0" VerticalAlignment="Center" Width="26" Click="btnSearch_Click" Style="{DynamicResource wbButtons}" IsEnabled="False">
+                    <Viewbox>
+                        <Image Source="/Resources/search.png"></Image>
+                    </Viewbox>
+                </Button>
+            </StackPanel>
         </Grid>
 
         <!--New Tab Button-->
@@ -190,12 +194,14 @@
             </TabControl.Resources>
 
             <!--ChromiumWebBrowser inside of a Tabitem-->
-           
+
             <TabItem HeaderTemplate="{DynamicResource BrowserTabHeaderTemplate}">
 
-                <cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com"/>
+                <!--<cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com"/>-->
+                <Label x:Name="lblMarple" Content="Marple" Height="70" Width="630" Margin="708,-500,582,0"/>
             </TabItem>
-            
+
+
         </TabControl>
 
 

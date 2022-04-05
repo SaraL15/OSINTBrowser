@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PdfSharp;
 using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 
 
@@ -20,38 +21,65 @@ namespace OSINTBrowser
          * Filepath to log
          * 
          * */
-        public void CreatePdf()
+
+        public void StartReport(string desc, string comments)
         {
+            CreatePdf(desc, comments);
+
+        }
+
+
+
+        private void CreatePdf(string desc, string comments)
+        {
+            string titleName = Case.CaseName;
             int i = 0;
             int n = 0;
+            int startX = 100;
+            int startY = 300;
             List<Image> images = new List<Image>();
 
             PdfDocument document = new PdfDocument();
             PdfPage page = document.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
+            var tf = new XTextFormatter(gfx);
 
-            XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+            XFont titleFont = new XFont("Verdana", 30, XFontStyle.Bold);
+            XFont font = new XFont("Verdana", 18, XFontStyle.Regular);
+            var rect = new XRect(100, 300, 400, 100);
 
-            gfx.DrawString("Hello world", font, XBrushes.Black,
-                new XRect(20,20, page.Width, page.Height),
-                XStringFormats.Center);
+            gfx.DrawString(titleName, titleFont, XBrushes.Black, new XPoint(200, 70));
+            gfx.DrawLine(XPens.Black, new XPoint(100, 100), new XPoint(500, 100));
 
-            foreach (FileInfo captureImage in new DirectoryInfo("C:\\Users\\saral\\OneDrive\\Desktop\\OSIB\\2022_03_13_CreateNew_Test\\images").GetFiles())
-            {
-                images.Add(Image.FromFile(captureImage.FullName));
 
-                Image img = images[i];
-                MemoryStream stream = new MemoryStream();
-                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+            int l = desc.Length + 10;
+            tf.DrawString(desc, font,  XBrushes.Black, rect);
+            tf.DrawString(comments, font, XBrushes.Black, rect);
 
-                //Continue creating PDF
-                XImage xImg = XImage.FromStream(stream);
-                gfx.DrawImage(xImg, n, 0);
-                img.Dispose();
+            //gfx.DrawLine(XPens.Blue, 0, 0, 30, 30);
 
-                i = i ++;
-                n = n + 100;
-            }
+            //foreach (FileInfo captureImage in new DirectoryInfo(@"C:\Users\saral\OneDrive\Desktop\OSIB\2022_04_01_moogie").GetFiles())
+            //{
+            //    Image img = images[i];
+            //    MemoryStream stream = new MemoryStream();
+            //    if (captureImage.Name.StartsWith("capture"))
+            //    {
+            //        images.Add(Image.FromFile(captureImage.FullName));
+
+                    
+                    
+            //        img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+            //    }
+                
+
+            //    //Continue creating PDF
+            //    XImage xImg = XImage.FromStream(stream);
+            //    gfx.DrawImage(xImg, n, 0);
+            //    img.Dispose();
+
+            //    i = i ++;
+            //    n = n + 100;
+            //}
 
 
 

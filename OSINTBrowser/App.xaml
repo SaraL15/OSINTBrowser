@@ -74,7 +74,7 @@
                     <ColumnDefinition Width="25"/>
                 </Grid.ColumnDefinitions>
                 <!--<Rectangle Fill="Black"/>-->
-                <TextBlock Text="Home" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource wbLight}"/>
+                <TextBlock Text="Help" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource wbLight}"/>
                 <Button Grid.Column="2" Width="16" Height="16" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" 
                         Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}">
                     <Viewbox>

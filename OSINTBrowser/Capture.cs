@@ -40,7 +40,7 @@ namespace OSINTBrowser
             saveDlog.InitialDirectory = Case.CaseFilePath;
             saveDlog.FileName = captureName;
 
-            string captureSaveLocation = saveDlog.InitialDirectory;
+            string captureSaveLocation = saveDlog.InitialDirectory + @"\" + captureName;
             saveDlog.Title = "Save Capture";
             saveDlog.Filter = "PNG File | *.png";
             System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
