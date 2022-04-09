@@ -33,7 +33,7 @@ namespace OSINTBrowser
             try
             {
                 _results = r.GetTheFiles(caseDesc, caseComments);
-                //r.StartReport(caseDesc, caseComments);
+                //_results = r.StartReport(caseDesc, caseComments);
                 //b.displayReport(caseDesc, caseComments);
                 this.Close();
             }
@@ -43,7 +43,7 @@ namespace OSINTBrowser
             }
         }
 
-        public string thesefuckingresults()
+        public string ReportResults()
         {
             return _results;
             

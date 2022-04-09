@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 using ScreenRecorderLib;
 namespace OSINTBrowser
@@ -55,14 +56,19 @@ namespace OSINTBrowser
             //Get the hash of the file to store into the database.
             Hashing h = new Hashing();
             Byte[] data = h.ImageToByte(bmp);
-            Byte[] result;
-            SHA512 shaM = new SHA512Managed();
-            result = shaM.ComputeHash(data);
+            Byte[] hashResult;
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                hashResult = shaM.ComputeHash(data);
+            }
+
+            
+            //string strHash = Encoding.UTF8.GetString(hashResult);
 
             //Open database connection and save
             DbConnect dbc = new DbConnect();
             dbc.open_connection();
-            dbc.captureToDatabase(dateTime, description, source, captureSaveLocation, check, result);
+            dbc.captureToDatabase(dateTime, description, source, captureSaveLocation, check, hashResult);
         }
     }
 
@@ -208,6 +214,7 @@ namespace OSINTBrowser
             Byte[] data = h.ImageToByte(placeholder);
             SHA512 shaM = new SHA512Managed();
             Byte[] result = shaM.ComputeHash(data);
+           
 
             //Open database connection and save
             DbConnect dbc = new DbConnect();

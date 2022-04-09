@@ -342,7 +342,7 @@ namespace OSINTBrowser
             //r.GetTheFiles();
             //MessageBox.Show("Report created.");
 
-            string rr = rw.thesefuckingresults();
+            string rr = rw.ReportResults();
             ;
             TabItem nt = new TabItem();
             ChromiumWebBrowser cb = new ChromiumWebBrowser();

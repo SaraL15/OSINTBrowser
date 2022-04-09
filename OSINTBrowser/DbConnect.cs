@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 
 
@@ -143,12 +144,12 @@ namespace OSINTBrowser
         //Used for the end report
         public List<String> getReport()
         {
-            List<String> data = new List<string>()
-                ;
+            List<String> data = new List<string>();
+            byte[] hash = new byte[64];
             int thisCase = Case.caseID;
             open_connection();
             SqlCommand cmd;
-            string query = "SELECT captureDate, sourceLink, eviDesc, filePath, indecentFlag FROM Evidence WHERE caseID = @caseID";
+            string query = "SELECT captureDate, sourceLink, eviDesc, filePath, indecentFlag, fileHash FROM Evidence WHERE caseID = @caseID";
             using (cmd = new SqlCommand(query, cnn))
             {
                 cmd.Parameters.AddWithValue("@caseID", thisCase);
@@ -158,15 +159,49 @@ namespace OSINTBrowser
                     data.Add(reading["captureDate"].ToString());
                     data.Add(reading["sourceLink"].ToString());
                     data.Add(reading["eviDesc"].ToString());
-                    data.Add(reading["filePath"].ToString());
+                    string fp = reading["filePath"].ToString();
+                    data.Add(fp);
                     data.Add(reading["indecentFlag"].ToString());
+
+                    hash = (byte[])reading["fileHash"];
+                    Hashing h = new Hashing();
+                    string hashResults = h.checkHashes(hash, fp);
+                    data.Add(hashResults);
+
                 }
+                
             }
+
             cmd.Dispose();
             return data;
         }
-        
 
+        private string ConvertHash(byte[] data)
+        {
+            char[] chars = data.Select(b => (char)b).ToArray();
+            return new string(chars);
+        }
+        
+        //public byte[] getHash()
+        //{
+        //    byte[] hash = new byte[64];
+        //    int thisCase = Case.caseID;
+        //    open_connection();
+        //    SqlCommand cmd;
+        //    string query = "SELECT fileHash FROM Evidence WHERE caseID = @caseID";
+        //    using (cmd = new SqlCommand(query, cnn))
+        //    {
+        //        cmd.Parameters.AddWithValue("@caseID", thisCase);
+        //        SqlDataReader reading = cmd.ExecuteReader();
+        //        while (reading.Read())
+        //        {
+        //           hash = (byte[])reading["fileHash"]; 
+
+        //        }
+        //    }
+
+        //    return hash;
+        //}
     }
 
 }

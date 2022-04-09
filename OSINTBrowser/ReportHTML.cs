@@ -10,24 +10,27 @@ namespace OSINTBrowser
 {
     internal class ReportHTML
     {
+        //StringBuilder sb = new StringBuilder();
+        //string results = "";
         //When button report is clicked - get all information from the case folder, and display in HTML links.
         //StringBuilder sb = new StringBuilder();
-      
-        public void StartReport(string desc, string comment)
-        {
-            //string id = Case.caseID.ToString();
-            //string name = Case.caseName;
-            //sb.AppendLine($"<h3>Case: {id} {name}</h3></br></br>");
-            //sb.AppendLine($"<h2>Description: {desc}</br>");
-            //sb.AppendLine($"<h2>Description: {comment}</br>");
-            //if (desc.Length > 50)
-            //{
-            //    desc = desc.Insert(50, "</br>");
-            //    sb.Append(desc);
-            //}
-            //GetTheFiles();
-            
-        }
+
+        //public string StartReport(string desc, string comment)
+        //{
+        //    string id = Case.caseID.ToString();
+        //    string name = Case.caseName;
+        //    sb.AppendLine($"<h3>Case: {id} {name}</h3></br></br>");
+        //    sb.AppendLine($"<h2>Description: {desc}</br>");
+        //    sb.AppendLine($"<h2>Description: {comment}</br>");
+        //    if (desc.Length > 50)
+        //    {
+        //        desc = desc.Insert(50, "</br>");
+        //        sb.Append(desc);
+        //    }
+        //    GetTheFiles(desc, comment);
+        //    return null;
+
+        //}
 
 
  
@@ -38,9 +41,9 @@ namespace OSINTBrowser
             string id = Case.caseID.ToString();
             string name = Case.caseName;
             sb.AppendLine($"<h3>Case: {id} {name}</h3></br></br>");
-            sb.AppendLine($"<h2>Description: {desc}</br>");
-            sb.AppendLine($"<h2>Description: {comment}</br>");
-
+            sb.AppendLine($"<h4>Description: </h4>{desc}</br>");
+            sb.AppendLine($"<h4>Comment: </h4>{comment}</br></br>");
+            
             List<string> dbOutput = new List<string>();
             List<string> headers = new List<string>();
             headers.Add("<b>Date: </b>");
@@ -48,8 +51,10 @@ namespace OSINTBrowser
             headers.Add("<b>Description: </b>");
             headers.Add("<b>File Path: </b>");
             headers.Add("<b>Indicent Flag: </b>");
+            headers.Add("<b>Hash: </b>");
             DbConnect db = new DbConnect();
             dbOutput = db.getReport();
+            
 
             //var sb = new StringBuilder();
             int i = 0;
@@ -71,9 +76,9 @@ namespace OSINTBrowser
                     {
                         sb.AppendLine($"<a href='' target='_blank'>{str}</a></br>");
                     }
-                    else if (i == 4)
+                    else if (i == 5)
                     {
-                        sb.AppendLine($"{str}</br></br></br>");
+                        sb.AppendLine($"{str}></br></br>");
                     }
                     else
                     {
@@ -83,7 +88,7 @@ namespace OSINTBrowser
 
 
                     i++;
-                    if (i > 4)
+                    if (i > 5)
                     {
                         i = 0;
                     }
