@@ -22,29 +22,22 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-
         <!--Menu bar and options -->
 
         <!--<Menu Height="25" VerticalAlignment="Center" Background="{StaticResource wbBlue}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">-->
         <!--<Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>-->
         <Grid Grid.Row="0" Background="{StaticResource wbBlue}" Grid.ColumnSpan="3" />
-        <Button x:Name="btnReport" Content="Produce Report" Click="btnReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95"/>
-        <Button x:Name="btnShowReport" Content="Show Report" Click="btnShowReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95" Visibility="Hidden"/>
+        <Button x:Name="btnReport" Content="Produce Report" Click="BtnReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95"/>
+        <Button x:Name="btnShowReport" Content="Show Report" Click="BtnShowReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95" Visibility="Hidden"/>
         <!--<Button x:Name="btnSherlock" Content="Running..." Style="{StaticResource wbMenuButtons}" Margin="10,2,0,2" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Visibility="Hidden"/>-->
         <Button x:Name="btnSherlockResults" Content="Sherlock" Click="btnSherlockResults_Click" Style="{StaticResource wbMenuButtons}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,2,0,2" Visibility="Hidden">
             <!--<Viewbox>
                     <Image Source="Resources/tick.png"></Image>
                 </Viewbox>-->
         </Button>
-
-
-
         <!-- </Menu>-->
 
-
-
-        <!--Window is split into three columns and three rows-->
-
+        <!--Window is split into three columns and three rows.-->
         <Grid Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -52,58 +45,50 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <!--Capture Buttons -->
+            <!--Capture Buttons. -->
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="10,0,20,0">
-                <Button x:Name="btnScreenshot" Style="{StaticResource wbButtons}" Click="btnScreenshot_Click">
+                <Button x:Name="btnScreenshot" Style="{StaticResource wbButtons}" Click="BtnScreenshot_Click">
                     <Viewbox>
                         <Image Source="Resources/screenshot.png"/>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnSnip" Style="{StaticResource wbButtons}" Click="btnSnip_Click">
+                <Button x:Name="btnSnip" Style="{StaticResource wbButtons}" Click="BtnSnip_Click">
                     <Viewbox>
                         <Image Source="Resources/snip.png"/>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnRecord" Style="{StaticResource wbButtons}" Click="btnRecord_Click" Visibility="Visible">
+                <Button x:Name="btnRecord" Style="{StaticResource wbButtons}" Click="BtnRecord_Click" Visibility="Visible">
                     <Viewbox>
                         <Image Source="Resources/record.png"/>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnStop" Style="{StaticResource wbButtons}" Click="btnStop_Click" Visibility="Hidden" Margin="-26,5,5,5">
+                <Button x:Name="btnStop" Style="{StaticResource wbButtons}" Click="BtnStop_Click" Visibility="Hidden" Margin="-26,5,5,5">
                     <Viewbox>
                         <Image Source="Resources/stop.png"/>
                     </Viewbox>
                 </Button>
-
-
-
-
             </StackPanel>
 
-            <!--Webbrowser buttons, URL and search text boxes-->
-            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
-
-            </StackPanel>
-
-            <!-- Address box and go button -->
+            <!--Webbrowser buttons, URL and search text boxes.-->
+            <!-- Address box and go button. -->
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                <Button x:Name="btnBack" Padding="5,0" Click="btnBack_Click" Style="{DynamicResource wbButtons}" Margin="175,2,0,2" IsEnabled="False">
+                <Button x:Name="btnBack" Padding="5,0" Click="BtnBack_Click" Style="{DynamicResource wbButtons}" Margin="175,2,0,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/back.png"></Image>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnFwd" Padding="5,0" Click="btnFwd_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2" IsEnabled="False">
+                <Button x:Name="btnFwd" Padding="5,0" Click="BtnFwd_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/forward.png"></Image>
                     </Viewbox>
                 </Button>
-                <Button x:Name="btnRefresh" Padding="5,0" Click="btnRefresh_Click" Style="{DynamicResource wbButtons}" Margin="5,2,2,2" IsEnabled="False">
+                <Button x:Name="btnRefresh" Padding="5,0" Click="BtnRefresh_Click" Style="{DynamicResource wbButtons}" Margin="5,2,2,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/reload.png"></Image>
                     </Viewbox>
                 </Button>
-                <TextBox x:Name="txtAddressBar" Height="26" MinWidth="200" Width="400" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtAddressBar_KeyDown" FontSize="14" IsEnabled="False"/>
-                <Button x:Name="btnGo" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26" Width="25" Click="btnGo_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2" IsEnabled="False">
+                <TextBox x:Name="txtAddressBar" Height="26" MinWidth="200" Width="400" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="TxtAddressBar_KeyDown" FontSize="14" IsEnabled="False"/>
+                <Button x:Name="btnGo" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26" Width="25" Click="BtnGo_Click" Style="{DynamicResource wbButtons}" Margin="5,2,0,2" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/go.png"></Image>
                     </Viewbox>
@@ -111,15 +96,60 @@
             </StackPanel>
 
 
-            <!-- Search box and button -->
+            <!-- Search box and button and bookmarks. -->
             <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right">
-
                 <Menu x:Name="mnuBookmark" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,5,0" Style="{StaticResource wbSubMenuItem}">
                     <MenuItem Header="" Style="{StaticResource wbMenuItem}">
                         <MenuItem.Icon>
                             <Image Source="/resources/bookmark.png"/>
                         </MenuItem.Icon>
-                        <MenuItem Header="Twitter" Background="{StaticResource wbBlue}"/>
+                        <MenuItem Header="Social Media" Background="{StaticResource wbBlue}">
+                            <MenuItem Header="Twitter" Name="Twitter" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Facebook" Name="Facebook" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Instagram" Name="Instagram" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="LinkedIn" Name="LinkedIn" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Pinterest" Name="Pinterest" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Reddit" Name="Reddit" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="YouTube" Name="YouTube" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="TikTok" Name="TikTok" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Tweetbeaver" Name="Tweetbeaver" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Tweetdeck" Name="Tweetdeck" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Twitch" Name="Twitch" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Images" Background="{StaticResource wbBlue}">
+                            <MenuItem Header="Google" Name="Google" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Bing" Name="Bing" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Yandex" Name="Yandex" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="TinEye" Name="TinEye" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="PimEyes" Name="PimEyes" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="KarmaDecay" Name="KarmaDecay" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Wolfram" Name="Wolfram" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Flickr" Name="Flickr" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Jeffery's" Name="Jefferys" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Email" Background="{StaticResource wbBlue}">
+                            <MenuItem Header="EmailRep" Name="EmailRep" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="TruMail" Name="TruMail" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="HIBP" Name="HIBP" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Dehashed" Name="Dehashed" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Usernames" Background="{StaticResource wbBlue}">
+                            <MenuItem Header="KnowEm" Name="KnowEm" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Social Searcher" Name="socialsearcher" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="What's My Name" Name="whatsmyname" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="UserSearch" Name="UserSearch" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="People" Background="{StaticResource wbBlue}">
+                            <MenuItem Header="192" Name="oneninetwo" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="PeopleTraceUK" Name="peopletrace" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="TrueCaller" Name="truecaller" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Maps" Background="{StaticResource wbBlue}">
+                            <MenuItem Header="Google" Name="GoogleMaps" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Bing" Name="BingMaps" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Zoom Earth" Name="zoomearth" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Scribble Maps" Name="scribblemaps" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                        </MenuItem>
                     </MenuItem>
                 </Menu>
                 <Menu x:Name="mnuSearch" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Style="{StaticResource wbSubMenuItem}">
@@ -135,12 +165,8 @@
                     </MenuItem>
                 </Menu>
 
-
-
-
                 <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" HorizontalAlignment="Right" MinWidth="200" VerticalAlignment="Center" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="0,0,40,0" FontSize="14" IsEnabled="False"/>
-
-                <Button x:Name="btnSearch" Grid.Column="2" Margin="-50,0,0,0" VerticalAlignment="Center" Width="26" Click="btnSearch_Click" Style="{DynamicResource wbButtons}" IsEnabled="False">
+                <Button x:Name="btnSearch" Grid.Column="2" Margin="-50,0,0,0" VerticalAlignment="Center" Width="26" Click="BtnSearch_Click" Style="{DynamicResource wbButtons}" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/search.png"></Image>
                     </Viewbox>
@@ -149,17 +175,14 @@
         </Grid>
 
         <!--New Tab Button-->
-        <Button x:Name="btnNewTab" Click="btnNewTab_Click" Grid.Column="0" Grid.Row="1" Width="24" Height="24" HorizontalAlignment="Left" Style="{StaticResource wbButtons}">
+        <Button x:Name="btnNewTab" Click="BtnNewTab_Click" Grid.Column="0" Grid.Row="1" Width="24" Height="24" HorizontalAlignment="Left" Style="{StaticResource wbButtons}">
             <Viewbox>
                 <Image Source="/Resources/new.png"/>
             </Viewbox>
         </Button>
 
-
-
-
         <!--TabItems-->
-        <TabControl x:Name="tabControl" Grid.Row="2" SelectionChanged="tabControl_SelectionChanged" Padding="0" Grid.ColumnSpan="3" BorderThickness="0,1,0,0">
+        <TabControl x:Name="tabControl" Grid.Row="2" SelectionChanged="TabControl_SelectionChanged" Padding="0" Grid.ColumnSpan="3" BorderThickness="0,1,0,0">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Template">
@@ -194,16 +217,11 @@
             </TabControl.Resources>
 
             <!--ChromiumWebBrowser inside of a Tabitem-->
-
             <TabItem HeaderTemplate="{DynamicResource BrowserTabHeaderTemplate}">
 
                 <!--<cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com"/>-->
                 <Label x:Name="lblMarple" Content="Marple" Height="70" Width="630" Margin="708,-500,582,0"/>
             </TabItem>
-
-
         </TabControl>
-
-
     </Grid>
 </Window>

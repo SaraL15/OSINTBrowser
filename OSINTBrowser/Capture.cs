@@ -3,22 +3,18 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Forms;
 using ScreenRecorderLib;
 namespace OSINTBrowser
 {
     /*Capture is an abstract class. Screenshot, Screensnip and Video are inherited from it.
-     Capture contains methods to log and save captures to selected locations **Perhaps I will change so there is no option for location and goes into case file directly.**
+     Capture contains methods to log and save captures to selected locations.
      Also saves filepath into database.
     */
     public abstract class Capture
     {
-
-        public string captureType { get; set; }
-        
+        public string captureType { get; set; }       
         public abstract void ScreenCapture(string source);
-
 
         //Logs the capture within Log.txt
         public void LogCapture(string captureDate, string captureName, string captureDesc, string captureSource)
@@ -62,13 +58,10 @@ namespace OSINTBrowser
                 hashResult = shaM.ComputeHash(data);
             }
 
-            
-            //string strHash = Encoding.UTF8.GetString(hashResult);
-
             //Open database connection and save
             DbConnect dbc = new DbConnect();
-            dbc.open_connection();
-            dbc.captureToDatabase(dateTime, description, source, captureSaveLocation, check, hashResult);
+            dbc.Open_connection();
+            dbc.CaptureToDatabase(dateTime, description, source, captureSaveLocation, check, hashResult);
         }
     }
 
@@ -140,6 +133,7 @@ namespace OSINTBrowser
     {
         Recorder rec;
         string videoPath = "";
+        string path = "";
 
         //Entry method. Calls createRecording and LogCapture
         public override void ScreenCapture(string source)
@@ -190,7 +184,7 @@ namespace OSINTBrowser
         private void Rec_OnRecordingComplete(object sender, RecordingCompleteEventArgs e)
         {
             //Get the file path if recorded to a file
-            string path = e.FilePath;
+            path = e.FilePath;
         }
         private void Rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
         {
@@ -207,19 +201,20 @@ namespace OSINTBrowser
             DateTime dateTime = DateTime.Now.ToUniversalTime();
             string captureSaveLocation = Case.CaseFilePath;
 
-            //**TODO get hash for MP3 file** **Currently a placeholder image**
-
-            Bitmap placeholder = (Bitmap)Image.FromFile(@"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\Resources\rec_placeholder.bmp");
-            Hashing h = new Hashing();
-            Byte[] data = h.ImageToByte(placeholder);
-            SHA512 shaM = new SHA512Managed();
-            Byte[] result = shaM.ComputeHash(data);
-           
+            //Gets the hash value of the mp4 file to save into the database.
+            Byte[] hashResult;
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                using (FileStream fs = File.OpenRead(path))
+                {
+                    hashResult = shaM.ComputeHash(fs);
+                }
+            }
 
             //Open database connection and save
             DbConnect dbc = new DbConnect();
-            dbc.open_connection();
-            dbc.captureToDatabase(dateTime, description, source, captureSaveLocation, check, result);
+            dbc.Open_connection();
+            dbc.CaptureToDatabase(dateTime, description, source, path, check, hashResult);
         }
     }
 }

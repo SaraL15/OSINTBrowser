@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Windows.Media.Imaging;
 
 namespace OSINTBrowser
 {
@@ -14,30 +11,37 @@ namespace OSINTBrowser
         public byte[] ImageToByte(Image img)
         {
             ImageConverter converter = new ImageConverter();
-            //var data = Encoding.UTF8.GetBytes(img.ToString());
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
-        public string checkHashes(byte[] dbHash, string file)
+        //Comparing the hash stored in the database to the hash of the file.
+        public (string matchResults, string objectHash) CheckHashes(string dbHash, string file)
         {
-            file = file + ".png";
-            //Byte[] data = ImageToByte(img);
+            string fileType = Path.GetFileName(file);
+
+            if (fileType.StartsWith("capture"))
+            {
+                file = file + ".png";
+            }
+
+            //Getting the hash of the saved file.
             Byte[] hashResult;
             using (SHA512 shaM = new SHA512Managed())
             {
-                //hashResult = shaM.ComputeHash(data);
                 using (FileStream fs = File.OpenRead(file))
                 {
                    hashResult = shaM.ComputeHash(fs);
-                }
-                     
+                }                     
             }
+            var hexString = BitConverter.ToString(hashResult);
+            hexString = hexString.Replace("-", "");
 
-            if (hashResult.SequenceEqual(dbHash))
+            //Comparing the hashes.
+            if (hexString == dbHash)
             {
-                return "Hashes match";
+                return ("Hashes match", hexString);
             }
-            return "Hashes do not match - Image may have been edited!";
+            return ("*****Hashes do not match - Image may have been edited!*****", hexString);
         }
     }
 }

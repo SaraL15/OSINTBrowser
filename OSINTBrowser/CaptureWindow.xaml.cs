@@ -14,6 +14,7 @@ namespace OSINTBrowser
     {
         Bitmap saveThisImage = null;
         int captureType = 0;
+        Record thisInstance = null;
 
         //For video capture
 
@@ -29,6 +30,13 @@ namespace OSINTBrowser
   
         public void ShowScreenshot(Bitmap image, int type)
         {          
+            AddToPreview(image);
+            captureType = type;
+        }
+
+        public void ShowRecord(Bitmap image, int type, Record r)
+        {
+            thisInstance = r;
             AddToPreview(image);
             captureType = type;
         }
@@ -84,7 +92,7 @@ namespace OSINTBrowser
             }
             if (captureType == 3)
             {
-                Record r = new Record();
+                Record r = thisInstance;
                 r.SaveRecording(desc, source, check);
                 this.Close();
                 return;

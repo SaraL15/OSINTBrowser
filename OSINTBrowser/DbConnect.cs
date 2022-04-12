@@ -2,34 +2,28 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-
 
 namespace OSINTBrowser
 {
+    //Database Class.
     public class DbConnect
     {
-        private string connectionString;
-        SqlConnection cnn;
+        private string _connectionString;
+        SqlConnection _cnn;
 
         //Opens connection to the database - uses machine name.
-        public void open_connection()
+        public void Open_connection()
         {
             string connDataSource = Environment.MachineName;
-            connectionString = @"Data Source="+connDataSource+";Initial Catalog=OSIBDatabase;Integrated Security=True";
-            cnn = new SqlConnection(connectionString);
-            cnn.Open();
+            _connectionString = @"Data Source="+connDataSource+";Initial Catalog=OSIBDatabase;Integrated Security=True";
+            _cnn = new SqlConnection(_connectionString);
+            _cnn.Open();
             Console.WriteLine("Connection Open");
         }
 
-        //public void close_connection()
-        //{
-        //    cnn.Close();
-        //}
-
         //Evidence capture - added to database.
-        public void captureToDatabase(DateTime captureDate, string desc, string source, string captureLocation, bool? check, byte[] hash)
+        public void CaptureToDatabase(DateTime captureDate, string desc, string source, string captureLocation, bool? check, byte[] hash)
         {
             int caseid = Case.caseID;
             int userid = Case.userID;
@@ -39,7 +33,7 @@ namespace OSINTBrowser
 
             string query = "INSERT INTO Evidence (caseID, userID, eviDesc, indecentFlag, captureDate, sourceLink, filePath, fileHash) " +
                 "VALUES (@caseID, @userID, @eviDesc, @indecentFlag, @captureDate, @sourceLink, @filepath, @fileHash)";
-            using (cmd = new SqlCommand(query, cnn))
+            using (cmd = new SqlCommand(query, _cnn))
             {
                 cmd.Parameters.AddWithValue("@caseID", caseid);
                 cmd.Parameters.AddWithValue("@userID", userid);
@@ -52,13 +46,13 @@ namespace OSINTBrowser
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
-            cnn.Close();          
+            _cnn.Close();          
         }
         
         //Adding a new case to the database.
-        public void addNewCase(DateTime creationDate, string subjectName, string description)
+        public void AddNewCase(DateTime creationDate, string subjectName, string description)
         {
-            int userid = getUserId();
+            int userid = GetUserId();
             SqlCommand cmd;
             //**TEMP VARIABLES**
             string tempEncryptionKey = "1111";
@@ -67,7 +61,7 @@ namespace OSINTBrowser
 
             string query = "INSERT INTO Cases (userID, caseName, caseDesc, caseStatus, dateCreated, dateAccessed, encryptionKey)" +
                 "VALUES (@userID, @caseName, @caseDesc, @caseStatus, @dateCreated, @dateAccessed, @key)";
-            using (cmd = new SqlCommand(query, cnn))
+            using (cmd = new SqlCommand(query, _cnn))
             {
                 cmd.Parameters.AddWithValue("@userID", userid);
                 cmd.Parameters.AddWithValue("@caseName", subjectName);
@@ -80,52 +74,51 @@ namespace OSINTBrowser
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
-            cnn.Close();
+            _cnn.Close();
         }
 
-        //Getting the user ID
-        public int getUserId()
+        //Getting the user ID.
+        public int GetUserId()
         {
             //**TEMP HARD CODED USERNAME TO GET ID**
             string invest = "saraTest";
             int id = 0;
-            open_connection();
+            Open_connection();
             SqlCommand cmd;
             string query = "SELECT userID FROM Users WHERE username = @name";
-            using (cmd = new SqlCommand(query, cnn))
+            using (cmd = new SqlCommand(query, _cnn))
             {
                 cmd.Parameters.AddWithValue("@name", invest);
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cmd.Dispose();
             }
             return id;
-            cnn.Close();
         }
 
         //Updating the case when it has last been accessed.
-        public void updateDateAccessed(int caseID)
+        public void UpdateDateAccessed(int caseID)
         {
             DateTime now = DateTime.Now;
-            open_connection();
+            Open_connection();
             SqlCommand cmd;
             string query = "UPDATE dbo.Cases SET dateAccessed = @now WHERE caseID = @caseID";
-            using (cmd = new SqlCommand(query, cnn))
+            using (cmd = new SqlCommand(query, _cnn))
             {
                 cmd.Parameters.AddWithValue("@now", now);
                 cmd.Parameters.AddWithValue("@caseID", caseID);
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
-            cnn.Close();        
+            _cnn.Close();        
         }
 
         //Updates the Case class with caseId, userId and caseName.
-        public void getTheCase(string caseName)
-        {
-            open_connection();
+        public void GetTheCase(string caseName)
+        {           
+            Open_connection();
             SqlCommand cmd;
             string query = "SELECT caseID, userID, caseName FROM Cases WHERE caseName = @name";
-            using (cmd = new SqlCommand(query, cnn))
+            using (cmd = new SqlCommand(query, _cnn))
             {
                 cmd.Parameters.AddWithValue("@name", caseName);
                 SqlDataReader reading = cmd.ExecuteReader();
@@ -137,20 +130,37 @@ namespace OSINTBrowser
                 }
                 cmd.Dispose();
             }
-            updateDateAccessed(Case.caseID);
-            cnn.Close();
+            UpdateDateAccessed(Case.caseID);
+            _cnn.Close();
+        }
+            
+        //Gets the status of the case 0 or 1 (closed or open).
+        public int GetCaseStatus(string caseName)
+        {
+            Open_connection();
+            int status = 0;
+            SqlCommand cmd;
+            string query = "SELECT caseStatus FROM Cases WHERE caseName = @name";
+            using (cmd=new SqlCommand(query, _cnn))
+            {
+                cmd.Parameters.AddWithValue("@name", caseName);
+                status = Convert.ToInt32(cmd.ExecuteScalar());
+                cmd.Dispose();
+
+            }
+            return status;
         }
 
-        //Used for the end report
-        public List<String> getReport()
+        //Used for the end report.
+        public List<String> GetReport()
         {
             List<String> data = new List<string>();
             byte[] hash = new byte[64];
             int thisCase = Case.caseID;
-            open_connection();
+            Open_connection();
             SqlCommand cmd;
             string query = "SELECT captureDate, sourceLink, eviDesc, filePath, indecentFlag, fileHash FROM Evidence WHERE caseID = @caseID";
-            using (cmd = new SqlCommand(query, cnn))
+            using (cmd = new SqlCommand(query, _cnn))
             {
                 cmd.Parameters.AddWithValue("@caseID", thisCase);
                 SqlDataReader reading = cmd.ExecuteReader();
@@ -164,44 +174,42 @@ namespace OSINTBrowser
                     data.Add(reading["indecentFlag"].ToString());
 
                     hash = (byte[])reading["fileHash"];
+                    
+                    var hexString = BitConverter.ToString(hash);
+                    hexString = hexString.Replace("-", "");
                     Hashing h = new Hashing();
-                    string hashResults = h.checkHashes(hash, fp);
+                    (string hashResults, string objHash) = h.CheckHashes(hexString, fp);
+                    data.Add(hexString);
+                    data.Add(objHash);
                     data.Add(hashResults);
-
-                }
-                
+                }                
             }
-
             cmd.Dispose();
             return data;
         }
 
-        private string ConvertHash(byte[] data)
-        {
-            char[] chars = data.Select(b => (char)b).ToArray();
-            return new string(chars);
-        }
-        
-        //public byte[] getHash()
+        //private string ConvertHash(byte[] data)
         //{
-        //    byte[] hash = new byte[64];
-        //    int thisCase = Case.caseID;
-        //    open_connection();
-        //    SqlCommand cmd;
-        //    string query = "SELECT fileHash FROM Evidence WHERE caseID = @caseID";
-        //    using (cmd = new SqlCommand(query, cnn))
-        //    {
-        //        cmd.Parameters.AddWithValue("@caseID", thisCase);
-        //        SqlDataReader reading = cmd.ExecuteReader();
-        //        while (reading.Read())
-        //        {
-        //           hash = (byte[])reading["fileHash"]; 
-
-        //        }
-        //    }
-
-        //    return hash;
+        //    char[] chars = data.Select(b => (char)b).ToArray();
+        //    return new string(chars);
         //}
+        
+        //Updates case status to closed.
+        public void CloseCase()
+        {
+            int close = 0;
+            int caseID = Case.caseID;
+            Open_connection();
+            SqlCommand cmd;
+            string query = "UPDATE dbo.Cases SET caseStatus = @close WHERE caseID = @caseID";
+            using (cmd = new SqlCommand(query, _cnn))
+            {
+                cmd.Parameters.AddWithValue("@close", close);
+                cmd.Parameters.AddWithValue("@caseID", caseID);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+            }
+            _cnn.Close();
+        }
     }
-
 }

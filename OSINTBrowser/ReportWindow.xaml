@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OSINTBrowser"
         mc:Ignorable="d"
-        Title="Marple - Report" Height="450" Width="800">
+        Title="Marple - Report" Height="450" Width="820">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"/>
@@ -40,13 +40,12 @@
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="2">
-            <Button x:Name="btnProduceReport" Content="Report" Style="{DynamicResource wbButtons}" Height="50" Width="100" Margin="100,20,200,20" Click="btnProduceReport_Click"/>
-            <Button x:Name="btnCancelReport" Content="Cancel" Style="{DynamicResource wbButtons}" Height="50" Width="100" Margin="250,20,50,20" Click="btnCancelReport_Click"/>
+            <Button x:Name="btnProduceReport" Content="Report" Style="{DynamicResource wbButtons}" Height="50" Width="100" Margin="100,20,200,20" Click="BtnProduceReport_Click"/>
+            <Button x:Name="btnCancelReport" Content="Cancel" Style="{DynamicResource wbButtons}" Height="50" Width="100" Margin="250,20,50,20" Click="BtnCancelReport_Click"/>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0">
-            <CheckBox x:Name="chkCloseCase" Content="Check to close the case" IsChecked="False" Height="30" FontSize="16" Margin="25"/>
-
+            <CheckBox x:Name="chkCloseCase" Content="Check to close the case" IsChecked="False" Height="30" FontSize="16" Margin="25" />
         </Grid>
 
     </Grid>

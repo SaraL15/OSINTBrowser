@@ -9,25 +9,26 @@ namespace OSINTBrowser
     public class Sherlock
     {
 
-        private bool Finished = false;
-        private string SearchForThis = "";
-        public string searchForThis
+        private bool _Finished = false;
+        private string _SearchForThis = "";
+        public string _searchForThis
         {
-            get { return SearchForThis; }
-            set { SearchForThis = value; }
+            get { return _SearchForThis; }
+            set { _SearchForThis = value; }
         }
 
-        public bool finished
+        public bool _finished
         {
-            get { return Finished; }
-            set { Finished = value; }
+            get { return _Finished; }
+            set { _Finished = value; }
         }
 
-        public bool launchSherlock(string sherlockSearchTerm)
+        //Starts the process to run Sherlock.
+        public bool LaunchSherlock(string sherlockSearchTerm)
         {
             //string FileName = "cmd.exe";
             //string Arguments = "/c C:\\Users\\saral\\source\\repos\\sherlock\\sherlock\\sherlock.py " + searchForThis;
-            searchForThis = sherlockSearchTerm;
+            _searchForThis = sherlockSearchTerm;
             try
             {
                 //Sets up the bits for a new process
@@ -35,7 +36,7 @@ namespace OSINTBrowser
                 myProcessStartInfo.CreateNoWindow = true;
                 myProcessStartInfo.UseShellExecute = false;
                 myProcessStartInfo.RedirectStandardOutput = true;
-                myProcessStartInfo.Arguments = "/r C:\\Users\\saral\\source\\repos\\sherlock\\sherlock\\sherlock.py -fo " + Case.CaseFilePath + " " + searchForThis;
+                myProcessStartInfo.Arguments = "/r C:\\Users\\saral\\source\\repos\\sherlock\\sherlock\\sherlock.py -fo " + Case.CaseFilePath + " " + _searchForThis;
                 myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
                 Process myProcess = new Process();
@@ -47,32 +48,26 @@ namespace OSINTBrowser
                 myProcess.Exited += (a, b) =>
                 {
                     MessageBox.Show("Sherlock scan finished");
-                    processFinished();
+                    ProcessFinished();
 
-                };
-                
+                };                
                 Console.WriteLine("Sherlock Finished");
-
                 return true;
-
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Sherlock could not launch, try again later.");
                 return false;
-
             }
-
-
         }
 
-        public void processFinished()
+        public void ProcessFinished()
         {
-            finished = true;
+            _finished = true;
         }
 
-        private string displayHTML(string search)
+        //Converts Sherlock .txt file into HTML to display.
+        private string DisplayHTML(string search)
         {
             try
             {
@@ -93,27 +88,23 @@ namespace OSINTBrowser
                     }
                     else if (str.Length > 0)
                     {
-                        sb.AppendLine($"<a href=''>{str}</a></br>");
+                        sb.AppendLine($"<a href='{str}' target='_blank'>{str}</a></br>");
                     }
                     str = sr.ReadLine();
                 }
-
                 return sb.ToString();
             }
             catch
             {
                 return "Sherlock results return failed - possible empty field name. Try again :)";
             }
-
         }
 
-        public string makeNewTab(string thisSearch)
+        public string MakeNewTab(string thisSearch)
         {
-            string htmlResults = displayHTML(thisSearch);
-
+            string htmlResults = DisplayHTML(thisSearch);
             return htmlResults;
         }
-
     }
 }
 

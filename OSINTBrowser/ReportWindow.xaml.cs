@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Windows;
 
-
 namespace OSINTBrowser
 {
-    /// <summary>
-    /// Interaction logic for ReportWindow.xaml
-    /// </summary>
     public partial class ReportWindow : Window
     {
         private string _results;
@@ -15,38 +11,49 @@ namespace OSINTBrowser
             InitializeComponent();
         }
 
-        private void btnCancelReport_Click(object sender, RoutedEventArgs e)
+        private void BtnCancelReport_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void btnProduceReport_Click(object sender, RoutedEventArgs e)
+        private void BtnProduceReport_Click(object sender, RoutedEventArgs e)
         {
             //Empty text boxes will be allowed.
             string caseDesc = txtDesc.Text;
             string caseComments = txtComment.Text;
-            
-            
-            
+            var checkForClose = chkCloseCase.IsChecked;
+
             ReportHTML r = new ReportHTML();
             //Browser b = new Browser();
             try
             {
                 _results = r.GetTheFiles(caseDesc, caseComments);
-                //_results = r.StartReport(caseDesc, caseComments);
-                //b.displayReport(caseDesc, caseComments);
                 this.Close();
             }
             catch
             {
                 MessageBox.Show("Unable to create report");
             }
-        }
 
+            try 
+            {
+                if (checkForClose == true)
+                {
+                    DbConnect db = new DbConnect();
+                    db.CloseCase();
+                    MessageBox.Show("Case is now closed");
+                    this.Close();
+                    //close the browser.
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Could not close the case");
+            }
+        }
         public string ReportResults()
         {
-            return _results;
-            
+            return _results;        
         }
     }
 }

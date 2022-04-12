@@ -173,7 +173,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Report.cs" />
+    <Compile Include="Bookmarks.cs" />
+    <Compile Include="CustomLifeSpanHandler.cs" />
     <Compile Include="ReportHTML.cs" />
     <Compile Include="ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>
@@ -290,6 +291,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\rec_placeholder.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Bookmarks.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,68 +8,61 @@ using System.Windows.Input;
 using CefSharp;
 using CefSharp.Wpf;
 
-
 namespace OSINTBrowser
 {
-
-    /// <summary>
-    /// Interaction logic for Browser.xaml
-    /// </summary>
-
     public partial class Browser : Window
     {
-        TabItem currentTabItem = null;
-        ChromiumWebBrowser currentBrowser = null;
-        Sherlock s = null;
-        Capture c = null;
+        TabItem _currentTabItem = null;
+        ChromiumWebBrowser _currentBrowser = null;
+        Sherlock _sher = null;
+        Capture _cap = null;
 
-        private bool firstClick = false;
-        private int tabCount = 0;
+        private bool _firstClick = false;
+        private int _tabCount = 0;
         public string CurrentUrl { get { return txtAddressBar.Text; } }
-        private string searchTermSherlock = null;
-        private string queryUrl = "https://duckduckgo.com/?q=";
-
-
+        private string _searchTermSherlock = null;
+        private string _queryUrl = "https://duckduckgo.com/?q=";
 
         public Browser()
         {
             InitializeComponent();
-            // loadBookmarks();
         }
 
         //Webbrowser buttons and tabs.
         //Opens a new tab containing a browser.
-        private void btnNewTab_Click(object sender, RoutedEventArgs e)
+        private void BtnNewTab_Click(object sender, RoutedEventArgs e)
         {
-            //If first time loading up Marple - enable buttons 
-            if (firstClick == false)
+            //If first time loading up Marple - enable buttons. 
+            if (_firstClick == false)
             {
                 EnableButtons();
                 MakeNewTab();
-                firstClick = true;
+                _firstClick = true;
             }
-            else if (firstClick == true)
+            else if (_firstClick == true)
             {
                 MakeNewTab();
             }
         }
 
+        //For making a new tabitem.
         private void MakeNewTab()
         {
             TabItem newTab = new TabItem();
             ChromiumWebBrowser browser = new ChromiumWebBrowser();
+            browser.LifeSpanHandler = new CustomLifeSpanHandler();
            
-            browser.Name = "browser" + tabCount;
+            browser.Name = "browser" + _tabCount;
             tabControl.Items.Add(newTab);
-            newTab.Name = "tab" + tabCount;
-            tabCount++;
+            newTab.Name = "tab" + _tabCount;
+            _tabCount++;
             newTab.Content = browser;
             browser.Address = "https://www.google.com";
             newTab.Focus();
             tabControl.SelectedItem = newTab;
-            //Updates the browser and tab
-            currentTabItem = newTab;
-            currentBrowser = browser;
+            //Updates the browser and tab.
+            _currentTabItem = newTab;
+            _currentBrowser = browser;
             browser.Loaded += FinishedLoadingWebpage;
         }
 
@@ -85,84 +77,70 @@ namespace OSINTBrowser
             btnSearch.IsEnabled = true;
         }
 
-        //Tries to put name of the site on the tab
+        //Tries to put name of the site on the tab.
         private void FinishedLoadingWebpage(object sender, RoutedEventArgs e)
         {
-            string removewww = "";
+            string removeWww = "";
             var s = sender as ChromiumWebBrowser;
-            //currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+            _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
             txtAddressBar.Text = s.Address;
-            if (currentTabItem != null)
+            if (_currentTabItem != null)
             {
                 string url = s.Address;
-                string hosturl = GetUri(url);
-                removewww = hosturl.Replace("www.", "");
-                
-
-                
+                string hostUrl = GetUri(url);
+                removeWww = hostUrl.Replace("www.", "");                
             }
-            currentTabItem.Header = removewww;
-
+            _currentTabItem.Header = removeWww;
         }
 
         private string GetUri(string url)
         {
             var uri = new Uri(url);
-            var thisuri = uri.Host;
-            return thisuri;
+            var thisUri = uri.Host;
+            return thisUri;
         }
 
-
-       
-
         //Changes the selected tab and browser to the current tab and browser.
-        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (tabControl.SelectedItem != null)
             {
-                currentTabItem = tabControl.SelectedItem as TabItem;
+                _currentTabItem = tabControl.SelectedItem as TabItem;
             }
-
-            if (currentTabItem != null)
+            if (_currentTabItem != null)
             {
-                currentBrowser = currentTabItem.Content as ChromiumWebBrowser;
+                _currentBrowser = _currentTabItem.Content as ChromiumWebBrowser;
             }
         }
 
-
-        //Turn this into a search bar on the browser - able to select different search engines.
+        //Turns this into a search bar on the browser - able to select different search engines.
         private void Search()
         {
+            if (!string.IsNullOrWhiteSpace(txtSearchBox.Text))
             {
-                if (!string.IsNullOrWhiteSpace(txtSearchBox.Text))
+                _currentBrowser.Address = _queryUrl + txtSearchBox.Text;
+                _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+                string folder = Case.CaseFilePath;
+                using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
                 {
-                    currentBrowser.Address = queryUrl + txtSearchBox.Text;
-                    currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
-                    string folder = Case.CaseFilePath;
-                    using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
-                    {
-                        string date = DateTime.Now.ToString();
-                        sw.WriteLine(date + ": Search Term: " + txtSearchBox.Text + " " + queryUrl, "/n");
-                    }
+                    string date = DateTime.Now.ToString();
+                    sw.WriteLine(date + ": Search Term: " + txtSearchBox.Text + " " + _queryUrl, "/n");
                 }
-                else
-                {
-                    Console.WriteLine("White space!");
-                }
-
             }
+            else
+            {
+                Console.WriteLine("White space!");
+            }            
         }
 
+        //Loads the address.
         private void Go()
         {
             if (!string.IsNullOrWhiteSpace(txtAddressBar.Text))
             {
-                currentBrowser.Load(txtAddressBar.Text);
-                currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
-                currentBrowser.Loaded += FinishedLoadingWebpage;
-
-                //currentTabItem.Header = txtAddressBar.Text;
-
+                _currentBrowser.Load(txtAddressBar.Text);
+                _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+                _currentBrowser.Loaded += FinishedLoadingWebpage;
 
                 string folder = Case.CaseFilePath;
                 using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
@@ -175,8 +153,6 @@ namespace OSINTBrowser
             {
                 Console.WriteLine("White space!");
             }
-
-
         }
 
         //Changes the text within the txtAddressBar to show current url.
@@ -185,7 +161,6 @@ namespace OSINTBrowser
             txtAddressBar.Text = e.NewValue.ToString();
             //txtAddressBar.Text = currentBrowser.Address;
         }
-
 
         //Search bar keydown on enter event.
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -198,16 +173,16 @@ namespace OSINTBrowser
 
         private void btnCloseTab_Click(object sender, RoutedEventArgs e)
         {
-            if (tabCount > 0 && currentTabItem != null)
+            if (_tabCount > 0 && _currentTabItem != null)
             {
-                tabControl.Items.Remove(currentTabItem);
+                tabControl.Items.Remove(_currentTabItem);
             }
         }
 
         //Some Sherlock functionality which works with the browser.
         private void btnSherlock_Click(object sender, RoutedEventArgs e)
         {
-            searchTermSherlock = txtSearchBox.Text;
+            _searchTermSherlock = txtSearchBox.Text;
             var ts = new ThreadStart(SherlockScan);
             
             var backgroundThread = new Thread(ts);
@@ -221,13 +196,13 @@ namespace OSINTBrowser
             try
             {
                 bool success = false;
-                s = new Sherlock();
-                success = s.launchSherlock(searchTermSherlock);
+                _sher = new Sherlock();
+                success = _sher.LaunchSherlock(_searchTermSherlock);
                 string folder = Case.CaseFilePath;
                 using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
                 {
                     string date = DateTime.Now.ToString();
-                    sw.WriteLine(date + ": Sherlock Search: " + searchTermSherlock, "/n");
+                    sw.WriteLine(date + ": Sherlock Search: " + _searchTermSherlock, "/n");
                 }
             }
             catch (Exception ex)
@@ -244,9 +219,8 @@ namespace OSINTBrowser
 
         private void btnSherlockResults_Click(object sender, RoutedEventArgs e)
         {
-
-                string thisSearch = s.searchForThis;
-                string resultHtml = s.makeNewTab(thisSearch);
+                string thisSearch = _sher._searchForThis;
+                string resultHtml = _sher.MakeNewTab(thisSearch);
 
                 TabItem nt = new TabItem();
                 ChromiumWebBrowser b = new ChromiumWebBrowser();
@@ -254,41 +228,36 @@ namespace OSINTBrowser
                 nt.Content = b;
                 nt.Header = "Sherlock";
 
-
-                currentBrowser = b;
-                currentTabItem = nt;
-
-                b.LoadHtml(resultHtml, "http://sherlockresults/");
+                _currentBrowser = b;
+                _currentTabItem = nt;
+                b.LoadHtml(resultHtml, @"http://sherlockresults/");
             
-                //b.MouseLeftButtonDown += B_MouseLeftButtonDown;
+                b.MouseLeftButtonDown += B_MouseLeftButtonDown;
             
         }
 
-        //private void B_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    TabItem newTab = new TabItem();
-        //    ChromiumWebBrowser browser = new ChromiumWebBrowser();
-        //    tabControl.Items.Add(newTab);
-        //    tabCount++;
-
-        //    newTab.Content = browser;
-        //    browser.Address = "https://www.google.com";
-
-        //    newTab.Header = "New Tab";
-
-        //    currentBrowser = browser;
-        //    currentTabItem = newTab;
-        //    browser.Loaded += FinishedLoadingWebpage;
-        //}
+        private void B_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TabItem newTab = new TabItem();
+            ChromiumWebBrowser browser = new ChromiumWebBrowser();
+            tabControl.Items.Add(newTab);
+            _tabCount++;
+            newTab.Content = browser;
+            browser.Address = "https://www.google.com";
+            newTab.Header = "New Tab";
+            _currentBrowser = browser;
+            _currentTabItem = newTab;
+            browser.Loaded += FinishedLoadingWebpage;
+        }
 
         //Capture buttons.
-        private void btnScreenshot_Click(object sender, RoutedEventArgs e)
+        private void BtnScreenshot_Click(object sender, RoutedEventArgs e)
         {
             Capture captureThis = new Screenshot();
             captureThis.ScreenCapture(CurrentUrl);
         }
 
-        private void btnSnip_Click(object sender, RoutedEventArgs e)
+        private void BtnSnip_Click(object sender, RoutedEventArgs e)
         {
             Capture captureThisSnip = new Screensnip();
             captureThisSnip.captureType = "Screen Snip";
@@ -296,120 +265,115 @@ namespace OSINTBrowser
         }
 
         //Screen record functionality.
-        private void btnRecord_Click(object sender, RoutedEventArgs e)
+        private void BtnRecord_Click(object sender, RoutedEventArgs e)
         {
-            c = new Record();
-            c.captureType = "Record";
+            _cap = new Record();
+            _cap.captureType = "Record";
             btnRecord.Visibility = Visibility.Hidden;
             btnStop.Visibility = Visibility.Visible;
-            c.ScreenCapture(CurrentUrl);           
+            _cap.ScreenCapture(CurrentUrl);           
         }
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
+        private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
             btnRecord.Visibility = Visibility.Visible;
             btnStop.Visibility = Visibility.Hidden;
-            stop_Recording(c as Record);
+            StopRecording(_cap as Record);
             
             Bitmap bmp = (Bitmap)System.Drawing.Image.FromFile(@"C:\Users\saral\source\repos\OSINTBrowser\OSINTBrowser\Resources\rec_placeholder.bmp");
             CaptureWindow cpw = new CaptureWindow(txtAddressBar.Text);
-            cpw.ShowScreenshot(bmp, 3);
+            cpw.ShowRecord(bmp, 3, _cap as Record);
             cpw.Topmost = true;
             cpw.Show();
         }
 
-        private void stop_Recording (Record c)
+        private void StopRecording (Record c)
         {
             c.EndRecording();
         }
 
-        ReportWindow rw = new ReportWindow();
-        //Possible to pop up in a new window?
-        private void btnReport_Click(object sender, RoutedEventArgs e)
+        ReportWindow _rw = new ReportWindow();
+        //Maybe make a pop up in a new window?
+        private void BtnReport_Click(object sender, RoutedEventArgs e)
         {
-            
-            //ReportWindow rw = new ReportWindow();
-            rw.Show();
+            _rw.Show();
             btnReport.Visibility = Visibility.Hidden;
-            btnShowReport.Visibility = Visibility.Visible;
-            
+            btnShowReport.Visibility = Visibility.Visible;    
         }
 
-        public void btnShowReport_Click(object sender, RoutedEventArgs e)
+        public void BtnShowReport_Click(object sender, RoutedEventArgs e)
         {
-            //ReportHTML r = new ReportHTML();
-            //string resultHtml = r.th;
-            //r.GetTheFiles();
-            //MessageBox.Show("Report created.");
-
-            string rr = rw.ReportResults();
-            ;
+            string rr = _rw.ReportResults();
             TabItem nt = new TabItem();
             ChromiumWebBrowser cb = new ChromiumWebBrowser();
             tabControl.Items.Add(nt);
             nt.Content = cb;
             nt.Header = "Report";
 
+            _currentBrowser = cb;
+            _currentTabItem = nt;
+            cb.MouseLeftButtonDown += B_MouseLeftButtonDown;
 
-            currentBrowser = cb;
-            currentTabItem = nt;
-
-            cb.LoadHtml(rr, "http://report");
+            try
+            {
+                cb.LoadHtml(rr, "http://report");
+            }
+            catch
+            {
+                MessageBox.Show("Whoops, something went wrong!");
+            }
+            
         }
-
-
 
         //Search Engine selection.
         //Google
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            queryUrl = "https://www.google.com/search?q=";
+            _queryUrl = "https://www.google.com/search?q=";
         }
 
         //Bing
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            queryUrl = "https://www.bing.com/search?q=";
+            _queryUrl = "https://www.bing.com/search?q=";
         }
 
         //DuckDuckGo
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             //Set as a default search.
-            queryUrl = "https://duckduckgo.com/?q=";
+            _queryUrl = "https://duckduckgo.com/?q=";
         }
 
         //Yandex
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
             //Russian but has a good image search.
-            queryUrl = "https://yandex.com/search/?text=";
+            _queryUrl = "https://yandex.com/search/?text=";
         }
-
-
 
         //Browser and Button Control.
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            if (currentBrowser.CanGoBack)
+            if (_currentBrowser.CanGoBack)
             {
-                currentBrowser.Back();
+                _currentBrowser.Back();
             }
         }
 
-        private void btnFwd_Click(object sender, RoutedEventArgs e)
+        private void BtnFwd_Click(object sender, RoutedEventArgs e)
         {
-            if (currentBrowser.CanGoForward)
+            if (_currentBrowser.CanGoForward)
             {
-                currentBrowser.Forward();
+                _currentBrowser.Forward();
             }
         }
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                currentBrowser.Reload();
+                _currentBrowser.Reload();
             }
             catch (Exception ex)
             {
@@ -418,23 +382,48 @@ namespace OSINTBrowser
 
         }
 
-        private void btnGo_Click(object sender, RoutedEventArgs e)
+        private void BtnGo_Click(object sender, RoutedEventArgs e)
         {
             Go();
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             Search();
         }
 
         //Enter key event for txtAddressBar for url navigation
-        private void txtAddressBar_KeyDown(object sender, KeyEventArgs e)
+        private void TxtAddressBar_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 Go();
             }
+        }
+
+        private void MenuItem_Bookmarks_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var thing = sender as MenuItem;
+                string siteName = thing.Name;
+                Bookmarks bk = new Bookmarks();
+                string goHere = bk.SelectedBookmark(siteName);
+                if (_currentBrowser != null)
+                {
+                    _currentBrowser.Load(goHere);
+                    _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+                    _currentBrowser.Loaded += FinishedLoadingWebpage;
+                }
+                else
+                {
+                    MessageBox.Show("Please click on the + to begin");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Error in opening a bookmark");
+            }    
         }
     }
 }
