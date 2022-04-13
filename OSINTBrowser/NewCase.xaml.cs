@@ -3,13 +3,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 
-
-
 namespace OSINTBrowser
 {
-    /// <summary>
-    /// Interaction logic for NewCase.xaml
-    /// </summary>
     public partial class NewCase : Window
     {
         public NewCase()
@@ -19,16 +14,15 @@ namespace OSINTBrowser
 
         private void btnFolderPath_Click(object sender, RoutedEventArgs e)
         {
-            browseForFolder();
+            BrowseForFolder();
         }
 
-        private void browseForFolder()
+        private void BrowseForFolder()
         { 
             Directory.CreateDirectory("OSIB_Cases");
-            //Opens the Windows Browser Explorer to select where to save the newly...
-            //...created folder.
+            //Opens the Windows Browser Explorer to select where to save the newly created folder.
             string selectedFolder = "";
-            //Opens the folder browser
+            //Opens the folder browser.
             FolderBrowserDialog folder = new FolderBrowserDialog();
             folder.ShowNewFolderButton = true;
             DialogResult result = folder.ShowDialog();
@@ -45,7 +39,7 @@ namespace OSINTBrowser
             txtFolderPath.Text = selectedFolder;
         }
 
-        private bool checkFolderIsValid(string folder)
+        private bool CheckFolderIsValid(string folder)
         {
             bool valid = false;
             if (!Directory.Exists(folder))
@@ -63,15 +57,15 @@ namespace OSINTBrowser
             return valid;
         }
 
-        private void create_new_case(string folder)
+        private void CreateNewCase(string folder)
         {
 
             //Gets the input from the form and creates a new folder.
-            if (validateUserInput() == false)
+            if (ValidateUserInput() == false)
             {
                 System.Windows.Forms.MessageBox.Show("Name or description missing");
             }
-            else if (validateUserInput() == true) { 
+            else if (ValidateUserInput() == true) { 
 
                 string subjectName = txtSubject.Text;
                 string description = txtDesc.Text;
@@ -90,10 +84,8 @@ namespace OSINTBrowser
                     Directory.CreateDirectory(pathString);
                     lblError.Content = "";
 
-                    //Class attributes are static so they can be accessed 
+                    //Class attributes are static so they can be accessed.
                     Case.CaseName = subjectName;
-                    //Case.CaseUser = Environment.UserName;
-                    //string investigator = Case.CaseUser;
                     Case.CaseCreationDate = creationDate;
                     Case.CaseFilePath = folder;
                     //Creates a new log file and inputs the data from the newCase object.
@@ -108,7 +100,7 @@ namespace OSINTBrowser
                         {
                             string[] logLines =
                             {
-                            //Case.CaseCreationDate, "Case Name: " + Case.CaseName, "Investigator Name: " + Case.CaseUser
+                            "Case Name: " + Case.CaseName + "  Case opened: " + Case.CaseCreationDate
                         };
                             foreach (string l in logLines)
                             {
@@ -117,14 +109,13 @@ namespace OSINTBrowser
                         }
                     }
                     DbConnect dbc = new DbConnect();
-                    //dbc.create_new_table();
-                    dbc.addNewCase(now, subjectName, description);
+                    dbc.AddNewCase(now, subjectName, description);
 
-                    Case.CaseFilePath = folder;
-                    ;
+                    Case.CaseFilePath = pathString;
+                    
                     string lastFolderName = Path.GetFileName(pathString);
                     string folderName = lastFolderName.Substring(11);
-                    dbc.getTheCase(folderName);
+                    dbc.GetTheCase(folderName);
                     Browser browser = new Browser();
                     browser.Show();
                     this.Close();
@@ -133,21 +124,21 @@ namespace OSINTBrowser
         }
 
         //Check file path is valid.
-        private void validateFilePath()
+        private void ValidateFilePath()
         {
             string selectedFolder = txtFolderPath.Text;
-            if (checkFolderIsValid(selectedFolder) == false)
+            if (CheckFolderIsValid(selectedFolder) == false)
             {
-                browseForFolder();
+                BrowseForFolder();
             }
             else
             {
-                create_new_case(selectedFolder);
+                CreateNewCase(selectedFolder);
             }
         }
 
         //Check textboxes are not empty.
-        private bool validateUserInput()
+        private bool ValidateUserInput()
         {
             string subject = txtSubject.Text;
             string description = txtDesc.Text;
@@ -164,17 +155,15 @@ namespace OSINTBrowser
         
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            validateFilePath();
+            ValidateFilePath();
         }
 
         private void btnCancel_Click_1(object sender, RoutedEventArgs e)
         {
             MainWindow mw = new MainWindow();
             mw.Show();
-            this.Close();
-            
+            this.Close();     
         }
-
     }
 }
 

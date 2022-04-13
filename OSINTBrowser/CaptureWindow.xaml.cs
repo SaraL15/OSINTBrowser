@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -13,6 +14,11 @@ namespace OSINTBrowser
     {
         Bitmap saveThisImage = null;
         int captureType = 0;
+        Record thisInstance = null;
+
+        //For video capture
+
+        //For snip and screenshot
         public CaptureWindow(string source)
         {
             
@@ -22,8 +28,15 @@ namespace OSINTBrowser
         }
 
   
-        public void showScreenshot(Bitmap image, int type)
+        public void ShowScreenshot(Bitmap image, int type)
         {          
+            AddToPreview(image);
+            captureType = type;
+        }
+
+        public void ShowRecord(Bitmap image, int type, Record r)
+        {
+            thisInstance = r;
             AddToPreview(image);
             captureType = type;
         }
@@ -65,18 +78,29 @@ namespace OSINTBrowser
             if (captureType == 1)
             {           
                 Capture c = new Screenshot();
-                c.saveCapture(saveThisImage, desc, source, check);
+                c.SaveCapture(saveThisImage, desc, source, check);
                 this.Close();
+                return;
             }
 
             if (captureType == 2)
             {
                 Capture s = new Screensnip();
-                s.saveCapture(saveThisImage, desc, source, check);
+                s.SaveCapture(saveThisImage, desc, source, check);
                 this.Close();
+                return;
             }
-
-
+            if (captureType == 3)
+            {
+                Record r = thisInstance;
+                r.SaveRecording(desc, source, check);
+                this.Close();
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Unknown Capture");
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

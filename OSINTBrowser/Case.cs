@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OSINTBrowser
+﻿namespace OSINTBrowser
 {
+    //Static Case class, so all information releating to the case can be accessed when needed.
     public static class Case
     {
         public static int CaseID;
