@@ -29,6 +29,7 @@ namespace OSINTBrowser
             {
                 _results = r.GetTheFiles(caseDesc, caseComments);
                 this.Close();
+                MessageBox.Show("Report Created");
             }
             catch
             {

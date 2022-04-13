@@ -51,7 +51,6 @@ namespace OSINTBrowser
             TabItem newTab = new TabItem();
             ChromiumWebBrowser browser = new ChromiumWebBrowser();
             browser.LifeSpanHandler = new CustomLifeSpanHandler();
-           
             browser.Name = "browser" + _tabCount;
             tabControl.Items.Add(newTab);
             newTab.Name = "tab" + _tabCount;
@@ -80,6 +79,23 @@ namespace OSINTBrowser
         //Tries to put name of the site on the tab.
         private void FinishedLoadingWebpage(object sender, RoutedEventArgs e)
         {
+            ForTab(sender);
+            //string removeWww = "";
+            //var s = sender as ChromiumWebBrowser;
+            //_currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+            //txtAddressBar.Text = s.Address;
+            //if (_currentTabItem != null)
+            //{
+            //    string url = s.Address;
+            //    string hostUrl = GetUri(url);
+            //    removeWww = hostUrl.Replace("www.", "");
+                
+            //}           
+            //_currentTabItem.Header = removeWww;
+        }
+
+        private string ForTab(object sender)
+        {
             string removeWww = "";
             var s = sender as ChromiumWebBrowser;
             _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
@@ -88,9 +104,11 @@ namespace OSINTBrowser
             {
                 string url = s.Address;
                 string hostUrl = GetUri(url);
-                removeWww = hostUrl.Replace("www.", "");                
+                removeWww = hostUrl.Replace("www.", "");
+
             }
             _currentTabItem.Header = removeWww;
+            return removeWww;
         }
 
         private string GetUri(string url)
@@ -148,6 +166,7 @@ namespace OSINTBrowser
                     string date = DateTime.Now.ToString();
                     sw.WriteLine(date + ": Site Visited: " + txtAddressBar.Text, "/n");
                 }
+                
             }
             else
             {
@@ -159,11 +178,11 @@ namespace OSINTBrowser
         private void CurrentBrowser_AddressChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             txtAddressBar.Text = e.NewValue.ToString();
-            //txtAddressBar.Text = currentBrowser.Address;
+            _currentTabItem.Header = ForTab(sender);
         }
 
         //Search bar keydown on enter event.
-        private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
+        private void TxtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -171,7 +190,7 @@ namespace OSINTBrowser
             }
         }
 
-        private void btnCloseTab_Click(object sender, RoutedEventArgs e)
+        private void BtnCloseTab_Click(object sender, RoutedEventArgs e)
         {
             if (_tabCount > 0 && _currentTabItem != null)
             {
@@ -180,7 +199,7 @@ namespace OSINTBrowser
         }
 
         //Some Sherlock functionality which works with the browser.
-        private void btnSherlock_Click(object sender, RoutedEventArgs e)
+        private void BtnSherlock_Click(object sender, RoutedEventArgs e)
         {
             _searchTermSherlock = txtSearchBox.Text;
             var ts = new ThreadStart(SherlockScan);
@@ -211,13 +230,13 @@ namespace OSINTBrowser
             }
         }
 
-        public string getSherlockSearchTerm()
+        public string GetSherlockSearchTerm()
         {
             string searchTerm = txtSearchBox.Text;
             return searchTerm;
         }
 
-        private void btnSherlockResults_Click(object sender, RoutedEventArgs e)
+        private void BtnSherlockResults_Click(object sender, RoutedEventArgs e)
         {
                 string thisSearch = _sher._searchForThis;
                 string resultHtml = _sher.MakeNewTab(thisSearch);
@@ -401,6 +420,7 @@ namespace OSINTBrowser
             }
         }
 
+        //Bookmark Menu Click.
         private void MenuItem_Bookmarks_Click(object sender, RoutedEventArgs e)
         {
             try

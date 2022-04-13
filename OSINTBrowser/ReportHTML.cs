@@ -18,7 +18,7 @@ namespace OSINTBrowser
 
             sb.AppendLine($"<h3>Case: {id} {name}</h3></br>");
             sb.AppendLine($"<h4>Description: </h4>{desc}</br>");
-            sb.AppendLine($"<h4>Comment: </h4>{comment}</br></br>");
+            sb.AppendLine($"<h4>Comment: </h4>{comment}</br>");
             
             headers.Add("<b>Date: </b>");
             headers.Add("<b>Source: </b>");

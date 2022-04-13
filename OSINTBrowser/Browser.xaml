@@ -27,14 +27,14 @@
         <!--<Menu Height="25" VerticalAlignment="Center" Background="{StaticResource wbBlue}" ItemContainerStyle="{StaticResource wbMenuItem}" Grid.ColumnSpan="3">-->
         <!--<Button x:Name="btnNewTab" Content="New Tab" Style="{StaticResource wbMenuButtons}" Click="btnNewTab_Click"></Button>-->
         <Grid Grid.Row="0" Background="{StaticResource wbBlue}" Grid.ColumnSpan="3" />
-        <Button x:Name="btnReport" Content="Produce Report" Click="BtnReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95"/>
-        <Button x:Name="btnShowReport" Content="Show Report" Click="BtnShowReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95" Visibility="Hidden"/>
+        <!--<Button x:Name="btnReport" Content="Produce Report" Click="BtnReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95"/>-->
+        <!--<Button x:Name="btnShowReport" Content="Show Report" Click="BtnShowReport_Click" Style="{StaticResource wbMenuButtons}" Grid.Column="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Center" Width="95" Visibility="Hidden"/>-->
         <!--<Button x:Name="btnSherlock" Content="Running..." Style="{StaticResource wbMenuButtons}" Margin="10,2,0,2" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Visibility="Hidden"/>-->
-        <Button x:Name="btnSherlockResults" Content="Sherlock" Click="btnSherlockResults_Click" Style="{StaticResource wbMenuButtons}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,2,0,2" Visibility="Hidden">
+        <!--<Button x:Name="btnSherlockResults" Content="Sherlock" Click="BtnSherlockResults_Click" Style="{StaticResource wbMenuButtons}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="10,2,0,2" Visibility="Hidden">-->
             <!--<Viewbox>
                     <Image Source="Resources/tick.png"></Image>
                 </Viewbox>-->
-        </Button>
+        <!--</Button>-->
         <!-- </Menu>-->
 
         <!--Window is split into three columns and three rows.-->
@@ -161,11 +161,11 @@
                         <MenuItem Header="Bing" Background="{StaticResource wbBlue}" Click="MenuItem_Click"/>
                         <MenuItem Header="Duckduckgo" Background="{StaticResource wbBlue}" Click="MenuItem_Click_2"/>
                         <MenuItem Header="Yandex" Background="{StaticResource wbBlue}" Click="MenuItem_Click_3"/>
-                        <MenuItem Header="Sherlock" Background="{StaticResource wbBlue}" Click="btnSherlock_Click"/>
+                        <MenuItem Header="Sherlock" Background="{StaticResource wbBlue}" Click="BtnSherlock_Click"/>
                     </MenuItem>
                 </Menu>
 
-                <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" HorizontalAlignment="Right" MinWidth="200" VerticalAlignment="Center" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="txtSearchBox_KeyDown" Margin="0,0,40,0" FontSize="14" IsEnabled="False"/>
+                <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" HorizontalAlignment="Right" MinWidth="200" VerticalAlignment="Center" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="TxtSearchBox_KeyDown" Margin="0,0,40,0" FontSize="14" IsEnabled="False"/>
                 <Button x:Name="btnSearch" Grid.Column="2" Margin="-50,0,0,0" VerticalAlignment="Center" Width="26" Click="BtnSearch_Click" Style="{DynamicResource wbButtons}" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/search.png"></Image>
@@ -189,7 +189,7 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TabItem}">
                                 <Grid>
-                                    <Border Name="Border" Background="{StaticResource wbBlue}" Margin="2,2,-8,0" BorderBrush="{StaticResource wbBlue}" BorderThickness="0,0,0,1" CornerRadius="3">
+                                    <Border Name="Border" Background="{StaticResource wbBlue}" Margin="2,2,-8,0" BorderBrush="{StaticResource wbLight}" BorderThickness="0,0,0,1" CornerRadius="3">
                                         <ContentPresenter x:Name="ContentSite" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,12,2" RecognizesAccessKey="True"/>
                                     </Border>
                                 </Grid>
@@ -203,8 +203,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle Fill="Black"/>
                                     <TextBlock Text="{Binding}"  Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource wbLight}" />
-                                    <Button x:Name="btnCloseTab" Click="btnCloseTab_Click" Padding="0" Margin="0,0,0,0" Style="{DynamicResource wbButtons}"
-                                        Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}">
+                                    <Button x:Name="btnCloseTab" Click="BtnCloseTab_Click" Padding="0" Margin="0,0,0,0" Style="{DynamicResource wbButtons}"
+                                        Height="20" Width="20" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=TabItem}}">
                                         <Viewbox>
                                             <Image Source="/Resources/close.png"></Image>
                                         </Viewbox>
@@ -220,7 +220,52 @@
             <TabItem HeaderTemplate="{DynamicResource BrowserTabHeaderTemplate}">
 
                 <!--<cefSharp:ChromiumWebBrowser x:Name="defaultBrowser" Address="https://www.google.com"/>-->
-                <Label x:Name="lblMarple" Content="Marple" Height="70" Width="630" Margin="708,-500,582,0"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="49*"/>
+                        <ColumnDefinition Width="51*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="33*"/>
+                        <RowDefinition Height="33*"/>
+                        <RowDefinition Height="33*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Column="2" Grid.RowSpan="3">
+                        <Image x:Name="imgSplashScreenHelp" Source="/Resources/marplehelp.png" Margin="0,20,0,20"/>
+                    </Grid>
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <Button x:Name="btnNewTab2" Click="BtnNewTab_Click" Grid.Column="0" Grid.Row="1" Width="70" Height="70" Margin="0" HorizontalAlignment="Right" Style="{StaticResource wbButtons}">
+                            <Viewbox>
+                                <Image Source="/Resources/new.png"/>
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Label x:Name="LblStartHere" Content="This button gets you started" FontSize="30" Margin="0,80,0,0"/>
+                        <Label x:Name="LblOpens" Content="Opens a new browser tab" FontSize="24" Margin="0,120,0,0"/>
+
+                    </Grid>
+                    <Grid Grid.Column="0" Grid.Row="1">
+                        <Button x:Name="btnReport" Content="Produce Report" Click="BtnReport_Click" Style="{StaticResource wbButtons}"  HorizontalAlignment="Right" Width="150" Height="50" Margin="100,50,0,110"/>
+                        <Button x:Name="btnShowReport" Content="Show Report" Click="BtnShowReport_Click" Style="{StaticResource wbButtons}"  HorizontalAlignment="Right" Width="150" Height="50"  Visibility="Hidden" Margin="100,50,0,110"/>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Label x:Name="lblProduceReport" Content="Produce a report and/or close the case" FontSize="24" Margin="0,65,0,0"/>
+                    </Grid>
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <Button x:Name="btnSherlockResults" Content="Sherlock" Click="BtnSherlockResults_Click" Style="{StaticResource wbButtons}" HorizontalAlignment="Right" Width="150" Height="50" Margin="0,0,0,180" Visibility="Hidden"/>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="2">
+                        <Label x:Name="lblSherlock" Content="Sherlock results button" FontSize="24" Margin="0,0,0,0"/>
+                        <Label x:Name="lblSherlock2" Content="When Sherlock scan is completed, click the button and a new tab will open displaying the results" FontSize="12" Margin="0,30,0,0"/>
+
+                    </Grid>
+                </Grid>
+
+                <!--<Label x:Name="lblMarple" Content="Marple" Height="70" Width="630" Margin="708,-500,582,0"/>-->
             </TabItem>
         </TabControl>
     </Grid>

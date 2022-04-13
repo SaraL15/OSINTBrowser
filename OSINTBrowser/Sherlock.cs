@@ -26,8 +26,6 @@ namespace OSINTBrowser
         //Starts the process to run Sherlock.
         public bool LaunchSherlock(string sherlockSearchTerm)
         {
-            //string FileName = "cmd.exe";
-            //string Arguments = "/c C:\\Users\\saral\\source\\repos\\sherlock\\sherlock\\sherlock.py " + searchForThis;
             _searchForThis = sherlockSearchTerm;
             try
             {
