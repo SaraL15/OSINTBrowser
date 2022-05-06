@@ -22,7 +22,7 @@
         <Label x:Name="lblTitle" Grid.Column="0" Grid.Row="0" Content="Capture Preview" Margin="20 ,5, 5, 0" Foreground="#d3ebfd" FontFamily="Cascadia Code" FontSize="24"/>
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <Label x:Name="lblDesc" Content="Capture Description" HorizontalAlignment="Left" Height="26" Width="145" Margin="20,20, 0, 0" FontSize="12"/>
-            <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="80"  TextWrapping="Wrap" Width="330" Margin="20, 5, 0, 0"/>
+            <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="80"  TextWrapping="Wrap" Width="330" Margin="20, 5, 0, 0" MaxLength="2000"/>
             <Label x:Name="lblSource" Content="Capture Source" HorizontalAlignment="Left" Height="25" Width="119" Margin="20, 20, 0, 0" FontSize="12"/>
             <TextBox x:Name="txtSource" HorizontalAlignment="Left" Height="38" TextWrapping="Wrap" Width="330" Background="LightGray" Cursor="Arrow" Margin="20, 5, 0 0"/>
             <CheckBox x:Name="chkIndecent" Content="Mark as indecent" HorizontalAlignment="Left" Height="20" Width="140" Margin="20, 30, 0, 0"/>

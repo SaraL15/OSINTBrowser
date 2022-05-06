@@ -32,11 +32,11 @@
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="0">
-            <TextBox x:Name="txtDesc" Height="180" Width="350" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <TextBox x:Name="txtDesc" Height="180" Width="350" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="2000"/>
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="txtComment" Height="180" Width="350" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <TextBox x:Name="txtComment" Height="180" Width="350" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="2000"/>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="2">

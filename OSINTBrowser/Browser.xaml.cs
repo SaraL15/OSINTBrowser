@@ -134,44 +134,62 @@ namespace OSINTBrowser
         //Turns this into a search bar on the browser - able to select different search engines.
         private void Search()
         {
-            if (!string.IsNullOrWhiteSpace(txtSearchBox.Text))
+            try
             {
-                _currentBrowser.Address = _queryUrl + txtSearchBox.Text;
-                _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
-                string folder = Case.CaseFilePath;
-                using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+                if (!string.IsNullOrWhiteSpace(txtSearchBox.Text))
                 {
-                    string date = DateTime.Now.ToString();
-                    sw.WriteLine(date + ": Search Term: " + txtSearchBox.Text + " " + _queryUrl, "/n");
+                    _currentBrowser.Address = _queryUrl + txtSearchBox.Text;
+                    _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+                    string folder = Case.CaseFilePath;
+                    using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+                    {
+                        string date = DateTime.Now.ToString();
+                        sw.WriteLine(date + ": Search Term: " + txtSearchBox.Text + " " + _queryUrl, "/n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("White space!");
                 }
             }
-            else
+            catch
             {
-                Console.WriteLine("White space!");
-            }            
+                MessageBox.Show("Great, you broke Sherlock");
+            }
         }
 
         //Loads the address.
         private void Go()
         {
+
             if (!string.IsNullOrWhiteSpace(txtAddressBar.Text))
             {
-                _currentBrowser.Load(txtAddressBar.Text);
-                _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
-                _currentBrowser.Loaded += FinishedLoadingWebpage;
-
-                string folder = Case.CaseFilePath;
-                using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+                try
                 {
-                    string date = DateTime.Now.ToString();
-                    sw.WriteLine(date + ": Site Visited: " + txtAddressBar.Text, "/n");
+                    _currentBrowser.Load(txtAddressBar.Text);
+                    _currentBrowser.AddressChanged += CurrentBrowser_AddressChanged;
+                    _currentBrowser.Loaded += FinishedLoadingWebpage;
+
+                    string folder = Case.CaseFilePath;
+                    using (StreamWriter sw = new StreamWriter(Path.Combine(folder, "Log.txt"), true))
+                    {
+                        string date = DateTime.Now.ToString();
+                        sw.WriteLine(date + ": Site Visited: " + txtAddressBar.Text, "/n");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Something went wrong! {0}", ex);
+                    return;
                 }
                 
+
             }
             else
             {
                 Console.WriteLine("White space!");
             }
+           
         }
 
         //Changes the text within the txtAddressBar to show current url.

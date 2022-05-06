@@ -104,40 +104,40 @@
                             <Image Source="/resources/bookmark.png"/>
                         </MenuItem.Icon>
                         <MenuItem Header="Social Media" Background="{StaticResource wbBlue}">
-                            <MenuItem Header="Twitter" Name="Twitter" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Facebook" Name="Facebook" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Instagram" Name="Instagram" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="LinkedIn" Name="LinkedIn" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Pinterest" Name="Pinterest" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Reddit" Name="Reddit" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="YouTube" Name="YouTube" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="TikTok" Name="TikTok" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Tweetbeaver" Name="Tweetbeaver" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Tweetdeck" Name="Tweetdeck" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Twitch" Name="Twitch" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Twitter" Name="Twitter" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="YouTube" Name="YouTube" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                         </MenuItem>
                         <MenuItem Header="Images" Background="{StaticResource wbBlue}">
-                            <MenuItem Header="Google" Name="Google" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Bing" Name="Bing" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="Yandex" Name="Yandex" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="TinEye" Name="TinEye" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="PimEyes" Name="PimEyes" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="KarmaDecay" Name="KarmaDecay" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="Wolfram" Name="Wolfram" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Flickr" Name="Flickr" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Google" Name="Google" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Jeffery's" Name="Jefferys" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="KarmaDecay" Name="KarmaDecay" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="PimEyes" Name="PimEyes" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="TinEye" Name="TinEye" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Wolfram" Name="Wolfram" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Yandex" Name="Yandex" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                         </MenuItem>
                         <MenuItem Header="Email" Background="{StaticResource wbBlue}">
-                            <MenuItem Header="EmailRep" Name="EmailRep" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="TruMail" Name="TruMail" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="HIBP" Name="HIBP" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Dehashed" Name="Dehashed" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="EmailRep" Name="EmailRep" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="HIBP" Name="HIBP" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Trumail" Name="TruMail" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                         </MenuItem>
                         <MenuItem Header="Usernames" Background="{StaticResource wbBlue}">
                             <MenuItem Header="KnowEm" Name="KnowEm" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Social Searcher" Name="socialsearcher" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="What's My Name" Name="whatsmyname" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="UserSearch" Name="UserSearch" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="What's My Name" Name="whatsmyname" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                         </MenuItem>
                         <MenuItem Header="People" Background="{StaticResource wbBlue}">
                             <MenuItem Header="192" Name="oneninetwo" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
@@ -145,10 +145,10 @@
                             <MenuItem Header="TrueCaller" Name="truecaller" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                         </MenuItem>
                         <MenuItem Header="Maps" Background="{StaticResource wbBlue}">
-                            <MenuItem Header="Google" Name="GoogleMaps" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Bing" Name="BingMaps" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
-                            <MenuItem Header="Zoom Earth" Name="zoomearth" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Google" Name="GoogleMaps" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                             <MenuItem Header="Scribble Maps" Name="scribblemaps" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
+                            <MenuItem Header="Zoom Earth" Name="zoomearth" Background="{StaticResource wbBlue}" Click="MenuItem_Bookmarks_Click"/>
                         </MenuItem>
                     </MenuItem>
                 </Menu>
@@ -165,7 +165,7 @@
                     </MenuItem>
                 </Menu>
 
-                <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" HorizontalAlignment="Right" MinWidth="200" VerticalAlignment="Center" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="TxtSearchBox_KeyDown" Margin="0,0,40,0" FontSize="14" IsEnabled="False"/>
+                <TextBox x:Name="txtSearchBox" Grid.Column="2" Height="26" HorizontalAlignment="Right" MinWidth="200" MaxWidth="200" VerticalAlignment="Center" VerticalContentAlignment="Center" TextWrapping="NoWrap" KeyDown="TxtSearchBox_KeyDown" Margin="0,0,40,0" FontSize="14" IsEnabled="False" MaxLength="300"/>
                 <Button x:Name="btnSearch" Grid.Column="2" Margin="-50,0,0,0" VerticalAlignment="Center" Width="26" Click="BtnSearch_Click" Style="{DynamicResource wbButtons}" IsEnabled="False">
                     <Viewbox>
                         <Image Source="/Resources/search.png"></Image>

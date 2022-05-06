@@ -65,61 +65,77 @@ namespace OSINTBrowser
             {
                 System.Windows.Forms.MessageBox.Show("Name or description missing");
             }
-            else if (ValidateUserInput() == true) { 
-
-                string subjectName = txtSubject.Text;
-                string description = txtDesc.Text;
-                DateTime now = DateTime.Now;
-                string creationDate = DateTime.Now.ToString("yyyy_MM_dd");
-                string subfolder = creationDate + "_" + subjectName;
-            
-                string pathString = Path.Combine(folder, subfolder);
-                if (Directory.Exists(pathString))
+            else if (ValidateUserInput() == true)
+            {
+                try
                 {
-                    Console.WriteLine("Folder \"{0}\" already exists.", subfolder);
-                    lblError.Content = "Folder already exists";
-                }
-                else
-                {
-                    Directory.CreateDirectory(pathString);
-                    lblError.Content = "";
+                    string subjectName = txtSubject.Text;
+                    string description = txtDesc.Text;
+                    DateTime now = DateTime.Now;
+                    string creationDate = DateTime.Now.ToString("yyyy_MM_dd");
+                    string subfolder = creationDate + "_" + subjectName;
 
-                    //Class attributes are static so they can be accessed.
-                    Case.CaseName = subjectName;
-                    Case.CaseCreationDate = creationDate;
-                    Case.CaseFilePath = folder;
-                    //Creates a new log file and inputs the data from the newCase object.
-                    string fileName = "Log.txt";
-                    string filepathString = Path.Combine(pathString, fileName);
-
-                    Console.WriteLine("Path to my file is {0}\n", pathString);
-
-                    if (!File.Exists(filepathString))
+                    string pathString = Path.Combine(folder, subfolder);
+                    if (Directory.Exists(pathString))
                     {
-                        using (StreamWriter sw = new StreamWriter(filepathString))
+                        Console.WriteLine("Folder \"{0}\" already exists.", subfolder);
+                        System.Windows.MessageBox.Show("Folder already exists");
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(pathString);
+                        lblError.Content = "";
+
+                        //Class attributes are static so they can be accessed.
+                        Case.CaseName = subjectName;
+                        Case.CaseCreationDate = creationDate;
+                        Case.CaseFilePath = folder;
+                        //Creates a new log file and inputs the data from the newCase object.
+                        string fileName = "Log.txt";
+                        string filepathString = Path.Combine(pathString, fileName);
+
+                        Console.WriteLine("Path to my file is {0}\n", pathString);
+
+                        if (!File.Exists(filepathString))
                         {
-                            string[] logLines =
+                            using (StreamWriter sw = new StreamWriter(filepathString))
                             {
+                                string[] logLines =
+                                {
                             "Case Name: " + Case.CaseName + "  Case opened: " + Case.CaseCreationDate
                         };
-                            foreach (string l in logLines)
-                            {
-                                sw.WriteLine(l);
+                                foreach (string l in logLines)
+                                {
+                                    sw.WriteLine(l);
+                                }
                             }
                         }
-                    }
-                    DbConnect dbc = new DbConnect();
-                    dbc.AddNewCase(now, subjectName, description);
+                        DbConnect dbc = new DbConnect();
+                        dbc.AddNewCase(now, subjectName, description);
 
-                    Case.CaseFilePath = pathString;
-                    
-                    string lastFolderName = Path.GetFileName(pathString);
-                    string folderName = lastFolderName.Substring(11);
-                    dbc.GetTheCase(folderName);
-                    Browser browser = new Browser();
-                    browser.Show();
-                    this.Close();
+                        Case.CaseFilePath = pathString;
+                        try
+                        {
+                            string lastFolderName = Path.GetFileName(pathString);
+                            string folderName = lastFolderName.Substring(11);
+                            dbc.GetTheCase(folderName);
+                            Browser browser = new Browser();
+                            browser.Show();
+                            this.Close();
+                        }
+                        catch
+                        {
+                            System.Windows.MessageBox.Show("Invalid Case Name");
+                        }
+
+                    }
                 }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(ex.Message);
+                    return;
+                }
+                
             }
         }
 

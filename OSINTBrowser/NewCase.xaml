@@ -24,9 +24,9 @@
 
         <Grid Grid.Row="1" Background="{StaticResource wbLight}"/>
 
-        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="22" Margin="42,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163" Grid.Row="1"/>
+        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="22" Margin="42,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163" Grid.Row="1" MaxLength="100"/>
         <TextBox x:Name="txtDesc" HorizontalAlignment="Left" MaxHeight="170" Margin="42,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="247" AcceptsReturn="True"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" Height="78" Grid.Row="1"/>
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Height="78" Grid.Row="1" MaxLength="255"/>
         
         <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="339,190,0,0" VerticalAlignment="Top" Width="90" Height="44" 
                 Style="{StaticResource wbButtons}" Click="btnCreate_Click" Cursor="Hand" Grid.Row="1"/>

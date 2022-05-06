@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OSINTBrowser
 {
-    internal class ReportHTML
+    public class ReportHTML
     {
         //Get the file details from the Evidence database, convert to HTML and display.
         public string GetTheFiles(string desc, string comment)
@@ -55,7 +55,7 @@ namespace OSINTBrowser
                     {
                         if (str.Contains("do not"))
                         {
-                            sb.AppendLine($"<b>{str}</b></br></br>");
+                            sb.AppendLine($"<u><b>{str}</b></u></br></br>");
                         }
                         sb.AppendLine($"<b>{str}</b></br></br>");
                     }

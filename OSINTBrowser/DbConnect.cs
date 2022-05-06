@@ -15,11 +15,18 @@ namespace OSINTBrowser
         //Opens connection to the database - uses machine name.
         public void Open_connection()
         {
-            string connDataSource = Environment.MachineName;
-            _connectionString = @"Data Source="+connDataSource+";Initial Catalog=OSIBDatabase;Integrated Security=True";
-            _cnn = new SqlConnection(_connectionString);
-            _cnn.Open();
-            Console.WriteLine("Connection Open");
+            try
+            {
+                string connDataSource = Environment.MachineName;
+                _connectionString = @"Data Source=" + connDataSource + ";Initial Catalog=OSIBDatabase;Integrated Security=True";
+                _cnn = new SqlConnection(_connectionString);
+                _cnn.Open();
+                Console.WriteLine("Connection Open");
+            }catch (Exception ex)
+            {
+                Console.WriteLine("Failed to open connection", ex);
+            }
+
         }
 
         //Evidence capture - added to database.
