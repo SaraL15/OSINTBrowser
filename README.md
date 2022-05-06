@@ -1,5 +1,5 @@
 
-Marple – A Forensically Enabled OSINT Browser
-Comp3000 Final Year Project
-University of Plymouth
+Marple – A Forensically Enabled OSINT Browser </br>
+Comp3000 Final Year Project </br>
+University of Plymouth </br>
 
